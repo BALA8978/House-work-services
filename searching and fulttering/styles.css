@@ -1,0 +1,516 @@
+/* Design System Variables */
+:root {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --surface: hsl(240, 6%, 12%);
+  --surface-foreground: hsl(0, 0%, 98%);
+  --primary: hsl(142.1, 76.2%, 36.3%);
+  --primary-foreground: hsl(355.7, 100%, 97.3%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --gradient-primary: linear-gradient(135deg, hsl(142.1, 76.2%, 36.3%), hsl(158.1, 64.4%, 51.6%));
+  --gradient-background: linear-gradient(180deg, hsl(240, 10%, 3.9%), hsl(240, 8%, 8%));
+  --shadow-card: 0 10px 30px -5px hsla(240, 10%, 3.9%, 0.3);
+  --shadow-glow: 0 0 20px hsla(142.1, 76.2%, 36.3%, 0.4);
+  --radius: 8px;
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--gradient-background);
+  color: var(--foreground);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Container for search & filter button */
+.search-container {
+  position: absolute;
+  top: 30px;
+  right: 16px;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-bottom: 1em;
+  height: 48px;
+  z-index: 10;
+}
+
+/* Search bar */
+#search-bar {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
+  font-size: 16px;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+#search-bar:focus {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-glow);
+}
+
+#search-bar::placeholder {
+  color: var(--muted-foreground);
+}
+
+/* Filter button */
+#filter-btn {
+  padding: 12px 16px;
+  height: 48px;
+  border-radius: var(--radius);
+  border: none;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-glow);
+}
+
+#filter-btn:hover {
+  background: hsl(142.1, 76.2%, 32%);
+  transform: translateY(-1px);
+}
+
+#filter-btn:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+#filter-btn i {
+  color: var(--primary-foreground);
+}
+
+/* Technicians list container */
+#technicians-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  padding: 32px;
+  max-height: 80vh;
+  overflow-y: auto;
+  width: 100%;
+  margin-top: 100px;
+  box-sizing: border-box;
+}
+
+/* No results message styling */
+#technicians-list > p {
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--muted-foreground);
+  font-size: 16px;
+}
+
+/* Individual technician card */
+.technician-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 32px;
+  margin: 0;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  font-family: inherit;
+  animation: fadeIn 0.5s ease-out;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: visible;
+  white-space: normal;           /* allow text wrapping */
+  word-wrap: break-word;         /* break long words */
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  line-height: 1.6;
+}
+
+.technician-card:hover {
+  background-color: hsl(240, 10%, 9%);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+.technician-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+}
+
+/* Technician name and ID styling */
+.technician-card h3 {
+  margin: 0 0 16px 0;
+  color: var(--foreground);
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tech-id {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted-foreground);
+  background: var(--muted);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* Technician info paragraphs */
+.technician-card p {
+  margin: 8px 0;
+  font-size: 16px;               /* slightly larger font */
+  color: var(--muted-foreground);
+  line-height: 1.6;
+  white-space: normal;           /* wrap text */
+  overflow-wrap: break-word;     /* break long words */
+  border-bottom: 1px solid var(--border); /* separator */
+  padding-bottom: 6px;
+}
+
+/* Remove bottom border from last paragraph */
+.technician-card p:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.technician-card p strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+/* Availability styling */
+.technician-card p:first-of-type strong {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.technician-card p:first-of-type:has-text("Available") strong {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.technician-card p:first-of-type:has-text("Not Available") strong {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+/* Rating stars styling */
+.technician-card p:nth-of-type(2) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  color: #fbbf24; /* gold star color */
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.technician-card p:nth-of-type(2)::after {
+  content: '';
+  margin-left: auto;
+}
+
+/* Services styling */
+.technician-card p:nth-of-type(4) strong {
+  color: var(--primary);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* Cost styling */
+.technician-card p:last-of-type strong {
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Button styling */
+.contact-btn,
+.book-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 8px;
+  margin-top: 16px;
+  outline: none;
+}
+
+.contact-btn {
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+.contact-btn:hover {
+  background: var(--surface);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.book-btn {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.book-btn:hover {
+  background: hsl(142.1, 76.2%, 32%);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* Show modal */
+.modal-overlay.show {
+  display: flex;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Modal Content box */
+.modal-content {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 24px 24px 24px;
+  box-shadow: var(--shadow-glow);
+  min-width: 320px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  font-family: inherit;
+  animation: slideUp 0.3s ease-out;
+}
+
+.modal-content h3 {
+  color: var(--foreground);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.modal-content label {
+  display: block;
+  color: var(--foreground);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
+  font-size: 14px;
+  margin-bottom: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px hsla(142.1, 76.2%, 36.3%, 0.2);
+}
+
+.modal-content input::placeholder {
+  color: var(--muted-foreground);
+}
+
+.modal-content input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+  margin-bottom: 0;
+}
+
+.modal-content option {
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+#apply-filters,
+#close-filters {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 8px;
+  margin-top: 16px;
+}
+
+#apply-filters {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+#apply-filters:hover {
+  background: hsl(142.1, 76.2%, 32%);
+  transform: translateY(-1px);
+}
+
+#close-filters {
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+#close-filters:hover {
+  background: var(--surface);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* When modal is open, blur & disable interaction with background */
+body.modal-open .search-container,
+body.modal-open .technicians-list {
+  filter: blur(1.5px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-container {
+    width: 90%;
+    right: 5%;
+  }
+  
+  #technicians-list {
+    padding: 16px;
+    margin-top: 80px;
+  }
+  
+  .contact-btn,
+  .book-btn {
+    width: 48%;
+    display: inline-block;
+    margin-right: 0;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+  }
+}
+
+/* Scrollbar Styling */
+#technicians-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#technicians-list::-webkit-scrollbar-track {
+  background: var(--surface);
+  border-radius: 3px;
+}
+
+#technicians-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+#technicians-list::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Enhanced star styling */
+.technician-card p:nth-of-type(2)::after {
+  content: '';
+  margin-left: auto;
+}
+
+/* Make the rating stars yellow */
+.technician-card p:nth-of-type(2) {
+  color: var(--muted-foreground);
+}
+
+/* Target the star characters specifically */
+.technician-card p:nth-of-type(2)::first-line {
+  color: #fbbf24;
+}
