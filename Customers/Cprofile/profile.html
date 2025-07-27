@@ -1,69 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Customer Profile</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="profile.css">
-  <script src="profile.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pana Customer Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="Cprofile.css">
 </head>
 <body>
-  <div class="logo">
-    <img src="../Photos/logo.png" alt="HomeCraft Pro Logo" />
-  </div>
+    <header class="app-header">
+        <div class="brand-section">
+            <img src="../images/logo.png"  class="circular-logo" />
+            <span class="brand-name">Home Craft Pro</span>
+        </div>
+        </header>
 
-  <div class="container">
-    <div class="profile-left">
-      <img id="avatarImg" src="../Photos/female.png" alt="Avatar" />
-      <h2 id="userName">Customer Name</h2>
-      <p id="userEmail">customer@example.com</p>
+    <div class="container">
+        <div class="profile-left">
+            <img id="avatarImg" src="./images/female.png" alt="Avatar" class="profile-avatar" />
+            <h2 id="userName">Customer Name</h2>
+            <p id="userEmail">customer@example.com</p>
+        </div>
+        <div class="profile-right">
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('info')">Info</div>
+                <div class="tab" onclick="showTab('history')">History</div>
+                <div class="tab" onclick="showTab('settings')">Settings</div>
+            </div>
+
+            <div id="info" class="tab-content active">
+                <div class="field">
+                    <label>Gender</label>
+                    <select id="genderSelect">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="field"><label>Phone Number</label><input id="phone" type="text" placeholder="Enter phone" disabled/></div>
+                <div class="field"><label>Address</label><textarea id="address" placeholder="Enter address" disabled></textarea></div>
+                <div class="field"><label>City</label><input id="city" type="text" placeholder="Enter city" disabled/></div>
+                <div class="field"><label>State</label><input id="state" type="text" placeholder="Enter state" disabled/></div>
+                <div class="field"><label>Pincode</label><input id="pincode" type="text" placeholder="Enter pincode" disabled/></div>
+                <p id="infoSaveMessage" class="error-message"></p>
+
+                <button id="editInfoBtn" class="action-btn">Edit Info</button>
+                <div id="saveCancelInfoButtons" style="display: none; width: 100%; text-align: center;">
+                    <button id="saveInfoBtn" class="action-btn mt-2">Save Info</button>
+                    <button id="cancelInfoEditBtn" class="action-btn delete-btn mt-2">Cancel</button>
+                </div>
+            </div>
+
+            <div id="history" class="tab-content">
+                <h3>Booking History</h3>
+                <p>No booking history available yet.</p>
+            </div>
+
+            <div id="settings" class="tab-content">
+                <div id="settingsCategoryList">
+                    <div class="setting-group" onclick="showSettingSection('passwordSection')">
+                        <span>Change Password</span>
+                    </div>
+                    <div class="setting-group" onclick="showSettingSection('notificationsSection')">
+                        <span>Notifications</span>
+                    </div>
+                    <div class="setting-group" onclick="showSettingSection('languageSection')">
+                        <span>Change Language</span>
+                    </div>
+                    <div class="setting-group" onclick="showSettingSection('bankUpiSection')">
+                        <span>Bank & UPI Details</span>
+                    </div>
+                    <div class="setting-group" onclick="showSettingSection('playHistorySection')">
+                        <span>Play History</span>
+                    </div>
+                    <div class="setting-group" onclick="showSettingSection('deleteAccountSection')">
+                        <span>Delete Account</span>
+                    </div>
+                    <div class="setting-group" onclick="confirmLogout()">
+                        <span>Logout</span>
+                    </div>
+                </div>
+
+                <div id="passwordSection" class="setting-section" style="display: none;">
+                    <button class="back-to-settings-list action-btn back-btn" onclick="renderSettingsUI()">Back to Settings</button>
+                    <h3>Change Password</h3>
+                    <div class="field"><label>Current Password</label><input type="password" id="currentPassword" /></div>
+                    <div class="field"><label>New Password</label><input type="password" id="newPassword" /></div>
+                    <div class="field"><label>Confirm New Password</label><input type="password" id="confirmNewPassword" /></div>
+                    <p id="passwordMessage" class="error-message"></p>
+                    <button class="action-btn" onclick="saveSpecificSettings('password')">Save Password</button>
+                </div>
+
+                <div id="notificationsSection" class="setting-section" style="display: none;">
+                    <button class="back-to-settings-list action-btn back-btn" onclick="renderSettingsUI()">Back to Settings</button>
+                    <h3>Notifications</h3>
+                    <div class="setting-group switch-group">
+                        <label>Enable Notifications</label>
+                        <label class="switch"><input type="checkbox" id="enableNotifications" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="setting-group switch-group">
+                        <label>Email Updates</label>
+                        <label class="switch"><input type="checkbox" id="emailUpdates" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="setting-group switch-group">
+                        <label>SMS Alerts</label>
+                        <label class="switch"><input type="checkbox" id="smsAlerts"><span class="slider"></span></label>
+                    </div>
+                    <p id="notificationsMessage" class="error-message"></p>
+                    <button class="action-btn" onclick="saveSpecificSettings('notifications')">Save Notifications</button>
+                </div>
+
+                <div id="languageSection" class="setting-section" style="display: none;">
+                    <button class="back-to-settings-list action-btn back-btn" onclick="renderSettingsUI()">Back to Settings</button>
+                    <h3>Change Language</h3>
+                    <div class="field">
+                        <label>Display Language</label>
+                        <select id="languageSelect">
+                            <option value="en">English</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="hi">Hindi</option>
+                        </select>
+                    </div>
+                    <p id="languageMessage" class="error-message"></p>
+                    <button class="action-btn" onclick="saveSpecificSettings('language')">Save Language</button>
+                </div>
+
+                <div id="bankUpiSection" class="setting-section" style="display: none;">
+                    <button class="back-to-settings-list action-btn back-btn" onclick="renderSettingsUI()">Back to Settings</button>
+                    <h3>Bank & UPI Details</h3>
+                    <div class="field"><label>Bank Name</label><input type="text" id="bankName" placeholder="e.g., State Bank of India" /></div>
+                    <div class="field"><label>Account Number</label><input type="text" id="accountNumber" placeholder="e.g., 123456789012" /></div>
+                    <div class="field"><label>IFSC Code</label><input type="text" id="ifscCode" placeholder="e.g., SBIN0000001" /></div>
+                    <div class="field"><label>UPI ID</label><input type="text" id="upiId" placeholder="e.g., yourname@bankupi" /></div>
+                    <p id="bankUpiMessage" class="error-message"></p>
+                    <button class="action-btn" onclick="saveSpecificSettings('bankUpi')">Save Bank & UPI</button>
+                </div>
+
+                <div id="playHistorySection" class="setting-section" style="display: none;">
+                    <button class="back-to-settings-list action-btn back-btn" onclick="renderSettingsUI()">Back to Settings</button>
+                    <h3>Play History</h3>
+                    <p>This section displays your gaming statistics and achievements.</p>
+                    <p>Total Games Played: <span id="totalGamesPlayed">0</span></p>
+                    <p>Total Hours Played: <span id="totalHoursPlayed">0</span></p>
+                    <p>Last Played: <span id="lastPlayedDate">N/A</span></p>
+                    <p id="playHistoryMessage" class="error-message"></p>
+                    <button class="action-btn" onclick="saveSpecificSettings('playHistory')">Update Play Statistics</button>
+                </div>
+
+                <div id="deleteAccountSection" class="setting-section" style="display: none;">
+                    <button class="back-to-settings-list action-btn back-btn" onclick="renderSettingsUI()">Back to Settings</button>
+                    <h3>Delete Account</h3>
+                    <p>Deleting your account is a permanent action and cannot be undone.</p>
+                    <p>To confirm, please type "DELETE" in the box below:</p>
+                    <input type="text" id="deleteConfirmationInput" placeholder="Type DELETE to confirm" />
+                    <p id="deleteConfirmationError" class="error-message"></p>
+                    <button class="action-btn delete-btn" onclick="confirmDeleteAccount()">Confirm Delete Account</button>
+                    <p id="deleteAccountMessage" class="error-message"></p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="profile-right">
-      <div class="tabs">
-        <div class="tab active" onclick="showTab('info')">Info</div>
-        <div class="tab" onclick="showTab('history')">History</div>
-        <div class="tab" onclick="showTab('settings')">Settings</div>
-      </div>
 
-      <div id="info" class="tab-content active">
-        <form id="infoForm" onsubmit="return validateForm()">
-          <div class="field">
-            <label>Gender</label>
-            <select id="genderSelect">
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          <div class="field"><label>Phone Number</label><input id="phone" type="text" placeholder="Enter phone" /></div>
-          <div class="field"><label>Address</label><textarea id="address" placeholder="Enter address"></textarea></div>
-          <div class="field"><label>City</label><input id="city" type="text" placeholder="Enter city" /></div>
-          <div class="field"><label>State</label><input id="state" type="text" placeholder="Enter state" /></div>
-          <div class="field"><label>Pincode</label><input id="pincode" type="text" placeholder="Enter pincode" /></div>
-          <button type="submit" class="delete-btn">Save</button>
-        </form>
-      </div>
-
-      <div id="history" class="tab-content">
-        <p>Booking history will appear here.</p>
-      </div>
-
-      <div id="settings" class="tab-content">
-        <div class="setting-group">
-          <label>Enable Notifications</label>
-          <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <p id="modalText"></p>
+            <div class="modal-buttons">
+                <button class="confirm" id="modalConfirmBtn">Confirm</button>
+                <button class="cancel" id="modalCancelBtn">Cancel</button>
+            </div>
         </div>
-        <div class="setting-group">
-          <label>Email Updates</label>
-          <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-        </div>
-        <div class="setting-group">
-          <label>SMS Alerts</label>
-          <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-        </div>
-        <button class="delete-btn">Delete Account</button>
-      </div>
     </div>
-  </div>
+
+    <script src="Cprofile.js"></script>
+
+    <footer style="text-align: center; padding: 20px; font-size: 0.8em; color: #555; background-color: #f8f0f4; margin-top: 20px;">
+        &copy; 2025 Pana. All rights reserved.
+    </footer>
 </body>
 </html>

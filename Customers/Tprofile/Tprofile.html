@@ -4,34 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Technician Profile</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-       <script src="profile.js"></script>
+    <script src="profile.js"></script>
     <link rel="stylesheet" href="profile.css">
 </head>
-<body class="antialiased">
-    <!-- Logo at the top-left corner -->
+<body class="antialiased flex flex-col min-h-screen">
     <div class="absolute top-4 left-4 p-2">
-        <img src="../Photos/logo.png" alt="Company Logo" class="h-28 w-28 rounded-full object-cover shadow-md">
+        <img src="../images/logo.png" alt="Company Logo" class="h-28 w-28 rounded-full object-cover shadow-md">
     </div>
 
-    <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div class="flex-grow flex items-center justify-center p-4 sm:p-6 lg:p-8">
         <div class="bg-white shadow-xl rounded-xl p-6 sm:p-8 lg:p-10 max-w-4xl w-full mx-auto">
 
-            <!-- Tab Navigation -->
             <div class="flex justify-center mb-8 bg-gray-100 rounded-full p-1 max-w-sm mx-auto shadow-inner">
                 <button id="infoTabBtn" class="tab-btn active px-6 py-2 rounded-full text-sm focus:outline-none transition-all duration-300">Info</button>
                 <button id="historyTabBtn" class="tab-btn px-6 py-2 rounded-full text-sm focus:outline-none transition-all duration-300">History</button>
                 <button id="settingsTabBtn" class="tab-btn px-6 py-2 rounded-full text-sm focus:outline-none transition-all duration-300">Settings</button>
             </div>
 
-            <!-- Tab Content -->
             <div id="infoContent" class="tab-content">
                 <form id="technicianProfileForm">
                     <div class="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-8">
-                        <!-- Left Column: Profile Picture & Basic Info -->
                         <div class="flex flex-col items-center md:items-start w-full md:w-1/3 p-4 bg-gray-50 rounded-lg shadow-sm">
                             <img src="https://placehold.co/150x150/a78bfa/ffffff?text=TP" alt="Technician Profile" class="w-36 h-36 rounded-full object-cover mb-4 shadow-md">
                             <h2 id="technicianNameDisplay" class="text-xl font-semibold text-gray-800 mb-1"></h2>
@@ -53,16 +47,13 @@
                             </div>
                         </div>
 
-                        <!-- Right Column: Technician Details (Skills, Certificates, etc.) -->
                         <div class="flex-1 space-y-6">
-                            <!-- About Me -->
                             <div>
                                 <label for="about" class="block text-sm font-medium text-gray-700 mb-1">About Me</label>
                                 <textarea id="about" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Tell us about yourself..." required></textarea>
                                 <p class="error-message" id="aboutError"></p>
                             </div>
 
-                            <!-- Specialty/Trade & Experience Level -->
                             <div>
                                 <label for="specialty" class="block text-sm font-medium text-gray-700 mb-1">Specialty/Trade</label>
                                 <input type="text" id="specialty" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., HVAC Systems" required>
@@ -80,7 +71,6 @@
                                 <p class="error-message" id="experienceError"></p>
                             </div>
 
-                            <!-- Skills Section (Main Field) -->
                             <div>
                                 <h3 class="text-md font-semibold text-gray-800 mb-2 flex items-center">
                                     <svg class="w-5 h-5 mr-2 text-indigo-500" fill="currentColor" viewBox="0 0 20 20">
@@ -89,8 +79,7 @@
                                     Skills (Mandatory)
                                 </h3>
                                 <div id="skillsContainer" class="flex flex-wrap gap-2 p-3 bg-gray-50 rounded-md border border-gray-200 min-h-[40px]">
-                                    <!-- Skills will be dynamically added here -->
-                                </div>
+                                    </div>
                                 <div class="flex items-center gap-2 mt-2">
                                     <input type="text" id="newSkillInput" placeholder="Add new skill" class="flex-grow border border-gray-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                                     <button type="button" id="addSkillBtn" class="bg-indigo-500 text-white text-xs px-2 py-1 rounded-md hover:bg-indigo-600">Add</button>
@@ -98,7 +87,6 @@
                                 <p class="error-message" id="skillsError"></p>
                             </div>
 
-                            <!-- Certificates Section (Main Field) -->
                             <div>
                                 <h3 class="text-md font-semibold text-gray-800 mb-2 flex items-center">
                                     <svg class="w-5 h-5 mr-2 text-indigo-500" fill="currentColor" viewBox="0 0 20 20">
@@ -107,18 +95,23 @@
                                     Certificates (Mandatory)
                                 </h3>
                                 <ul id="certificatesList" class="space-y-2 p-3 bg-gray-50 rounded-md border border-gray-200 min-h-[40px]">
-                                    <!-- Certificates will be dynamically added here -->
-                                </ul>
+                                    </ul>
                                 <div class="space-y-2 mt-2 p-2 border border-gray-200 rounded-md bg-gray-50">
                                     <input type="text" id="newCertNameInput" placeholder="Certificate Name" class="block w-full border border-gray-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                                     <input type="text" id="newCertIssuerInput" placeholder="Issuer" class="block w-full border border-gray-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                                     <input type="text" id="newCertYearInput" placeholder="Year (e.g., 2023)" pattern="\d{4}" title="Please enter a 4-digit year" class="block w-full border border-gray-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                    <input type="file" id="certificateUploadInput" accept=".pdf,.doc,.docx,.jpg,.png" class="block w-full text-xs text-gray-500
+                                        file:mr-4 file:py-1 file:px-2
+                                        file:rounded-md file:border-0
+                                        file:text-sm file:font-semibold
+                                        file:bg-indigo-50 file:text-indigo-700
+                                        hover:file:bg-indigo-100 mt-2"/>
                                     <button type="button" id="addCertificateBtn" class="bg-indigo-500 text-white text-xs px-2 py-1 rounded-md hover:bg-indigo-600">Add Certificate</button>
                                 </div>
                                 <p class="error-message" id="certificatesError"></p>
+                                <p id="certificateUploadMessage" class="text-center text-sm mt-2"></p>
                             </div>
 
-                            <!-- Standard Contact Info -->
                             <div>
                                 <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                                 <input type="email" id="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter email" required>
@@ -152,7 +145,6 @@
                                 <p class="error-message" id="pincodeError"></p>
                             </div>
 
-                            <!-- Save Button -->
                             <div class="mt-6">
                                 <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save Profile</button>
                                 <p id="saveMessage" class="text-center text-sm mt-2"></p>
@@ -183,15 +175,13 @@
                         <span>Change Language</span>
                     </div>
                     <div id="bankUpiSettingItem" class="setting-item">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         <span>Bank & UPI Details</span>
                     </div>
                     <div id="refundsSettingItem" class="setting-item">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 14l6-6m-6 6l-6-6m6 6l6-6"></path></svg>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944 11.955 11.955 0 01.382 8.984M5.618 15.016A11.955 11.955 0 0112 21.056a11.955 11.955 0 016.382-6.048"></path></svg>
                         <span>Refunds</span>
                     </div>
-
-                    <h3 class="text-lg font-semibold text-gray-800 mt-8 mb-4">Danger Zone</h3>
                     <div id="deleteAccountSettingItem" class="setting-item danger-item">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                         <span>Delete Account</span>
@@ -202,153 +192,149 @@
                     </div>
                 </div>
 
-                <!-- Individual Setting Sections (Initially hidden) -->
-                <div id="passwordSection" class="hidden mt-6 p-4 bg-white rounded-lg shadow-md">
-                    <button type="button" class="back-to-settings-list text-indigo-600 hover:text-indigo-800 mb-4 flex items-center">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+                <div id="passwordSection" class="settings-section hidden p-4 border border-gray-200 rounded-md">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Change Password</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="currentPassword" class="block text-sm font-medium text-gray-700">Current Password</label>
+                            <input type="password" id="currentPassword" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                            <p class="error-message" id="currentPasswordError"></p>
+                        </div>
+                        <div>
+                            <label for="newPassword" class="block text-sm font-medium text-gray-700">New Password</label>
+                            <input type="password" id="newPassword" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                            <p class="error-message" id="newPasswordError"></p>
+                        </div>
+                        <div>
+                            <label for="confirmNewPassword" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                            <input type="password" id="confirmNewPassword" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                            <p class="error-message" id="confirmNewPasswordError"></p>
+                        </div>
+                        <div class="mt-6">
+                            <button type="button" id="changePasswordBtn" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Change Password</button>
+                            <p id="passwordSaveMessage" class="text-center text-sm mt-2"></p>
+                        </div>
+                    </div>
+                    <button type="button" class="back-to-settings mt-4 text-indigo-600 hover:text-indigo-800 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         Back to Settings
                     </button>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Change Password</h3>
-                    <div>
-                        <label for="currentPassword" class="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
-                        <input type="password" id="currentPassword" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                        <p class="error-message" id="currentPasswordError"></p>
-                    </div>
-                    <div class="mt-4">
-                        <label for="newPassword" class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-                        <input type="password" id="newPassword" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" pattern=".{8,}" title="Password must be at least 8 characters long" required>
-                        <p class="error-message" id="newPasswordError"></p>
-                    </div>
-                    <div class="mt-4">
-                        <label for="confirmNewPassword" class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
-                        <input type="password" id="confirmNewPassword" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                        <p class="error-message" id="confirmNewPasswordError"></p>
-                    </div>
-                    <div class="mt-6">
-                        <button type="button" class="save-settings-btn w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" data-setting-type="password">Save Password</button>
-                        <p id="passwordSaveMessage" class="text-center text-sm mt-2"></p>
-                    </div>
                 </div>
 
-                <div id="notificationsSection" class="hidden mt-6 p-4 bg-white rounded-lg shadow-md">
-                    <button type="button" class="back-to-settings-list text-indigo-600 hover:text-indigo-800 mb-4 flex items-center">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+                <div id="notificationsSection" class="settings-section hidden p-4 border border-gray-200 rounded-md">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Notification Preferences</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <input id="emailNotifications" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="emailNotifications" class="ml-2 block text-sm font-medium text-gray-700">Email Notifications</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="smsNotifications" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="smsNotifications" class="ml-2 block text-sm font-medium text-gray-700">SMS Notifications</label>
+                        </div>
+                        <div>
+                            <label for="timezone" class="block text-sm font-medium text-gray-700 mb-1">Timezone</label>
+                            <select id="timezone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="UTC+00">UTC+00:00</option>
+                                <option value="UTC+01">UTC+01:00</option>
+                                <option value="UTC+0530">UTC+05:30 (India Standard Time)</option>
+                                </select>
+                        </div>
+                        <div class="mt-6">
+                            <button type="button" id="saveNotificationsBtn" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save Notifications</button>
+                            <p id="notificationsSaveMessage" class="text-center text-sm mt-2"></p>
+                        </div>
+                    </div>
+                    <button type="button" class="back-to-settings mt-4 text-indigo-600 hover:text-indigo-800 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         Back to Settings
                     </button>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Notification Preferences</h3>
-                    <div class="flex items-center mb-2">
-                        <input id="emailNotifications" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="emailNotifications" class="ml-2 block text-sm text-gray-900">Email Notifications</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input id="smsNotifications" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="smsNotifications" class="ml-2 block text-sm text-gray-900">SMS Notifications</label>
-                    </div>
-                    <div class="mt-6">
-                        <button type="button" class="save-settings-btn w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" data-setting-type="notifications">Save Notifications</button>
-                        <p id="notificationsSaveMessage" class="text-center text-sm mt-2"></p>
-                    </div>
                 </div>
 
-                <div id="languageSection" class="hidden mt-6 p-4 bg-white rounded-lg shadow-md">
-                    <button type="button" class="back-to-settings-list text-indigo-600 hover:text-indigo-800 mb-4 flex items-center">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
-                        Back to Settings
-                    </button>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Language Preference</h3>
+                <div id="languageSection" class="settings-section hidden p-4 border border-gray-200 rounded-md">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Change Language</h3>
                     <div>
-                        <label for="language" class="block text-sm font-medium text-gray-700 mb-1">Display Language</label>
+                        <label for="language" class="block text-sm font-medium text-gray-700 mb-1">Language</label>
                         <select id="language" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="en" selected>English</option>
+                            <option value="en">English</option>
                             <option value="es">Spanish</option>
                             <option value="fr">French</option>
-                            <option value="de">German</option>
-                            <option value="hi">Hindi</option>
-                        </select>
+                            </select>
                     </div>
                     <div class="mt-6">
-                        <button type="button" class="save-settings-btn w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" data-setting-type="language">Save Language</button>
+                        <button type="button" id="saveLanguageBtn" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save Language</button>
                         <p id="languageSaveMessage" class="text-center text-sm mt-2"></p>
                     </div>
-                </div>
-
-                <div id="bankUpiSection" class="hidden mt-6 p-4 bg-white rounded-lg shadow-md">
-                    <button type="button" class="back-to-settings-list text-indigo-600 hover:text-indigo-800 mb-4 flex items-center">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+                    <button type="button" class="back-to-settings mt-4 text-indigo-600 hover:text-indigo-800 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         Back to Settings
                     </button>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Bank & UPI Details</h3>
+                </div>
+
+                <div id="bankUpiSection" class="settings-section hidden p-4 border border-gray-200 rounded-md">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Bank & UPI Details</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="bankName" class="block text-sm font-medium text-gray-700">Bank Name</label>
+                            <input type="text" id="bankName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., State Bank of India">
+                        </div>
+                        <div>
+                            <label for="accountNumber" class="block text-sm font-medium text-gray-700">Account Number</label>
+                            <input type="text" id="accountNumber" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., 1234567890">
+                        </div>
+                        <div>
+                            <label for="ifscCode" class="block text-sm font-medium text-gray-700">IFSC Code</label>
+                            <input type="text" id="ifscCode" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., SBIN0000001">
+                        </div>
+                        <div>
+                            <label for="upiId" class="block text-sm font-medium text-gray-700">UPI ID</label>
+                            <input type="text" id="upiId" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., yourname@bankupi">
+                        </div>
+                        <div class="mt-6">
+                            <button type="button" id="saveBankUpiBtn" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save Bank & UPI Details</button>
+                            <p id="bankUpiSaveMessage" class="text-center text-sm mt-2"></p>
+                        </div>
+                    </div>
+                    <button type="button" class="back-to-settings mt-4 text-indigo-600 hover:text-indigo-800 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Back to Settings
+                    </button>
+                </div>
+
+                <div id="refundsSection" class="settings-section hidden p-4 border border-gray-200 rounded-md">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Refunds Information</h3>
+                    <p class="text-sm text-gray-700 mb-2">
+                        View details about your recent refunds.
+                    </p>
+                    <p class="text-sm text-gray-600">Last Refund Date: <span id="lastRefundDate" class="font-medium">N/A</span></p>
+                    <p id="refundsSaveMessage" class="text-center text-sm mt-2"></p>
+                    <button type="button" class="back-to-settings mt-4 text-indigo-600 hover:text-indigo-800 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Back to Settings
+                    </button>
+                </div>
+
+                <div id="deleteAccountSection" class="settings-section hidden p-4 border border-red-300 rounded-md bg-red-50">
+                    <h3 class="text-xl font-semibold text-red-800 mb-4">Delete Account</h3>
+                    <p class="text-sm text-red-700 mb-4">
+                        This action is irreversible. Please type "DELETE" to confirm.
+                    </p>
                     <div>
-                        <label for="bankName" class="block text-sm font-medium text-gray-700 mb-1">Bank Name</label>
-                        <input type="text" id="bankName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., State Bank of India">
-                        <p class="error-message" id="bankNameError"></p>
-                    </div>
-                    <div class="mt-4">
-                        <label for="accountNumber" class="block text-sm font-medium text-gray-700 mb-1">Account Number</label>
-                        <input type="text" id="accountNumber" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., 123456789012" pattern="^\d{9,18}$" title="Please enter a valid account number (9-18 digits)">
-                        <p class="error-message" id="accountNumberError"></p>
-                    </div>
-                    <div class="mt-4">
-                        <label for="ifscCode" class="block text-sm font-medium text-gray-700 mb-1">IFSC Code</label>
-                        <input type="text" id="ifscCode" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., SBIN0000001" pattern="^[A-Z]{4}0[A-Z0-9]{6}$" title="Please enter a valid IFSC code (e.g., ABCD0123456)">
-                        <p class="error-message" id="ifscCodeError"></p>
-                    </div>
-                    <div class="mt-4">
-                        <label for="upiId" class="block text-sm font-medium text-gray-700 mb-1">UPI ID</label>
-                        <input type="text" id="upiId" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., yourname@bankupi" pattern="^([a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64})$" title="Please enter a valid UPI ID (e.g., username@bankname)">
-                        <p class="error-message" id="upiIdError"></p>
+                        <label for="deleteConfirmationInput" class="sr-only">Type "DELETE" to confirm</label>
+                        <input type="text" id="deleteConfirmationInput" class="block w-full border border-red-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Type DELETE to confirm">
                     </div>
                     <div class="mt-6">
-                        <button type="button" class="save-settings-btn w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" data-setting-type="bankUpi">Save Bank & UPI</button>
-                        <p id="bankUpiSaveMessage" class="text-center text-sm mt-2"></p>
-                    </div>
-                </div>
-
-                <div id="refundsSection" class="hidden mt-6 p-4 bg-white rounded-lg shadow-md">
-                    <button type="button" class="back-to-settings-list text-indigo-600 hover:text-indigo-800 mb-4 flex items-center">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
-                        Back to Settings
-                    </button>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Refunds Information</h3>
-                    <p class="text-gray-700 leading-relaxed text-sm">
-                        This section provides information regarding your refund history and our refund policy.
-                        For any issues with payments or refunds, please contact support.
-                    </p>
-                    <p class="mt-2 text-sm text-gray-500">
-                        Last refund processed: <span id="lastRefundDate">N/A</span>
-                    </p>
-                    <div class="mt-6">
-                        <button type="button" class="save-settings-btn w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" data-setting-type="refunds">Refresh Refunds Info</button>
-                        <p id="refundsSaveMessage" class="text-center text-sm mt-2"></p>
-                    </div>
-                </div>
-
-                <div id="deleteAccountSection" class="hidden mt-6 p-4 bg-white rounded-lg shadow-md border border-red-300">
-                    <button type="button" class="back-to-settings-list text-indigo-600 hover:text-indigo-800 mb-4 flex items-center">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
-                        Back to Settings
-                    </button>
-                    <h3 class="text-lg font-semibold text-red-700 mb-4">Delete Account</h3>
-                    <p class="text-gray-700 mb-4">
-                        Deleting your account is a permanent action and cannot be undone. All your profile data and settings will be removed.
-                    </p>
-                    <p class="font-semibold text-red-600 mb-4">
-                        To confirm, please type "DELETE" in the box below:
-                    </p>
-                    <input type="text" id="deleteConfirmationInput" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Type DELETE to confirm">
-                    <p class="error-message" id="deleteConfirmationError"></p>
-                    <div class="mt-6">
-                        <button type="button" id="confirmDeleteAccountBtn" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Confirm Delete Account</button>
+                        <button type="button" id="confirmDeleteAccountBtn" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" disabled>Confirm Delete Account</button>
                         <p id="deleteAccountMessage" class="text-center text-sm mt-2"></p>
                     </div>
-                </div>
-
-                <div id="logoutSection" class="hidden mt-6 p-4 bg-white rounded-lg shadow-md border border-red-300">
-                    <button type="button" class="back-to-settings-list text-indigo-600 hover:text-indigo-800 mb-4 flex items-center">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+                    <button type="button" class="back-to-settings mt-4 text-indigo-600 hover:text-indigo-800 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         Back to Settings
                     </button>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Logout</h3>
+                </div>
+
+                <div id="logoutSection" class="settings-section hidden p-4 border border-gray-200 rounded-md">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Logout</h3>
                     <p class="text-gray-700 mb-4">
                         Are you sure you want to log out of your account?
                     </p>
@@ -356,13 +342,15 @@
                         <button type="button" id="confirmLogoutBtn" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Confirm Logout</button>
                         <p id="logoutMessage" class="text-center text-sm mt-2"></p>
                     </div>
+                    <button type="button" class="back-to-settings mt-4 text-indigo-600 hover:text-indigo-800 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Back to Settings
+                    </button>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Confirmation Modal (Hidden by default) -->
     <div id="confirmationModal" class="modal-overlay hidden">
         <div class="modal-content">
             <h3 class="text-xl font-semibold text-gray-800 mb-4">Confirm Action</h3>
@@ -373,5 +361,10 @@
             </div>
         </div>
     </div>
+
+    <footer class="bg-gray-800 text-white text-center p-4 mt-auto">
+        <p>&copy; 2023 Technician Profile. All rights reserved.</p>
+        <p class="text-sm">Designed with <span class="text-red-500">&hearts;</span> by Your Company</p>
+    </footer>
 </body>
 </html>

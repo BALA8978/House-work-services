@@ -1,0 +1,511 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f0f4; /* Light pinkish background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Ensure full viewport height */
+}
+
+/* New Header Styling */
+.app-header {
+    width: 100%;
+    padding: 15px 30px; /* More padding for a prominent header */
+    background-color: #fff; /* White background for the header bar */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Clearer shadow */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align content to the left */
+    position: sticky; /* Make it sticky at the top */
+    top: 0;
+    z-index: 1000; /* Ensure it's above other content */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between logo and name */
+}
+
+.circular-logo {
+    height: 45px; /* Adjust size as needed */
+    width: 45px; /* Make width equal to height for a perfect circle */
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border: 2px solid #ff99cc; /* Optional: a thin border around the circular logo */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for the logo */
+}
+
+.brand-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.6em; /* Adjust font size as needed */
+    font-weight: 700; /* Bold text */
+    color: #333; /* Darker color for brand name */
+    background: linear-gradient(to right, #ff66a3, #cc33ff); /* Pink-purple gradient for text */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+
+.container {
+    display: flex;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin: 30px; /* Space from header and footer */
+    width: 90%;
+    max-width: 1100px;
+    box-sizing: border-box;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    margin-top: 30px; /* Ensure space below the sticky header */
+}
+
+.profile-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-width: 250px; /* Minimum width for left pane */
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #ff99cc; /* Pink border around avatar */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile-left h2 {
+    margin: 10px 0 5px;
+    color: #333;
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+.profile-left p {
+    color: #777;
+    font-size: 0.95em;
+    margin-bottom: 20px;
+}
+
+.profile-right {
+    flex: 2;
+    padding: 20px;
+    border-left: 1px solid #eee; /* Separator line */
+    min-width: 350px; /* Minimum width for right pane */
+}
+
+/* Tabs Styling */
+.tabs {
+    display: flex;
+    justify-content: flex-start; /* Align tabs to the left */
+    margin-bottom: 25px;
+    border-bottom: 2px solid #f0f0f0; /* Underline for tabs area */
+}
+
+.tab {
+    background: linear-gradient(to right, #ff99cc, #cc66ff); /* Pink-purple gradient */
+    color: white;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    margin-right: 15px; /* Space between tabs */
+    font-weight: 600;
+    font-size: 1.0em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for buttons */
+    border: none; /* Remove default button border */
+}
+
+.tab:hover {
+    background: linear-gradient(to right, #ee88bb, #aa55ee); /* Slightly darker on hover */
+    transform: translateY(-2px); /* Slight lift */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.tab.active {
+    background: linear-gradient(to right, #ee88bb, #aa55ee); /* Active tab remains darker */
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+/* Tab Content Styling */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out; /* Fade in animation */
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Form Fields */
+.field {
+    margin-bottom: 18px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+.field input[type="text"],
+.field input[type="password"],
+.field textarea,
+.field select {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+    border-color: #cc66ff; /* Pink-purple on focus */
+    box-shadow: 0 0 0 3px rgba(204, 102, 255, 0.2);
+    outline: none;
+}
+
+.field textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 80px;
+}
+
+.field input:disabled,
+.field textarea:disabled,
+.field select:disabled {
+    background-color: #f9f9f9;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* Action Buttons (Save, Edit, etc.) */
+.action-btn {
+    background: linear-gradient(to right, #ff99cc, #cc66ff);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    font-size: 1.05em;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+    margin-top: 25px; /* Space above buttons */
+    margin-right: 15px; /* Space between buttons if multiple */
+    box-shadow: 0 3px 7px rgba(0,0,0,0.15);
+}
+
+.action-btn:hover {
+    background: linear-gradient(to right, #ee88bb, #aa55ee);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.25);
+}
+
+.action-btn.delete-btn {
+    background: linear-gradient(to right, #ff6666, #e60000); /* Red gradient for danger */
+}
+
+.action-btn.delete-btn:hover {
+    background: linear-gradient(to right, #ee5555, #cc0000);
+}
+
+.action-btn.back-btn {
+    margin-bottom: 25px;
+    margin-top: 0; /* Adjust for back button placement */
+}
+
+.mt-2 {
+    margin-top: 15px;
+}
+
+/* Settings Specifics */
+.setting-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.setting-group:last-child {
+    border-bottom: none; /* No border for the last item */
+}
+
+.setting-group:hover {
+    background-color: #fdf7fa; /* Light highlight on hover */
+}
+
+.setting-group span {
+    font-weight: 500;
+    color: #333;
+}
+
+.setting-section h3 {
+    color: #444;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Toggle Switch (for Notifications) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 25px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 25px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 3.5px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #cc66ff; /* Pink-purple when checked */
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #cc66ff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+.switch-group {
+    padding: 10px 0; /* Adjust padding for switch items */
+}
+
+/* Error Messages */
+.error-message {
+    color: #e60000; /* Red for errors */
+    font-size: 0.85em;
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+/* Modal Styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1001; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    position: relative; /* For potential close button */
+}
+
+.modal-content p {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
+}
+
+.modal-buttons button {
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-buttons .confirm {
+    background: linear-gradient(to right, #66bb6a, #4CAF50); /* Green for confirm */
+    color: white;
+}
+
+.modal-buttons .confirm:hover {
+    background: linear-gradient(to right, #5cb85c, #449d44);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.modal-buttons .cancel {
+    background: linear-gradient(to right, #f44336, #d32f2f); /* Red for cancel */
+    color: white;
+}
+
+.modal-buttons .cancel:hover {
+    background: linear-gradient(to right, #cc3333, #b71c1c);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 20px;
+        margin: 20px;
+        margin-top: 20px; /* Adjust for smaller screens */
+    }
+
+    .app-header {
+        padding: 10px 20px; /* Reduce padding on smaller screens */
+        justify-content: center; /* Center content on smaller screens if desired, or keep flex-start */
+    }
+
+    .brand-section {
+        flex-direction: column; /* Stack logo and name on small screens */
+        text-align: center;
+        gap: 5px;
+    }
+
+    .circular-logo {
+        height: 40px;
+        width: 40px;
+    }
+
+    .brand-name {
+        font-size: 1.3em;
+    }
+
+    .profile-left {
+        border-bottom: 1px solid #eee; /* Add border to bottom of left pane */
+        border-left: none; /* Remove left border */
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        min-width: unset;
+    }
+
+    .profile-right {
+        border-left: none; /* Remove left border */
+        padding-top: 0;
+        min-width: unset;
+    }
+
+    .tabs {
+        flex-direction: column; /* Stack tabs vertically */
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .tab {
+        margin-right: 0;
+        margin-bottom: 10px; /* Space between stacked tabs */
+        width: 100%; /* Full width tabs */
+        max-width: 250px; /* Limit tab width on small screens */
+    }
+
+    .action-btn {
+        width: calc(100% - 30px); /* Full width minus padding */
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #saveCancelInfoButtons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .profile-left h2 {
+        font-size: 1.5em;
+    }
+
+    .profile-left p {
+        font-size: 0.85em;
+    }
+
+    .field label {
+        font-size: 0.9em;
+    }
+
+    .field input, .field textarea, .field select {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+
+    .action-btn {
+        padding: 10px 20px;
+        font-size: 0.95em;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+}

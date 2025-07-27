@@ -1,81 +1,112 @@
 body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
-        }
-        /* Custom styles to match the pink/purple active tab */
-        .tab-btn.active {
-            background-image: linear-gradient(to right, #e9d5ff, #fbcfe8); /* bg-purple-200 to pink-200 gradient */
-            color: #8b5cf6; /* text-purple-700 */
-            font-weight: 600;
-        }
-        /* Style for validation messages */
-        .error-message {
-            color: #ef4444; /* red-500 */
-            font-size: 0.75rem; /* text-xs */
-            margin-top: 0.25rem;
-        }
-        input:invalid:not(:placeholder-shown), textarea:invalid:not(:placeholder-shown), select:invalid:not(:placeholder-shown) {
-            border-color: #ef4444; /* red-500 */
-            box-shadow: 0 0 0 1px #ef4444;
-        }
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6; /* Light gray background */
+}
+/* Custom styles to match the pink/purple active tab */
+.tab-btn.active {
+    background-image: linear-gradient(to right, #e9d5ff, #fbcfe8); /* bg-purple-200 to pink-200 gradient */
+    color: #8b5cf6; /* text-purple-700 */
+    font-weight: 600;
+}
+/* Style for validation messages */
+.error-message {
+    color: #ef4444; /* red-500 */
+    font-size: 0.75rem; /* text-xs */
+    margin-top: 0.25rem;
+}
+input:invalid:not(:placeholder-shown), textarea:invalid:not(:placeholder-shown), select:invalid:not(:placeholder-shown) {
+    border-color: #ef4444; /* red-500 */
+    box-shadow: 0 0 0 1px #ef4444;
+}
 
-        /* Styles for the clickable setting items */
-        .setting-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background-color: #fff;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out;
-        }
-        .setting-item:hover {
-            background-color: #f9fafb;
-        }
-        .setting-item svg {
-            flex-shrink: 0;
-            width: 1.5rem;
-            height: 1.5rem;
-            margin-right: 1rem;
-            color: #6366f1; /* indigo-500 */
-        }
-        .setting-item span {
-            font-weight: 500;
-            color: #374151; /* gray-700 */
-        }
+/* Styles for the clickable setting items */
+.setting-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+.setting-item:hover {
+    background-color: #f9fafb;
+}
+.setting-item svg {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 1rem;
+    color: #6366f1; /* indigo-500 */
+}
+.setting-item span {
+    font-weight: 500;
+    color: #374151; /* gray-700 */
+}
 
-        /* Styles for danger zone items */
-        .danger-item {
-            color: #dc2626; /* red-600 */
-            border: 1px solid #ef4444; /* red-500 */
-        }
-        .danger-item svg {
-            color: #dc2626; /* red-600 */
-        }
-        .danger-item:hover {
-            background-color: #fef2f2; /* red-50 */
-        }
+/* Styles for danger zone items */
+.danger-item {
+    color: #dc2626; /* red-600 */
+    border: 1px solid #ef4444; /* red-500 */
+}
+.danger-item svg {
+    color: #dc2626; /* red-600 */
+}
+.danger-item:hover {
+    background-color: #fef2f2; /* red-50 */
+}
 
-        /* Modal Overlay */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .modal-content {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+}
+
+/* Specific styles for the individual settings sections */
+.settings-section {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Footer styles */
+.site-footer {
+    background-color: #2d3748; /* Tailwind's gray-800 */
+    color: #cbd5e0; /* Tailwind's gray-300 */
+    padding: 1.5rem 1rem;
+    text-align: center;
+    font-size: 0.875rem; /* text-sm */
+    margin-top: auto; /* Pushes the footer to the bottom */
+}
+
+.site-footer p {
+    margin-bottom: 0.5rem;
+}
+
+.site-footer a {
+    color: #6366f1; /* indigo-500 */
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}

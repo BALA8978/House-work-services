@@ -39,7 +39,7 @@ body, html {
 
 .left-side {
     flex: 1;
-    background-image: url('../Photos/right.png'); /* Replace with your home service image */
+    background-image: url('../images/right.png'); /* Replace with your home service image */
     background-size: cover;
     background-position: center;
 }
