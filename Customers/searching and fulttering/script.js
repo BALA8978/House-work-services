@@ -1,6 +1,7 @@
 let technicians = []; // Will hold data fetched from backend API
 let currentFilters = {};
 
+
 // --- Filtering logic ---
 function filterTechnicians(list, filters) {
   return list.filter((tech) => {
@@ -30,12 +31,12 @@ function filterTechnicians(list, filters) {
     )
       return false;
     // Price range
-    if (filters.minPrice && tech.price < filters.minPrice) return false;
-    if (filters.maxPrice && tech.price > filters.maxPrice) return false;
+    if (filters.minPrice !== undefined && tech.price < filters.minPrice) return false;
+    if (filters.maxPrice !== undefined && tech.price > filters.maxPrice) return false;
     // Rating
-    if (filters.minRating && tech.rating < filters.minRating) return false;
+    if (filters.minRating !== undefined && tech.rating < filters.minRating) return false;
     // Experience
-    if (filters.minExperience && tech.experience < filters.minExperience) return false;
+    if (filters.minExperience !== undefined && tech.experience < filters.minExperience) return false;
     // Availability
     if (filters.availability && !tech.isAvailable) return false;
 
@@ -43,33 +44,37 @@ function filterTechnicians(list, filters) {
   });
 }
 
+
 // --- Render technicians ---
 function renderTechnicians(list) {
   const container = document.getElementById("technicians-list");
-  container.innerHTML = "";
   if (list.length === 0) {
     container.innerHTML = "<p>No technicians found.</p>";
     return;
   }
-  list.forEach((tech) => {
+
+  const technicianCardsHTML = list.map(tech => {
     const services = tech.services.join(", ");
     const availability = tech.isAvailable ? "Available" : "Not Available";
-    const ratingStars =
-      "★".repeat(Math.round(tech.rating)) + "☆".repeat(5 - Math.round(tech.rating));
-    container.innerHTML += `
+    const ratingStars = "★".repeat(Math.round(tech.rating)) + "☆".repeat(5 - Math.round(tech.rating));
+
+    return `
       <div class="technician-card">
-        <h3>${tech.name} <span class="tech-id">(${tech.id})</span></h3>
-        <p>Availability: <strong>${availability}</strong></p>
-        <p>Rating: ${ratingStars} (${tech.rating.toFixed(1)})</p>
-        <p>Experience: ${tech.experience} years</p>
-        <p>Services: ${services}</p>
-        <p>Cost: ₹${tech.price}</p>
-        <button class="contact-btn" aria-label="Contact ${tech.name} technician">Contact</button>
-        <button class="book-btn" aria-label="Book ${tech.name} technician">Book</button>
+      <h3>${tech.name} <span class="tech-id">(${tech.id})</span></h3>
+      <p>Availability: <strong>${availability}</strong></p>
+      <p>Rating: ${ratingStars} (${tech.rating.toFixed(1)})</p>
+      <p>Experience: ${tech.experience} years</p>
+      <p>Services: ${services}</p>
+      <p>Cost: ₹${tech.price}</p>
+      <button class="contact-btn" aria-label="Contact ${tech.name} technician">Contact</button>
+      <button class="book-btn" aria-label="Book ${tech.name} technician" onclick="location.href='localhost/House-work-services/calendar and booking/index.html?tech_id=${tech.id}'">Book</button>
       </div>
     `;
-  });
+  }).join('');
+
+  container.innerHTML = technicianCardsHTML;
 }
+
 
 // --- Apply filters function ---
 function applyFilters() {
@@ -77,35 +82,49 @@ function applyFilters() {
     searchTerm: document.getElementById("search-bar")?.value.trim() || "",
     technicianId: document.getElementById("technician-id-filter")?.value.trim() || "",
     serviceType: document.getElementById("service-type-filter")?.value || "all",
-    minPrice: parseInt(document.getElementById("min-price")?.value, 10) || undefined,
-    maxPrice: parseInt(document.getElementById("max-price")?.value, 10) || undefined,
-    minRating: parseFloat(document.getElementById("rating-filter")?.value) || undefined,
-    minExperience: parseInt(document.getElementById("min-exp")?.value, 10) || undefined,
+    minPrice: parseInt(document.getElementById("min-price")?.value, 10),
+    maxPrice: parseInt(document.getElementById("max-price")?.value, 10),
+    minRating: parseFloat(document.getElementById("rating-filter")?.value),
+    minExperience: parseInt(document.getElementById("min-exp")?.value, 10),
     availability: document.getElementById("availability-filter")?.checked || false,
   };
+
+  // Convert NaN to undefined for number filters for correct filtering logic
+  if (isNaN(currentFilters.minPrice)) currentFilters.minPrice = undefined;
+  if (isNaN(currentFilters.maxPrice)) currentFilters.maxPrice = undefined;
+  if (isNaN(currentFilters.minRating)) currentFilters.minRating = undefined;
+  if (isNaN(currentFilters.minExperience)) currentFilters.minExperience = undefined;
+
   const filtered = filterTechnicians(technicians, currentFilters);
   renderTechnicians(filtered);
 }
+
 
 // --- Fetch technicians from PHP backend API ---
 function fetchTechnicians() {
   fetch("http://localhost/api/get_technicians.php")
     .then((response) => {
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        return response.text().then(text => {
+          throw new Error(`HTTP error! Status: ${response.status}. Response: ${text}`);
+        });
       }
       return response.json();
     })
     .then((data) => {
       technicians = data;
-      applyFilters(); // Render after fetching
+      applyFilters();
     })
     .catch((error) => {
       console.error("Failed to load technicians:", error);
       const container = document.getElementById("technicians-list");
-      container.innerHTML = "<p>Error loading technicians data.</p>";
+      container.innerHTML = "<p>Error loading technicians data. Please try again later.</p>";
+      if (error.message.includes("Response:")) {
+        container.innerHTML += `<p>Debug Info: ${error.message}</p>`;
+      }
     });
 }
+
 
 // --- Setup event listeners and initialize ---
 document.addEventListener("DOMContentLoaded", function () {

@@ -1,23 +1,9 @@
-/* Add these styles to your existing style.css file */
+/*
+ * File: /loginpage/style.css
+ * This is the original stylesheet for the login page.
+ */
 
-.options {
-  text-align: right;
-  margin-top: -0.5rem; /* Adjusts spacing to be closer to the password field */
-  margin-bottom: 1rem;
-}
-
-.options a {
-  text-decoration: none;
-  color: #5c27fe;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.options a:hover {
-  text-decoration: underline;
-}
-
-/* --- Your existing CSS continues below --- */
+/* --- General Styles --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -31,6 +17,7 @@ body, html {
     background: #f3f4f6;
 }
 
+/* --- Main Layout Container --- */
 .container {
     display: flex;
     height: 100vh;
@@ -39,7 +26,9 @@ body, html {
 
 .left-side {
     flex: 1;
-    background-image: url('../Photos/right.png'); /* Replace with your home service image */
+    /* The background image was referenced in the original file. 
+       Ensure the path is correct on your server. */
+    background-image: url('../Photos/right.png'); 
     background-size: cover;
     background-position: center;
 }
@@ -53,6 +42,7 @@ body, html {
     position: relative;
 }
 
+/* --- Login Form Popup --- */
 .login-popup {
     width: 100%;
     max-width: 400px;
@@ -60,16 +50,6 @@ body, html {
     background: white;
     border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    animation: slideIn 1s ease forwards;
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-@keyframes slideIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .login-popup h2 {
@@ -84,6 +64,7 @@ body, html {
     margin-bottom: 1.5rem;
 }
 
+/* --- Form Elements --- */
 .login-popup form {
     display: flex;
     flex-direction: column;
@@ -112,6 +93,36 @@ body, html {
     background: linear-gradient(90deg, #6a23d4, #e00695);
 }
 
+/* --- Options and Links --- */
+.options {
+  text-align: right;
+  margin-top: 0.5rem; 
+  margin-bottom: 1rem;
+}
+
+.options a {
+  text-decoration: none;
+  color: #5c27fe;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.options a:hover {
+  text-decoration: underline;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.signup-link a {
+    text-decoration: none;
+    color: #5c27fe;
+    font-weight: 600;
+}
+
+/* --- Social Media Icons --- */
 .social-icons {
     display: flex;
     justify-content: center;
@@ -134,17 +145,7 @@ body, html {
 .instagram { color: #E1306C; }
 .linkedin { color: #0077b5; }
 
-.signup-link {
-    text-align: center;
-    margin-top: 1rem;
-}
-
-.signup-link a {
-    text-decoration: none;
-    color: #5c27fe;
-    font-weight: 600;
-}
-
+/* --- Responsive Design for Mobile --- */
 @media (max-width: 768px) {
     .container {
         flex-direction: column-reverse;
@@ -152,9 +153,11 @@ body, html {
 
     .left-side {
         height: 250px;
+        flex: none;
     }
 
     .right-side {
         height: auto;
+        flex: 1;
     }
 }
