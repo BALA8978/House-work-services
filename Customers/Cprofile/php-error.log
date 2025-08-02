@@ -1,0 +1,10 @@
+[30-Jul-2025 16:04:33 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'homecraft_pro_db.login' doesn't exist in C:\xampp\htdocs\House-work-services\Customers\Cprofile\get_customer_profile.php:24
+Stack trace:
+#0 C:\xampp\htdocs\House-work-services\Customers\Cprofile\get_customer_profile.php(24): mysqli->prepare('\r\n    SELECT\r\n ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\House-work-services\Customers\Cprofile\get_customer_profile.php on line 24
+[30-Jul-2025 16:07:25 Europe/Berlin] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\xampp\htdocs\House-work-services\Customers\Cprofile\update_customer_profile.php:71
+Stack trace:
+#0 C:\xampp\htdocs\House-work-services\Customers\Cprofile\update_customer_profile.php(71): mysqli_stmt->bind_param('issssss', 'female', '1234567890', 'Tiruvuru', 'VIJAYAWADA', 'Andhra\xC2\xA0Pradesh', '520011')
+#1 {main}
+  thrown in C:\xampp\htdocs\House-work-services\Customers\Cprofile\update_customer_profile.php on line 71

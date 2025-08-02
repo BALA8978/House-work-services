@@ -1,0 +1,6 @@
+[30-Jul-2025 18:16:09 Europe/Berlin] User registered: ID=6, Email=samanthapudirakeshvarma123@gmail.com, Role=technician
+[30-Jul-2025 18:16:09 Europe/Berlin] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\xampp\htdocs\House-work-services\Customers\login\Registration\register.php:91
+Stack trace:
+#0 C:\xampp\htdocs\House-work-services\Customers\login\Registration\register.php(91): mysqli_stmt->bind_param('ssidisisi', 'TECH-6', 'SAMANTHAPUDI VE...', 1, 0.0, 0, 'General Service', 100)
+#1 {main}
+  thrown in C:\xampp\htdocs\House-work-services\Customers\login\Registration\register.php on line 91

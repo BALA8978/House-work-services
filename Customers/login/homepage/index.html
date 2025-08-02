@@ -24,7 +24,7 @@
             <div class="auth-buttons">
                 <button class="btn btn-secondary" id="signInBtn" onclick="location.href='../Loginpage/index.html'">Sign In</button>
                 <!-- MODIFIED: Changed to a link for direct navigation -->
-                <a href="../loginpage/index.html" class="btn btn-primary">Sign Up</a>
+                <a href="../Registration/index.html" class="btn btn-primary">Sign Up</a>
             </div>
         </nav>
     </header>
@@ -72,12 +72,47 @@
     </main>
     
     <!-- Footer Section -->
-    <footer id="contact">
-        <div class="container">
+    <footer id="contact" style="background-color: #222; color: #fff; padding: 2rem 1rem; font-family: Arial, sans-serif;">
+    <div class="container footer-flex" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; max-width: 1200px; margin: auto;">
+        
+        <!-- Block 1: Company Info -->
+        <div class="footer-block" style="flex: 1; min-width: 220px;">
+            <h3 style="color: #fff;">HomeCraft Pro</h3>
             <p>&copy; 2025 HomeCraft Pro. All Rights Reserved.</p>
             <p>Your complete home maintenance solution.</p>
         </div>
-    </footer>
+
+        <!-- Block 2: Quick Links -->
+        <div class="footer-block" style="flex: 1; min-width: 220px;">
+            <h4 style="color: #fff;">Quick Links</h4>
+            <div class="footer-links" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <a href="#services" style="color: #ccc; text-decoration: none;">Services</a>
+                <a href="#about" style="color: #ccc; text-decoration: none;">About Us</a>
+                <a href="#contact" style="color: #ccc; text-decoration: none;">Contact</a>
+            </div>
+        </div>
+
+        <!-- Block 3: Contact Info -->
+        <div class="footer-block" style="flex: 1; min-width: 220px;">
+            <h4 style="color: #fff;">Contact Us</h4>
+            <p>Email: <a href="mailto:support@homecraftpro.com" style="color: #ccc;">support@homecraftpro.com</a></p>
+            <p>Phone: <a href="tel:+919999999999" style="color: #ccc;">+91 99999 99999</a></p>
+            <p>Address: 123, Main Street, Your City, India</p>
+        </div>
+
+        <!-- Block 4: Social Media -->
+        <div class="footer-block" style="flex: 1; min-width: 220px;">
+            <h4 style="color: #fff;">Follow Us</h4>
+            <div class="footer-social" style="margin-top: 0.5rem;">
+                <a href="#" title="Facebook" style="margin-right: 1rem; color: #ccc;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" title="Twitter" style="margin-right: 1rem; color: #ccc;"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="Instagram" style="color: #ccc;"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
 
     <!-- Auth Modal (Sign In ONLY) -->
     <div id="authModal" class="modal">

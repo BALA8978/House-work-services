@@ -1,70 +1,73 @@
 <?php
-/*
- * File: register.php
- *
- * This script handles the user registration form submission.
- * It receives data from the registration form, validates it,
- * hashes the password, and inserts the new user into the database.
- */
+require '../../config/db_connect.php'; // Corrected path
+header('Content-Type: application/json');
 
-// --- Step 1: Include the database connection file ---
-// This makes the $conn variable available for use in this script.
-require 'db_connect.php';
+$response = ['success' => false, 'message' => ''];
 
-// --- Step 2: Check if the form was submitted using POST ---
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $full_name = trim($_POST['full_name']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $role = trim($_POST['role']);
 
-    // --- Step 3: Retrieve and Sanitize Form Data ---
-    // Use trim() to remove any leading/trailing whitespace.
-    // Use real_escape_string to prevent basic SQL injection.
-    $full_name = $conn->real_escape_string(trim($_POST['full_name']));
-    $email = $conn->real_escape_string(trim($_POST['email']));
-    $password = trim($_POST['password']); // We'll hash this, so no need to escape.
-    $role = $conn->real_escape_string(trim($_POST['role']));
-
-    // --- Step 4: Validate the data (basic validation) ---
     if (empty($full_name) || empty($email) || empty($password) || empty($role)) {
-        die("Error: All fields are required.");
+        $response['message'] = 'All fields are required.';
+        echo json_encode($response);
+        exit;
     }
 
-    // --- Step 5: Hash the password for security ---
-    // This is a CRITICAL security step. Never store plain-text passwords.
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // --- Step 6: Prepare and Execute the SQL Statement ---
-    // Use a prepared statement to prevent SQL injection effectively.
-    $sql = "INSERT INTO users (full_name, email, password, role) VALUES (?, ?, ?, ?)";
+    $conn->begin_transaction();
 
-    // Prepare the statement
-    $stmt = $conn->prepare($sql);
+    try {
+        // Insert into users table
+        $stmt1 = $conn->prepare("INSERT INTO users (full_name, email, password, role) VALUES (?, ?, ?, ?)");
+        $stmt1->bind_param("ssss", $full_name, $email, $hashed_password, $role);
+        $stmt1->execute();
+        $user_id = $conn->insert_id;
+        $stmt1->close();
 
-    if ($stmt === false) {
-        die("Error preparing the statement: " . $conn->error);
-    }
-
-    // Bind parameters to the statement ('ssss' means four string parameters)
-    $stmt->bind_param("ssss", $full_name, $email, $hashed_password, $role);
-
-    // Execute the statement and check for success
-    if ($stmt->execute()) {
-        echo "Registration successful! You can now log in.";
-    } else {
-        // Check for a duplicate email error
-        if ($conn->errno == 1062) { // 1062 is the MySQL error code for duplicate entry
-            echo "Error: This email address is already registered.";
+        // If the user is a technician, create corresponding entries in other tables
+        if ($role === 'technician') {
+            $technician_id_str = 'TECH' . $user_id;
+            // Insert into technicians table (for searching)
+            $stmt2 = $conn->prepare("INSERT INTO technicians (id, user_id, name) VALUES (?, ?, ?)");
+            $stmt2->bind_param("sis", $technician_id_str, $user_id, $full_name);
+            $stmt2->execute();
+            $stmt2->close();
+            
+            // Insert a blank profile into technician_profiles
+            $stmt3 = $conn->prepare("INSERT INTO technician_profiles (user_id) VALUES (?)");
+            $stmt3->bind_param("i", $user_id);
+            $stmt3->execute();
+            $stmt3->close();
         } else {
-            echo "Error during registration: " . $stmt->error;
+             // Insert a blank profile into customer_profiles
+            $stmt4 = $conn->prepare("INSERT INTO customer_profiles (user_id) VALUES (?)");
+            $stmt4->bind_param("i", $user_id);
+            $stmt4->execute();
+            $stmt4->close();
+        }
+
+        $conn->commit();
+        $response['success'] = true;
+        $response['message'] = 'Registration successful! You can now log in.';
+    } catch (mysqli_sql_exception $exception) {
+        $conn->rollback();
+        if ($conn->errno == 1062) {
+            $response['message'] = 'This email address is already registered.';
+        } else {
+            $response['message'] = 'Database error: ' . $exception->getMessage();
         }
     }
 
-    // --- Step 7: Close the statement ---
-    $stmt->close();
+    echo json_encode($response);
 
 } else {
-    // If the script is accessed directly without a POST request, show an error.
-    echo "Invalid request method.";
+    $response['message'] = 'Invalid request method.';
+    echo json_encode($response);
 }
 
-// --- Step 8: Close the database connection ---
 $conn->close();
 ?>

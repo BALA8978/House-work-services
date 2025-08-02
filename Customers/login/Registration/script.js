@@ -101,28 +101,21 @@ function validatePassword() {
  * @param {HTMLFormElement} form - The form element to be submitted.
  */
 async function submitRegistrationForm(form) {
-  // Create a FormData object from the form. This makes it easy to send form data.
   const formData = new FormData(form);
-  const action = form.getAttribute('action'); // Get the URL from the form's 'action' attribute.
+  const action = form.getAttribute('action');
 
   try {
-    // Send the form data to the server using a POST request.
     const response = await fetch(action, {
       method: 'POST',
       body: formData,
     });
 
-    // Wait for the server's response and parse it as text.
     const result = await response.text();
 
-    // TODO: Handle the server response.
-    // For example, you could show a success message or redirect the user.
-    alert('Server response: ' + result); // Placeholder for demonstration
-    // On success, you might want to redirect:
-    // window.location.href = '../loginpage/index.html';
+    // Redirect to login page after successful submission
+    window.location.href = '../loginpage/index.html';
 
   } catch (error) {
-    // If there's an error during the fetch operation, log it to the console.
     console.error('Error submitting the form:', error);
     alert('An error occurred. Please try again.');
   }
