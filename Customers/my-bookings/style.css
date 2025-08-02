@@ -1,0 +1,211 @@
+:root {
+    --primary-color: #007BFF;
+    --secondary-color: #6c757d;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --heading-font: 'Poppins', sans-serif;
+    --body-font: 'Poppins', sans-serif;
+    --border-radius: 12px;
+    --box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--body-font);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+}
+
+.container {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    max-width: 1200px;
+    width: 100%;
+    margin: 20px auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.header h1 {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.back-btn {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--secondary-color);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #f0f0f0;
+    border-color: #ddd;
+    color: var(--text-color);
+}
+
+.booking-history, .recurring-services {
+    margin-bottom: 40px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title h2 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    color: var(--text-color);
+    text-align: left;
+}
+
+.section-subtitle {
+    color: #555;
+    font-size: 1.1rem;
+    text-align: left;
+    margin: 0;
+}
+
+.btn-add-new {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add-new:hover {
+    background-color: #0056b3;
+}
+
+.history-grid, .recurring-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.booking-card, .recurring-card {
+    background: #fdfdfd;
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.booking-card:hover, .recurring-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.booking-details, .recurring-details {
+    flex-grow: 1;
+}
+
+.booking-details h3, .recurring-details h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+}
+
+.booking-details p, .recurring-details p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.booking-status {
+    padding: 6px 12px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.booking-status.Confirmed {
+    background-color: #28a745; /* Green */
+}
+
+.booking-status.Completed {
+    background-color: var(--secondary-color);
+}
+
+.booking-status.Cancelled {
+    background-color: #dc3545; /* Red */
+}
+
+.booking-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-card-action {
+    background-color: #f0f0f0;
+    color: var(--text-color);
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-card-action:hover {
+    background-color: #e9e9e9;
+    border-color: #ccc;
+}
+
+
+.recurring-actions .btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.recurring-actions .btn:hover {
+    background-color: #0056b3;
+}

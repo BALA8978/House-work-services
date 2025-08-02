@@ -1,0 +1,828 @@
+/* Design System Variables (modified for light theme) */
+:root {
+  --background: hsl(210, 20%, 98%); /* Light background */
+  --foreground: hsl(240, 10%, 3.9%); /* Dark text */
+  --surface: hsl(0, 0%, 100%); /* White surface for cards/elements */
+  --surface-foreground: hsl(240, 10%, 3.9%); /* Dark text on surface */
+  --primary: hsl(260, 80%, 60%); /* A purplish-blue for primary actions */
+  --primary-foreground: hsl(0, 0%, 100%); /* White text on primary */
+  --secondary: hsl(220, 14%, 96%); /* Light grey secondary background */
+  --secondary-foreground: hsl(240, 5%, 64.9%); /* Muted text for secondary */
+  --muted: hsl(220, 14%, 96%); /* Light muted background */
+  --muted-foreground: hsl(240, 5%, 64.9%); /* Muted text */
+  --border: hsl(220, 14%, 90%); /* Light border color */
+  --input: hsl(0, 0%, 100%); /* White input background */
+  --gradient-primary: linear-gradient(
+    135deg,
+    hsl(260, 80%, 60%),
+    hsl(330, 80%, 70%)
+  ); /* Blue-purple to pink gradient */
+  --gradient-background: linear-gradient(
+    180deg,
+    hsl(210, 20%, 98%),
+    hsl(210, 15%, 95%)
+  ); /* Soft light background gradient */
+  --shadow-card: 0 5px 15px -3px hsla(240, 10%, 3.9%, 0.1); /* Lighter shadow */
+  --shadow-glow: 0 0 15px hsla(260, 80%, 60%, 0.2); /* Lighter glow */
+  --radius: 8px;
+}
+
+/* Base Styles (from original styles.css) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--gradient-background);
+  color: var(--foreground);
+  min-height: 100vh;
+  line-height: 1.6;
+  display: flex; /* Make body a flex container */
+  flex-direction: column; /* Stack children vertically */
+}
+
+/* Animations (from original styles.css) */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* --- Dashboard Specific Styles --- */
+.top-frame {
+  width: 100%;
+  height: 80px; /* Fixed height for the header */
+  background: var(--surface); /* White background */
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: var(--shadow-card);
+  flex-shrink: 0; /* Prevent header from shrinking */
+  z-index: 100; /* Ensure it stays on top */
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  background: var(--gradient-primary); /* Use gradient for logo */
+  border-radius: var(--radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--primary-foreground);
+}
+
+.project-name {
+  color: var(--foreground);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-button {
+  padding: 10px 15px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted-foreground); /* Muted text color */
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background: var(--primary); /* Use primary color on hover */
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  transform: translateY(-1px);
+}
+
+.nav-button.active {
+  background: var(--gradient-primary); /* Active button with gradient */
+  border-color: transparent;
+  color: var(--primary-foreground);
+  font-weight: 600;
+}
+
+.user-profile-circle {
+  width: 45px;
+  height: 45px;
+  background: var(--secondary); /* Light grey background */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: var(--secondary-foreground);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-card);
+}
+
+.user-profile-circle:hover {
+  background: var(--gradient-primary); /* Gradient on hover */
+  color: var(--primary-foreground);
+  transform: scale(1.05);
+}
+
+.main-content-frame {
+  flex-grow: 1; /* Allow main content to take remaining space */
+  overflow-y: auto; /* Enable scrolling for content within this frame */
+  padding-top: 20px; /* Add some padding below the fixed header */
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  display: flex; /* Changed to flex */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center horizontally */
+  gap: 20px; /* Space between search and profile card */
+}
+
+/* --- Profile Card Specific Styles --- */
+.profile-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 30px;
+  display: flex;
+  flex-direction: row; /* Horizontal layout for image and details */
+  gap: 40px;
+  max-width: 900px; /* Max width for the card */
+  width: 100%;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.profile-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding-right: 20px;
+  border-right: 1px solid var(--border);
+}
+
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: var(--secondary); /* Placeholder background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ensure image fits */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.customer-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 5px;
+}
+
+.customer-email {
+  font-size: 16px;
+  color: var(--muted-foreground);
+}
+
+.profile-right {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  border: none;
+  background: var(--muted); /* Muted background for inactive tabs */
+  color: var(--muted-foreground);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-button.active {
+  background: var(--gradient-primary); /* Gradient for active tab */
+  color: var(--primary-foreground);
+  box-shadow: var(--shadow-glow);
+}
+
+.profile-field-group {
+  margin-bottom: 15px;
+}
+
+.profile-field-group label {
+  display: block;
+  font-size: 14px;
+  color: var(--foreground);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.profile-field-group input[type='text'],
+.profile-field-group input[type='email'],
+.profile-field-group input[type='tel'],
+.profile-field-group textarea,
+.profile-field-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--input); /* White input background */
+  color: var(--foreground);
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle inner shadow */
+}
+
+.profile-field-group input:focus,
+.profile-field-group select:focus,
+.profile-field-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px hsla(260, 80%, 60%, 0.15); /* Primary glow */
+}
+
+.profile-field-group input::placeholder,
+.profile-field-group textarea::placeholder {
+  color: var(--muted-foreground);
+}
+
+.profile-field-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.save-button {
+  padding: 12px 25px;
+  border-radius: var(--radius);
+  border: none;
+  background: var(--gradient-primary); /* Gradient for save button */
+  color: var(--primary-foreground);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-glow);
+  margin-top: 20px;
+  width: fit-content; /* Make button fit content */
+}
+
+.save-button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px hsla(260, 80%, 60%, 0.3);
+}
+
+/* --- Existing original styles.css content, modified where necessary --- */
+
+/* Search container adjustments - RE-ENABLED and adjusted for wider placement */
+.search-container {
+  display: flex; /* Re-enabled */
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 900px; /* Match profile card max-width for alignment */
+  justify-content: center;
+  height: 48px;
+  z-index: 10;
+  padding: 0 16px; /* Add padding to match original aesthetic within the new frame */
+}
+
+/* Search bar */
+#search-bar {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--input); /* Use input variable for consistency */
+  color: var(--foreground);
+  font-size: 16px;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+#search-bar:focus {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-glow);
+}
+
+#search-bar::placeholder {
+  color: var(--muted-foreground);
+}
+
+/* Filter button */
+#filter-btn {
+  display: flex; /* Re-enabled */
+  padding: 12px 16px;
+  height: 48px;
+  border-radius: var(--radius);
+  border: none;
+  color: var(--primary-foreground);
+  background: var(--gradient-primary); /* Use gradient for filter button */
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-glow);
+}
+
+#filter-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+#filter-btn:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+#filter-btn i {
+  color: var(--primary-foreground);
+}
+
+/* Technicians list container adjustments - RE-ENABLED but styled to be a general content area */
+#technicians-list {
+  display: flex; /* Re-enabled */
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  padding: 0 16px;
+  max-height: calc(100vh - 80px - 20px - 100px); /* Adjust max-height based on header and search bar */
+  overflow-y: auto;
+  width: 100%;
+  max-width: 900px; /* Match profile card max-width */
+  margin-top: 0;
+  box-sizing: border-box;
+}
+
+/* No results message styling */
+#technicians-list > p {
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--muted-foreground);
+  font-size: 16px;
+}
+
+/* Individual technician card - If you intend to use this, adjust its styles for light theme */
+.technician-card {
+  /* Keep this hidden if this is purely a profile page, or re-enable and style for light theme */
+  /* If you want to show a list of technicians BELOW the profile card, you'd integrate this. */
+  /* For now, it will be visible but its styling will be based on your original dark theme unless changed here */
+  /* Re-enabling for now to show it's present */
+  display: block; /* Re-enabled */
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 32px;
+  margin: 0;
+  background: var(--surface); /* Adjusted to light surface */
+  box-shadow: var(--shadow-card); /* Adjusted to light shadow */
+  font-family: inherit;
+  animation: fadeIn 0.5s ease-out;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: visible;
+  white-space: normal;
+  word-wrap: break-word;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  line-height: 1.6;
+}
+
+.technician-card:hover {
+  background-color: hsl(210, 10%, 95%); /* Lighter hover effect */
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+.technician-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+}
+
+/* Technician name and ID styling */
+.technician-card h3 {
+  margin: 0 0 16px 0;
+  color: var(--foreground);
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tech-id {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted-foreground);
+  background: var(--muted);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* Technician info paragraphs */
+.technician-card p {
+  margin: 8px 0;
+  font-size: 16px;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+  white-space: normal;
+  overflow-wrap: break-word;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+
+/* Remove bottom border from last paragraph */
+.technician-card p:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.technician-card p strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+/* Availability styling - Kept for technician card */
+.technician-card p:first-of-type strong {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* NOTE: The original CSS had 'has-text' which is not standard.
+   I'm removing those and leaving the general style.
+   You would need JavaScript to dynamically apply classes based on text content.
+.technician-card p:first-of-type:has-text("Available") strong {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.technician-card p:first-of-type:has-text("Not Available") strong {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+*/
+
+/* Rating stars styling */
+.technician-card p:nth-of-type(2) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  color: #fbbf24; /* gold star color */
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.technician-card p:nth-of-type(2)::after {
+  content: '';
+  margin-left: auto;
+}
+
+/* Services styling */
+.technician-card p:nth-of-type(4) strong {
+  color: var(--primary);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* Cost styling */
+.technician-card p:last-of-type strong {
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Button styling - adjusted for general use if needed, but primarily for modal/profile now */
+.contact-btn,
+.book-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 8px;
+  margin-top: 16px;
+  outline: none;
+}
+
+.contact-btn {
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+.contact-btn:hover {
+  background: var(--secondary);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.book-btn {
+  background: var(--gradient-primary);
+  color: var(--primary-foreground);
+}
+
+.book-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4); /* Lighter overlay */
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* Show modal */
+.modal-overlay.show {
+  display: flex;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Modal Content box */
+.modal-content {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 24px 24px 24px;
+  box-shadow: var(--shadow-card); /* Lighter shadow for modal */
+  min-width: 320px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  font-family: inherit;
+  animation: slideUp 0.3s ease-out;
+}
+
+.modal-content h3 {
+  color: var(--foreground);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.modal-content label {
+  display: block;
+  color: var(--foreground);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--foreground);
+  font-size: 14px;
+  margin-bottom: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px hsla(260, 80%, 60%, 0.2);
+}
+
+.modal-content input::placeholder {
+  color: var(--muted-foreground);
+}
+
+.modal-content input[type='checkbox'] {
+  width: auto;
+  margin-right: 8px;
+  margin-bottom: 0;
+}
+
+.modal-content option {
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+#apply-filters,
+#close-filters {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 8px;
+  margin-top: 16px;
+}
+
+#apply-filters {
+  background: var(--gradient-primary);
+  color: var(--primary-foreground);
+}
+
+#apply-filters:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+#close-filters {
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+#close-filters:hover {
+  background: var(--secondary);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* When modal is open, blur & disable interaction with background */
+body.modal-open .main-content-frame {
+  filter: blur(1.5px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Responsive Design (from original styles.css) */
+@media (max-width: 768px) {
+  .search-container {
+    width: 100%;
+    right: auto;
+    flex-direction: column; /* Stack search bar and filter button */
+    height: auto;
+    gap: 10px;
+  }
+  #search-bar {
+    width: 100%; /* Full width for search bar on small screens */
+  }
+  #filter-btn {
+    width: 100%; /* Full width for filter button on small screens */
+  }
+
+  #technicians-list {
+    padding: 16px;
+    margin-top: 0;
+  }
+
+  .contact-btn,
+  .book-btn {
+    width: 48%;
+    display: inline-block;
+    margin-right: 0;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+  }
+
+  .top-frame {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+  .header-left,
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .nav-buttons {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .profile-card {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .profile-left {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+  }
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* Scrollbar Styling (from original styles.css) */
+#technicians-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#technicians-list::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 3px;
+}
+
+#technicians-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+#technicians-list::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Make the rating stars yellow - Kept for technician card */
+.technician-card p:nth-of-type(2) {
+  color: var(--muted-foreground);
+}
+
+/* Target the star characters specifically */
+.technician-card p:nth-of-type(2)::first-line {
+  color: #fbbf24;
+}
