@@ -1,48 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // --- DOM Elements ---
+    const technicianNameDisplay = document.getElementById('technicianName');
+    const messageInput = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+    const chatMessagesContainer = document.getElementById('chat-messages');
 
-    // Pre-fill subject line if technician name is in the URL
+    // --- Pre-fill technician name from URL ---
     const urlParams = new URLSearchParams(window.location.search);
     const technicianName = urlParams.get('technician');
-    const subjectInput = document.getElementById('subject');
 
-    if (technicianName && subjectInput) {
-        subjectInput.value = `Question regarding service with ${technicianName}`;
+    if (technicianName) {
+        technicianNameDisplay.textContent = technicianName;
     }
 
-    // Handle form submission
-    const form = document.getElementById('contact-form');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
+    // --- Function to add a message to the chat window ---
+    function addMessage(message, type) {
+        const messageBubble = document.createElement('div');
+        messageBubble.className = `message-bubble ${type}`; // 'sent' or 'received'
+        messageBubble.textContent = message;
+        chatMessagesContainer.appendChild(messageBubble);
 
-        const formData = new FormData(form);
-        const statusDiv = document.getElementById('form-status');
+        // Scroll to the bottom of the chat
+        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+    }
 
-        statusDiv.className = '';
-        statusDiv.textContent = 'Sending...';
-        statusDiv.style.display = 'block';
+    // --- Function to handle sending a message ---
+    function sendMessage() {
+        const messageText = messageInput.value.trim();
 
-        fetch('submit_contact.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                statusDiv.textContent = data.message;
-                statusDiv.className = 'success';
-                form.reset();
-                 if (technicianName && subjectInput) {
-                    subjectInput.value = `Question regarding service with ${technicianName}`;
-                }
-            } else {
-                statusDiv.textContent = data.message;
-                statusDiv.className = 'error';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            statusDiv.textContent = 'An error occurred. Please try again later.';
-            statusDiv.className = 'error';
-        });
+        if (messageText) {
+            // Display the sent message
+            addMessage(messageText, 'sent');
+
+            // Clear the input field
+            messageInput.value = '';
+
+            // Simulate a reply from the technician after a short delay
+            setTimeout(() => {
+                const reply = `Hi! This is ${technicianName || 'your technician'}. I've received your message and will get back to you shortly.`;
+                addMessage(reply, 'received');
+            }, 1500);
+        }
+    }
+
+    // --- Event Listeners ---
+    sendBtn.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
     });
+
+    // --- Initial welcome message ---
+    setTimeout(() => {
+         addMessage('Welcome! How can I help you today?', 'received');
+    }, 500);
 });

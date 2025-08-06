@@ -85,21 +85,19 @@ if ($conn->query($sql_technicians_table) === TRUE) {
     die("Error creating 'technicians' table: " . $conn->error);
 }
 
-// 7. Create 'technician_profiles' Table (for detailed profile page)
+// 7. Create 'technician_profiles' Table (for detailed application/profile)
+// MODIFIED: Updated to match the fields from the application form (apply.php)
 $sql_technician_profiles = "
 CREATE TABLE IF NOT EXISTS technician_profiles (
     profile_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT UNSIGNED NOT NULL UNIQUE,
-    about TEXT,
-    specialty VARCHAR(255),
-    experience_level VARCHAR(50),
+    full_name VARCHAR(100) NOT NULL, -- Added from apply.php
+    gender VARCHAR(10) NOT NULL,     -- Added from apply.php
+    phone_number VARCHAR(20),        -- Renamed from 'phone' for consistency with apply.php
+    area VARCHAR(255) NOT NULL,      -- Added from apply.php
     skills TEXT,
-    certificates TEXT,
-    phone VARCHAR(20),
-    address TEXT,
-    city VARCHAR(100),
-    state VARCHAR(100),
-    pincode VARCHAR(20),
+    documents_path VARCHAR(255) NOT NULL, -- Renamed from 'certificates' and made NOT NULL
+    status VARCHAR(50) DEFAULT 'pending', -- Added for application status
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 )";
 if ($conn->query($sql_technician_profiles) === TRUE) {
@@ -183,22 +181,6 @@ if ($conn->query($sql_create_recurring_services_table) === TRUE) {
 } else {
     echo "Error creating table 'recurring_services': " . $conn->error . "\n";
 }
-
-// 12. --- NEW: Create 'pending_technicians' Table for Admin Approval ---
-$sql_pending_technicians_table = "
-CREATE TABLE IF NOT EXISTS pending_technicians (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    full_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)";
-if ($conn->query($sql_pending_technicians_table) === TRUE) {
-    echo "12. Table 'pending_technicians' created or already exists.\n";
-} else {
-    die("Error creating 'pending_technicians' table: " . $conn->error);
-}
-
 
 echo "\n--- DATABASE SETUP COMPLETE ---";
 $conn->close();

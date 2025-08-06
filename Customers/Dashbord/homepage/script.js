@@ -49,7 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // --- Main function to fetch technicians from the PHP backend ---
     function fetchTechnicians() {
-        fetch("../get_technicians.php") // Path is simpler now as it's in the same folder
+        // Assuming get_technicians.php is in a shared backend folder
+        fetch("../get_technicians.php") 
             .then(response => {
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                 return response.json();
@@ -65,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // --- Function to render technicians to the page ---
+    // --- Function to render technicians to the page (with the fix) ---
     function renderTechnicians(list) {
         const container = document.getElementById("technicians-list");
         if (!container) return;
@@ -76,20 +77,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const technicianCardsHTML = list.map(tech => {
-            const services = tech.services.join(", ");
+            // Ensure services is an array before joining
+            const services = Array.isArray(tech.services) ? tech.services.join(", ") : "No services listed";
             const availability = tech.isAvailable ? "Available" : "Not Available";
             const ratingStars = "★".repeat(Math.round(tech.rating)) + "☆".repeat(5 - Math.round(tech.rating));
             
-            const bookingUrl = `../../calendar-and-booking/index.html?technician_id=${tech.id}`;
-
+            // The fix is in the button's onclick attribute below.
+            // It now correctly constructs a clean URL with the technician's ID.
+            
             return `
-              <div class="technician-card">
-                <h3>${tech.name} <span class="tech-id">(${tech.id})</span></h3>
-                <p><strong>Services:</strong> ${services}</p>
-                <p><strong>Rating:</strong> ${ratingStars} (${tech.rating.toFixed(1)})</p>
-                <p><strong>Status:</strong> ${availability}</p>
-                <button class="btn btn-primary book-btn" onclick="location.href='${bookingUrl}'">Book Now</button>
-              </div>
+                <div class="technician-card">
+                    <h3>${tech.name} <span class="tech-id">(${tech.id})</span></h3>
+                    <p><strong>Services:</strong> ${services}</p>
+                    <p><strong>Rating:</strong> ${ratingStars} (${parseFloat(tech.rating).toFixed(1)})</p>
+                    <p><strong>Status:</strong> ${availability}</p>
+                    <button class="btn btn-primary book-btn" onclick="location.href='../../calendar-and-booking/index.html?technician_id=${tech.id}'">Book Now</button>
+                </div>
             `;
         }).join('');
         container.innerHTML = technicianCardsHTML;
@@ -98,9 +101,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // --- Filtering logic ---
     function filterTechnicians(list, filters) {
         return list.filter(tech => {
-            if (filters.searchTerm && ! (tech.name.toLowerCase().includes(filters.searchTerm) || tech.services.some(s => s.toLowerCase().includes(filters.searchTerm)))) return false;
+            if (filters.searchTerm && ! (tech.name.toLowerCase().includes(filters.searchTerm) || (Array.isArray(tech.services) && tech.services.some(s => s.toLowerCase().includes(filters.searchTerm))))) return false;
             if (filters.technicianId && !tech.id.toLowerCase().includes(filters.technicianId)) return false;
-            if (filters.serviceType && !tech.services.includes(filters.serviceType)) return false;
+            if (filters.serviceType && (!Array.isArray(tech.services) || !tech.services.includes(filters.serviceType))) return false;
             if (filters.minPrice && tech.price < filters.minPrice) return false;
             if (filters.maxPrice && tech.price > filters.maxPrice) return false;
             if (filters.minRating && tech.rating < filters.minRating) return false;

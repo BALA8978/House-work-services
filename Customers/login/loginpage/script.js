@@ -1,39 +1,47 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('login-form');
-    const messageDiv = document.getElementById('login-message');
-    const submitButton = loginForm.querySelector('button[type="submit"]');
+document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            messageDiv.textContent = 'Logging in...';
-            messageDiv.style.color = 'blue';
-            submitButton.disabled = true;
+    const form = event.target;
+    const formData = new FormData(form);
+    const errorMessage = document.getElementById('error-message');
 
-            const formData = new FormData(loginForm);
-            try {
-                const response = await fetch('login.php', {
-                    method: 'POST',
-                    body: formData,
-                });
-                const result = await response.json();
-
-                if (result.success) {
-                    messageDiv.style.color = 'green';
-                    messageDiv.textContent = result.message;
-                    // Redirect to the dashboard homepage
-                    window.location.href = '../../Dashbord/homepage/index.html';
-                } else {
-                    messageDiv.style.color = 'red';
-                    messageDiv.textContent = result.message;
-                    submitButton.disabled = false;
+    fetch('login.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Handle redirection based on the response from login.php
+            if (data.user_type === 'customer') {
+                window.location.href = '../Dashbord/index.html';
+            } else if (data.user_type === 'technician') {
+                switch (data.status) {
+                    case 'approved':
+                        window.location.href = '../../Technician/Dashboard/index.html';
+                        break;
+                    case 'pending':
+                        errorMessage.textContent = 'Your application is still pending review. Please wait for admin approval.';
+                        break;
+                    case 'rejected':
+                        errorMessage.textContent = 'We regret to inform you that your application has been rejected.';
+                        break;
+                    case 'not_applied':
+                        // If registered but no application, send to application form
+                        window.location.href = '../../Technician/apply/index.html';
+                        break;
+                    default:
+                        errorMessage.textContent = 'An unknown error occurred. Please contact support.';
                 }
-            } catch (error) {
-                console.error('Login error:', error);
-                messageDiv.style.color = 'red';
-                messageDiv.textContent = 'An error occurred. Please try again.';
-                submitButton.disabled = false;
+            } else if (data.user_type === 'admin') {
+                window.location.href = '../../Admin/Dashbord/index.html';
             }
-        });
-    }
+        } else {
+            errorMessage.textContent = data.message;
+        }
+    })
+    .catch(error => {
+        errorMessage.textContent = 'An error occurred. Please try again.';
+        console.error('Error:', error);
+    });
 });

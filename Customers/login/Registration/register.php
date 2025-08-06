@@ -1,73 +1,65 @@
 <?php
-require '../../config/db_connect.php'; // Corrected path
+/*
+ * File: register.php (Updated for Immediate Login & Redirect)
+ *
+ * This script now automatically logs in a new user upon successful registration.
+ * If the user is a technician, it allows the front-end to redirect them
+ * straight to the application form.
+ */
+
+// Start the session at the very beginning
+session_start();
+
+// Set the header to specify JSON content
 header('Content-Type: application/json');
 
-$response = ['success' => false, 'message' => ''];
+// Include the database connection
+require 'db_connect.php'; 
+
+$response = ['success' => false, 'message' => 'An unexpected error occurred.'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $full_name = trim($_POST['full_name']);
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
-    $role = trim($_POST['role']);
+    $full_name = trim($_POST['full_name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+    $role = trim($_POST['role'] ?? '');
 
     if (empty($full_name) || empty($email) || empty($password) || empty($role)) {
-        $response['message'] = 'All fields are required.';
-        echo json_encode($response);
-        exit;
-    }
+        $response['message'] = "Error: All fields are required.";
+    } else {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO users (full_name, email, password, role) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $full_name, $email, $hashed_password, $role);
 
-    $conn->begin_transaction();
+        if ($stmt->execute()) {
+            // Get the ID of the new user that was just created
+            $new_user_id = $conn->insert_id;
 
-    try {
-        // Insert into users table
-        $stmt1 = $conn->prepare("INSERT INTO users (full_name, email, password, role) VALUES (?, ?, ?, ?)");
-        $stmt1->bind_param("ssss", $full_name, $email, $hashed_password, $role);
-        $stmt1->execute();
-        $user_id = $conn->insert_id;
-        $stmt1->close();
+            // --- AUTOMATIC LOGIN ---
+            // Set session variables immediately after creating the account
+            $_SESSION['user_id'] = $new_user_id;
+            $_SESSION['username'] = $full_name; // Using full_name as username for the session
+            $_SESSION['role'] = $role;
 
-        // If the user is a technician, create corresponding entries in other tables
-        if ($role === 'technician') {
-            $technician_id_str = 'TECH' . $user_id;
-            // Insert into technicians table (for searching)
-            $stmt2 = $conn->prepare("INSERT INTO technicians (id, user_id, name) VALUES (?, ?, ?)");
-            $stmt2->bind_param("sis", $technician_id_str, $user_id, $full_name);
-            $stmt2->execute();
-            $stmt2->close();
-            
-            // Insert a blank profile into technician_profiles
-            $stmt3 = $conn->prepare("INSERT INTO technician_profiles (user_id) VALUES (?)");
-            $stmt3->bind_param("i", $user_id);
-            $stmt3->execute();
-            $stmt3->close();
+            $response['success'] = true;
+            $response['message'] = "Redirecting...";
+            $response['role'] = $role; // Send the role back to the JavaScript
+
         } else {
-             // Insert a blank profile into customer_profiles
-            $stmt4 = $conn->prepare("INSERT INTO customer_profiles (user_id) VALUES (?)");
-            $stmt4->bind_param("i", $user_id);
-            $stmt4->execute();
-            $stmt4->close();
+            if ($conn->errno == 1062) {
+                $response['message'] = "Error: This email address is already registered.";
+            } else {
+                $response['message'] = "Error during registration: " . $stmt->error;
+            }
         }
-
-        $conn->commit();
-        $response['success'] = true;
-        $response['message'] = 'Registration successful! You can now log in.';
-    } catch (mysqli_sql_exception $exception) {
-        $conn->rollback();
-        if ($conn->errno == 1062) {
-            $response['message'] = 'This email address is already registered.';
-        } else {
-            $response['message'] = 'Database error: ' . $exception->getMessage();
-        }
+        $stmt->close();
     }
-
-    echo json_encode($response);
-
 } else {
     $response['message'] = 'Invalid request method.';
-    echo json_encode($response);
 }
 
 $conn->close();
+echo json_encode($response);
 ?>

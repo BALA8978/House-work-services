@@ -3,84 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Join HomeCraft Pro</title>
-
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
-  <!-- Your CSS -->
+  <title>Register - HomeCraft Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Your JS -->
-  <script src="script.js" defer></script>
 </head>
 <body>
+  <div class="container">
+    <div class="left-side"></div>
 
-  <div class="wrapper">
-    <!-- Left Side -->
-    <div class="left-side">
-      <div class="card">
-        <h2>Join HomeCraft Pro</h2>
-        <p>Create your account to get started</p>
+    <div class="right-side">
+      <div class="register-popup">
+        <h2>Create Your Account</h2>
+        <p>Join HomeCraft Pro today</p>
 
-        <!-- Role Selection -->
-        <div class="role-selection">
-          <div class="role-option" id="customerBtn" onclick="selectRole('customer')">
-            <i class="fas fa-user"></i> Customer
-          </div>
-          <div class="role-option" id="technicianBtn" onclick="selectRole('technician')">
-            <i class="fas fa-tools"></i> Technician
-          </div>
-        </div>
+        <form id="register-form" method="POST">
+          <input type="text" id="full_name" name="full_name" placeholder="Full Name" required />
+          <input type="email" id="email" name="email" placeholder="Email Address" required />
+          <input type="password" id="password" name="password" placeholder="Password" required />
 
-        <!-- Hidden Form (Shows on Role Selection) -->
-        <div id="signupForm" style="display: none;">
-          <form action="register.php" method="POST" onsubmit="return validatePassword()">
-            <div>
-              <label>Full Name *</label>
-              <input type="text" name="full_name" placeholder="Enter your full name" required>
+          <div class="role-selection">
+            <span class="role-label">I am a:</span>
+            <div class="role-options">
+                <input type="radio" id="role-customer" name="role" value="customer" checked>
+                <label for="role-customer">Customer</label>
+                <input type="radio" id="role-technician" name="role" value="technician">
+                <label for="role-technician">Technician</label>
             </div>
-
-            <div>
-              <label>Email Address *</label>
-              <input type="email" name="email" placeholder="Enter your email" required>
-            </div>
-
-            <div>
-              <label>Password *</label>
-              <input type="password" id="password" name="password" placeholder="Enter your password" required>
-              <div id="passwordError" class="password-error"></div>
-            </div>
-
-            <!-- Hidden input to store the selected role -->
-            <input type="hidden" name="role" id="roleInput">
-
-            <button type="submit">Create Account</button>
-          </form>
-
-          <!-- Social Icons -->
-          <div class="social-icons">
-            <i class="fab fa-google google" title="Google"></i>
-            <i class="fab fa-facebook facebook" title="Facebook"></i>
-            <i class="fab fa-instagram instagram" title="Instagram"></i>
-            <i class="fab fa-linkedin linkedin" title="LinkedIn"></i>
           </div>
+          
+          <div id="register-message"></div>
 
-          <div style="text-align: center; margin-top: 1rem;">
-            <p>Already have an account? 
-              <a href="../loginpage/index.html" style="color: #5c27fe; text-decoration: none; font-weight: 600;">Login</a>
-            </p>
-          </div>
+          <button type="submit">Create Account</button>
+        </form>
+
+        <div class="login-link">
+          <p>Already have an account? <a href="../loginpage/index.html">Log In</a></p>
         </div>
       </div>
     </div>
-
-    <!-- Right Side -->
-    <div class="right-side">
-      <!-- You can add an image as background via CSS -->
-    </div>
   </div>
-
+  <script src="script.js"></script>
 </body>
 </html>
