@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Field Service Management Portal</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Chart.js for KPI Dashboards -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f3f4f6;}
+    .feature-card { transition: transform 0.3s ease, box-shadow 0.3s ease;}
+    .feature-card:hover { transform: translateY(-5px);box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);}
+    ::-webkit-scrollbar { width: 8px;}
+    ::-webkit-scrollbar-track { background: #f1f1f1;}
+    ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px;}
+    ::-webkit-scrollbar-thumb:hover { background: #555;}
+  </style>
+</head>
+<body class="antialiased text-gray-800">
+
+  <!-- Header & Navigation -->
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold text-gray-800">
+        <a href="index.html">ServicePro</a>
+      </div>
+      <div class="hidden md:flex space-x-6 items-center">
+        <a href="onboarding.html" class="text-gray-600 hover:text-blue-600 transition">Onboarding</a>
+        <a href="pricing.html" class="text-gray-600 hover:text-blue-600 transition">Pricing</a>
+        <a href="scheduling.html" class="text-gray-600 hover:text-blue-600 transition">Scheduling</a>
+        <a href="index.html" class="text-gray-600 hover:text-blue-600 transition">Dashboards</a>
+        <a href="warranty.html" class="text-gray-600 hover:text-blue-600 transition">Warranty</a>
+        <a href="support.html" class="text-gray-600 hover:text-blue-600 transition">Support</a>
+      </div>
+      <button id="mobile-menu-button" class="md:hidden flex items-center">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+      </button>
+    </nav>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden">
+      <a href="onboarding.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Onboarding</a>
+      <a href="pricing.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Pricing</a>
+      <a href="scheduling.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Scheduling</a>
+      <a href="dashboards.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Dashboards</a>
+      <a href="warranty.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Warranty</a>
+      <a href="support.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Support</a>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-12">
+    <section class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Streamline Your Field Service Operations</h1>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">An all-in-one platform to manage technicians, pricing, scheduling, and customer support with data-driven insights.</p>
+    </section>
+    <section id="dashboards" class="feature-card bg-white p-6 rounded-lg shadow-sm md:col-span-2 lg:col-span-3">
+      <div class="flex items-center mb-4">
+        <div class="bg-yellow-100 p-3 rounded-full mr-4">
+          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold">KPI Dashboards</h2>
+          <span class="text-sm font-semibold text-gray-500">ID: FR21</span>
+        </div>
+      </div>
+      <p class="text-gray-600 mb-6">Track revenue, technician performance, and customer satisfaction with real-time, easy-to-read charts.</p>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="font-semibold mb-2 text-center">Monthly Revenue</h3>
+          <canvas id="revenueChart"></canvas>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="font-semibold mb-2 text-center">Technician Performance</h3>
+          <canvas id="performanceChart"></canvas>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="font-semibold mb-2 text-center">Customer Satisfaction (CSAT)</h3>
+          <canvas id="satisfactionChart"></canvas>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-white mt-16 border-t">
+    <div class="container mx-auto px-6 py-8 text-center text-gray-600">
+      <p>&copy; 2025 ServicePro. All Rights Reserved.</p>
+      <p class="text-sm mt-2">Built to demonstrate modern field service management capabilities.</p>
+    </div>
+  </footer>
+
+  <script>
+    // --- Mobile Menu Toggle ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // --- KPI Dashboard Charts ---
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Revenue Chart (Bar)
+      const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+      new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{
+            label: 'Revenue ($K)',
+            data: [65, 59, 80, 81, 56, 55],
+            backgroundColor: 'rgba(59, 130, 246, 0.5)',
+            borderColor: 'rgba(59, 130, 246, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+
+      // 2. Technician Performance Chart (Radar)
+      const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+      new Chart(performanceCtx, {
+        type: 'radar',
+        data: {
+          labels: ['Punctuality', 'First-Time Fix', 'Efficiency', 'Customer Rating', 'Upsells'],
+          datasets: [{
+            label: 'Team Alpha',
+            data: [9, 7, 8, 9, 6],
+            fill: true,
+            backgroundColor: 'rgba(168, 85, 247, 0.2)',
+            borderColor: 'rgb(168, 85, 247)',
+            pointBackgroundColor: 'rgb(168, 85, 247)',
+          }, {
+            label: 'Team Bravo',
+            data: [7, 9, 9, 8, 8],
+            fill: true,
+            backgroundColor: 'rgba(236, 72, 153, 0.2)',
+            borderColor: 'rgb(236, 72, 153)',
+            pointBackgroundColor: 'rgb(236, 72, 153)',
+          }]
+        },
+        options: {
+          responsive: true,
+          elements: { line: { tension: 0.1, borderWidth: 2 } }
+        }
+      });
+
+      // 3. Customer Satisfaction Chart (Doughnut)
+      const satisfactionCtx = document.getElementById('satisfactionChart').getContext('2d');
+      new Chart(satisfactionCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Very Satisfied', 'Satisfied', 'Neutral', 'Unsatisfied'],
+          datasets: [{
+            label: 'CSAT Scores',
+            data: [120, 190, 30, 15],
+            backgroundColor: [
+              'rgba(16, 185, 129, 0.7)',
+              'rgba(34, 197, 94, 0.7)',
+              'rgba(245, 158, 11, 0.7)',
+              'rgba(239, 68, 68, 0.7)'
+            ],
+            hoverOffset: 4
+          }]
+        },
+        options: { responsive: true }
+      });
+    });
+  </script>
+</body>
+</html>
