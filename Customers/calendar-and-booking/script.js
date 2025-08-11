@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const technicianId = urlParams.get('technician_id');
 
+<<<<<<< HEAD
     // --- SAFEGUARD ---
     // If no technician ID is found in the URL, display an error and stop.
     if (!technicianId) {
@@ -26,6 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // --- END OF SAFEGUARD ---
 
+=======
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
     let currentDate = new Date();
     let selectedDate = null;
     let selectedTimeSlot = null;
@@ -34,11 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
         calendarGrid.innerHTML = '';
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
+<<<<<<< HEAD
         currentMonthYear.textContent = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
         const firstDayOfMonth = new Date(year, month, 1);
         const lastDayOfMonth = new Date(year, month + 1, 0);
         const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+=======
+
+        currentMonthYear.textContent = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
+
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0);
+
+        const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
         weekdays.forEach(day => {
             const dayElement = document.createElement('div');
             dayElement.classList.add('calendar-day', 'weekday-name');
@@ -53,7 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const today = new Date();
+<<<<<<< HEAD
         today.setHours(0, 0, 0, 0);
+=======
+        today.setHours(0, 0, 0, 0); // Set to midnight for accurate date comparison
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
 
         for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
             const dayElement = document.createElement('div');
@@ -80,11 +97,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchAvailability() {
         if (!selectedDate) return;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
         timeSlotsGrid.innerHTML = '<p>Loading time slots...</p>';
         const dateString = selectedDate.toISOString().split('T')[0];
         try {
             const response = await fetch(`get_technician_availability.php?technician_id=${technicianId}&date=${dateString}`);
+<<<<<<< HEAD
             if (!response.ok) throw new Error('Network response was not ok');
+=======
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
             const data = await response.json();
             renderTimeSlots(data);
         } catch (error) {
@@ -100,7 +127,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+<<<<<<< HEAD
         const slots = availability.is_available ? ['09:00-11:00', '11:00-13:00', '14:00-16:00', '16:00-18:00'] : ['19:00-21:00'];
+=======
+        // Define the list of possible slots based on backend data
+        const slots = availability.is_available ?
+            ['09:00-11:00', '11:00-13:00', '14:00-16:00', '16:00-18:00'] :
+            ['19:00-21:00'];
+        
+        // --- NEW LOGIC: Get current time details for comparison ---
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
         const now = new Date();
         const isToday = selectedDate.toDateString() === now.toDateString();
 
@@ -109,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             slotElement.classList.add('time-slot');
             slotElement.textContent = slot;
 
+<<<<<<< HEAD
             const isBooked = availability.booked_slots && availability.booked_slots.includes(slot);
             let isPast = false;
 
@@ -120,6 +157,25 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isBooked || isPast) {
                 slotElement.classList.add('unavailable', 'disabled');
             } else {
+=======
+            // --- NEW LOGIC: Determine if the slot is unavailable for any reason ---
+            const isBooked = availability.booked_slots && availability.booked_slots.includes(slot);
+            let isPast = false;
+
+            // Check if the time has passed, but ONLY if the selected date is today
+            if (isToday) {
+                const slotEndHour = parseInt(slot.split('-')[1].split(':')[0]); // e.g., gets 11 from "09:00-11:00"
+                if (now.getHours() >= slotEndHour) {
+                    isPast = true;
+                }
+            }
+
+            // If the slot is either booked OR its time has passed for today, make it red and disabled
+            if (isBooked || isPast) {
+                slotElement.classList.add('unavailable', 'disabled');
+            } else {
+                // Otherwise, it's available and clickable
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
                 slotElement.addEventListener('click', () => {
                     document.querySelectorAll('.time-slot.selected').forEach(s => s.classList.remove('selected'));
                     slotElement.classList.add('selected');
@@ -131,13 +187,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+<<<<<<< HEAD
     function confirmBooking() {
+=======
+    async function confirmBooking() {
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
         if (!selectedDate || !selectedTimeSlot) {
             alert('Please select a date and time slot.');
             return;
         }
 
         const dateString = selectedDate.toISOString().split('T')[0];
+<<<<<<< HEAD
         
         const params = new URLSearchParams({
             technician_id: technicianId,
@@ -146,6 +207,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         window.location.href = `../conformbooking/index.html?${params.toString()}`;
+=======
+        try {
+            const response = await fetch('create_booking.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    technician_id: technicianId,
+                    date: dateString,
+                    time: selectedTimeSlot
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert('Booking confirmed!');
+                window.location.href = '../my-bookings/index.html';
+            } else {
+                alert(`Booking failed: ${result.message}`);
+                fetchAvailability(); // Refresh slots in case someone else just booked it
+            }
+        } catch (error) {
+            alert('Booking failed due to a network error.');
+        }
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
     }
 
     prevMonthBtn.addEventListener('click', () => {
@@ -159,5 +245,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     confirmBookingBtn.addEventListener('click', confirmBooking);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
     renderCalendar();
 });

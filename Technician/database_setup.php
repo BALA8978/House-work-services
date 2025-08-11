@@ -91,6 +91,7 @@ $sql_technician_profiles = "
 CREATE TABLE IF NOT EXISTS technician_profiles (
     profile_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT UNSIGNED NOT NULL UNIQUE,
+<<<<<<< HEAD
     full_name VARCHAR(100) NOT NULL,
     gender VARCHAR(10) NOT NULL,
     phone_number VARCHAR(20),
@@ -98,6 +99,15 @@ CREATE TABLE IF NOT EXISTS technician_profiles (
     skills TEXT,
     documents_path VARCHAR(255) NOT NULL,
     status VARCHAR(50) DEFAULT 'pending',
+=======
+    full_name VARCHAR(100) NOT NULL, -- Added from apply.php
+    gender VARCHAR(10) NOT NULL,     -- Added from apply.php
+    phone_number VARCHAR(20),        -- Renamed from 'phone' for consistency with apply.php
+    area VARCHAR(255) NOT NULL,      -- Added from apply.php
+    skills TEXT,
+    documents_path VARCHAR(255) NOT NULL, -- Renamed from 'certificates' and made NOT NULL
+    status VARCHAR(50) DEFAULT 'pending', -- Added for application status
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 )";
 if ($conn->query($sql_technician_profiles) === TRUE) {
@@ -106,6 +116,10 @@ if ($conn->query($sql_technician_profiles) === TRUE) {
     die("Error creating 'technician_profiles' table: " . $conn->error);
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
 // 8. Create 'bookings' Table
 $sql_bookings_table = "
 CREATE TABLE IF NOT EXISTS bookings (
@@ -181,6 +195,7 @@ if ($conn->query($sql_create_recurring_services_table) === TRUE) {
     echo "Error creating table 'recurring_services': " . $conn->error . "\n";
 }
 
+<<<<<<< HEAD
 // 12. Add 'pending_technicians' table
 $sql_pending_technicians = "
 CREATE TABLE IF NOT EXISTS pending_technicians (
@@ -261,5 +276,8 @@ DELIMITER ;
 $conn->multi_query($sql_trigger);
 echo "14. Trigger `after_technician_profile_insert` created.\n";
 
+=======
+echo "\n--- DATABASE SETUP COMPLETE ---";
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
 $conn->close();
 ?>

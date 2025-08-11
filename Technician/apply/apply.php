@@ -65,7 +65,11 @@ try {
     // Sanitize the uploaded file name to prevent directory traversal or other attacks
     $uploaded_file_name = preg_replace("/[^a-zA-Z0-9.\-_]/", "", basename($_FILES["documents"]["name"]));
     // Add unique ID to prevent overwrites and ensure unique paths
+<<<<<<< HEAD
     $target_file = $target_dir . uniqid() . '_' . $uploaded_file_name;
+=======
+    $target_file = $target_dir . uniqid() . '_' . $uploaded_file_name; 
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
     $documents_path = ''; // Initialize path
 
     // Check if file is an actual image or PDF using finfo_open for robust MIME type checking
@@ -107,7 +111,11 @@ try {
 
     // Move the uploaded file to the target directory using a relative path
     // This assumes 'uploads/' is a subdirectory of where apply.php is located.
+<<<<<<< HEAD
     if (move_uploaded_file($_FILES["documents"]["tmp_name"], $target_file)) {
+=======
+    if (move_uploaded_file($_FILES["documents"]["tmp_name"], $target_file)) { 
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
         $documents_path = $target_file;
     } else {
         // Log the specific upload error
@@ -117,8 +125,13 @@ try {
         exit();
     }
 
+<<<<<<< HEAD
     // Correct table name to match the database setup script
     $sql = "INSERT INTO pending__technicians (user_id, full_name, gender, phone_number, area, skills, documents_path, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')";
+=======
+    // Insert into technician_profiles table
+    $sql = "INSERT INTO technician_profiles (user_id, full_name, gender, phone_number, area, skills, documents_path, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')";
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
     $stmt = $conn->prepare($sql);
 
     // Check if the statement preparation was successful
