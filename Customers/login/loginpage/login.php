@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Use the new central connection file
-require '../../config/db_connect.php'; 
+require '../../config/db_connect.php';
 header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,15 +24,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Role-based redirection logic
             $redirect_url = '';
             if ($user['role'] == 'customer') {
-                $redirect_url = '../../Dashbord/index.html';
+                // Corrected path for customer dashboard
+                $redirect_url = '../../Dashbord/homepage/index.html';
             } else if ($user['role'] == 'technician') {
-                $redirect_url = '../../Tprofile/profile.html';
+                // Corrected path for technician dashboard
+                $redirect_url = '../../../Technician/homepage/index.html';
+            }
+            else if ($user['role'] == 'admin') {
+                // Corrected path for admin dashboard
+                $redirect_url = '../../../Admin/Dashbord/index.html';
             }
 
             echo json_encode([
-                'success' => true, 
+                'success' => true,
                 'message' => 'Login Successful! Welcome, ' . htmlspecialchars($user['full_name']) . '.',
-                'redirect' => $redirect_url
+                'redirect' => $redirect_url,
+                'role' => $user['role']
             ]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Invalid email or password.']);

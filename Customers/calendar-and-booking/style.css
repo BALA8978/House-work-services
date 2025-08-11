@@ -1,97 +1,57 @@
-:root {
-    --primary-color: #007BFF;
-    --secondary-color: #6c757d;
-    --background-color: #f8f9fa;
-    --text-color: #333;
-    --heading-font: 'Poppins', sans-serif;
-    --body-font: 'Poppins', sans-serif;
-    --border-radius: 8px;
-    --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    --hover-light: #e6f2ff;
-    --selected-date-bg: #e0f2fe; /* Light blue for selected date */
-    --booked-slot-bg: #ffdddd; /* Light red for booked slots */
-    --available-slot-bg: #e6ffe6; /* Light green for available slots */
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: var(--body-font);
-    color: var(--text-color);
-    background-color: var(--background-color);
-    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f6;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     min-height: 100vh;
+    margin: 0;
+}
+
+.booking-container {
+    width: 90%;
+    max-width: 900px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+/* Add this to your stylesheet */
+
+.time-slot.unavailable {
+    background-color: #ffebee; /* A light red background */
+    border-color: #e57373;
+    color: #c62828; /* A darker red text color */
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+/* Ensure you also have a general disabled style */
+.time-slot.disabled {
+    pointer-events: none; /* Prevents clicks */
+    opacity: 0.6;
+}
+.booking-header {
+    background-color: #007bff;
+    color: #fff;
     padding: 20px;
-}
-
-.container {
-    background: #fff;
-    padding: 30px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    max-width: 1200px;
-    width: 100%;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 20px;
-}
-
-.header h1 {
-    flex-grow: 1;
     text-align: center;
-    font-size: 2rem;
-    color: var(--primary-color);
 }
 
-.back-btn {
-    background: none;
-    border: none;
-    color: var(--secondary-color);
-    font-size: 1rem;
-    cursor: pointer;
+.booking-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.booking-main {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 15px;
-    border-radius: var(--border-radius);
-    transition: background-color 0.3s ease;
-}
-
-.back-btn:hover {
-    background-color: #f0f0f0;
-    color: var(--text-color);
-}
-
-.booking-section {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    justify-content: center;
-}
-
-.calendar-container, .booking-form-container {
-    flex: 1;
-    min-width: 300px; /* Minimum width for responsiveness */
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: var(--border-radius);
-    background: #fdfdfd;
 }
 
 .calendar-container {
-    max-width: 500px;
+    flex: 1;
+    padding-right: 20px;
+    border-right: 1px solid #eee;
 }
 
 .calendar-header {
@@ -102,209 +62,115 @@ body {
 }
 
 .calendar-header h2 {
-    font-size: 1.5rem;
-    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin: 0;
 }
 
 .calendar-header button {
-    background-color: var(--primary-color);
-    color: white;
+    background: none;
     border: none;
-    padding: 8px 15px;
-    border-radius: var(--border-radius);
+    font-size: 1.5rem;
     cursor: pointer;
-    font-size: 1.2rem;
-    transition: background-color 0.3s ease;
-}
-
-.calendar-header button:hover {
-    background-color: #0056b3;
 }
 
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
-    text-align: center;
-}
-
-.day-name {
-    font-weight: 600;
-    color: var(--secondary-color);
-    padding: 10px 0;
 }
 
 .calendar-day {
+    text-align: center;
     padding: 10px;
-    border-radius: var(--border-radius);
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    font-weight: 500;
-    color: var(--text-color);
-    min-height: 40px; /* Ensure consistent height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s;
 }
 
-.calendar-day:not(.empty):hover {
-    background-color: var(--hover-light);
+.calendar-day.weekday-name {
+    font-weight: bold;
+    cursor: default;
 }
 
-.calendar-day.empty {
+.calendar-day:not(.weekday-name):hover {
     background-color: #f0f0f0;
+}
+
+.calendar-day.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.calendar-day.disabled {
     color: #ccc;
     cursor: not-allowed;
 }
 
-.calendar-day.current-day {
-    border: 2px solid var(--primary-color);
+.time-slots-container {
+    flex: 1;
+    padding-left: 20px;
 }
 
-.calendar-day.selected {
-    background-color: var(--selected-date-bg);
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    font-weight: 700;
-}
-
-.calendar-day.has-bookings {
-    background-color: var(--available-slot-bg);
-    border: 1px solid #99e699;
-}
-
-.date-message {
+.time-slots-container h3 {
     text-align: center;
-    margin-top: 20px;
-    color: var(--secondary-color);
-    font-style: italic;
-}
-
-.booking-form-container h2 {
-    font-size: 1.3rem;
-    color: var(--text-color);
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.time-slots {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-    justify-content: center;
-}
-
-.time-slot {
-    padding: 10px 15px;
-    border: 1px solid var(--primary-color);
-    border-radius: var(--border-radius);
-    background-color: var(--available-slot-bg);
-    color: var(--primary-color);
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.time-slot.booked {
-    background-color: var(--booked-slot-bg);
-    border-color: #ff8888;
-    color: #cc0000;
-    cursor: not-allowed;
-    text-decoration: line-through;
-}
-
-.time-slot.selected-slot {
-    background-color: var(--primary-color);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.time-slot:not(.booked):hover {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.no-slots-message {
-    text-align: center;
-    color: #888;
-    width: 100%;
-}
-
-#bookingForm {
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-#bookingForm h3 {
-    text-align: center;
-    color: var(--primary-color);
     margin-bottom: 10px;
 }
 
-#bookingForm p {
-    font-size: 0.95rem;
+#selected-date-display {
+    text-align: center;
+    margin-bottom: 20px;
     color: #555;
 }
 
-#bookingForm p span {
-    font-weight: 600;
-    color: var(--text-color);
+.time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
 }
 
-#serviceDescription {
-    width: 100%;
+.time-slot {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: var(--border-radius);
-    min-height: 80px;
-    resize: vertical;
-    font-size: 1rem;
-}
-
-.book-now-btn {
-    background-color: #28a745; /* Green for booking */
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-}
-
-.book-now-btn:hover {
-    background-color: #218838;
-}
-
-#bookingMessage {
     text-align: center;
-    margin-top: 15px;
-    font-weight: 600;
-    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
-    }
-    .back-btn {
-        width: 100%;
-        justify-content: center;
-    }
-    .booking-section {
-        flex-direction: column;
-    }
-    .calendar-container, .booking-form-container {
-        max-width: 100%;
-    }
+.time-slot:hover {
+    background-color: #f0f0f0;
+}
+
+.time-slot.selected {
+    background-color: #28a745;
+    color: #fff;
+    border-color: #28a745;
+}
+
+.time-slot.disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+.booking-footer {
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+#confirm-booking-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#confirm-booking-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
 }

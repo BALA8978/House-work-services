@@ -101,11 +101,12 @@ body {
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-add-new:hover {
     background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
 .history-grid, .recurring-grid {
@@ -193,6 +194,18 @@ body {
     border-color: #ccc;
 }
 
+/* New style for the cancel button */
+.btn-card-action.btn-cancel {
+    background-color: #dc3545; /* Red */
+    color: white;
+    border-color: #dc3545;
+}
+
+.btn-card-action.btn-cancel:hover {
+    background-color: #c82333; /* Darker Red */
+    border-color: #bd2130;
+}
+
 
 .recurring-actions .btn {
     background-color: var(--primary-color);
@@ -208,4 +221,176 @@ body {
 
 .recurring-actions .btn:hover {
     background-color: #0056b3;
+}
+
+/* --- Enhanced Modal Styles --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.modal-overlay:target,
+.modal-overlay[style*="display: flex"] {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 650px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95);
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-overlay:target .modal-content,
+.modal-overlay[style*="display: flex"] .modal-content {
+    transform: scale(1);
+}
+
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.close-btn {
+    background: #f0f0f0;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #888;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    line-height: 35px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: #e0e0e0;
+    color: #333;
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    overflow-y: auto;
+    padding-right: 15px; /* For scrollbar */
+}
+
+/* Custom scrollbar for modal body */
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+.modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.modal-body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+
+.service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.service-item:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.1);
+}
+
+.service-item h4 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.service-item p {
+    font-size: 0.9rem;
+    color: #666;
+    max-width: 300px;
+}
+
+.service-item-action {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-align: right;
+}
+
+.service-item-action .price {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #28a745;
+    min-width: 80px;
+}
+
+.service-item-action .btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.service-item-action .btn:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+    .service-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .service-item-action {
+        width: 100%;
+        justify-content: space-between;
+    }
 }

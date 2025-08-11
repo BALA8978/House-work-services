@@ -1,83 +1,44 @@
 <?php
-// get_technician_availability.php
 session_start();
-require '../config/db_connect.php'; // Use the central database connection file
+require '../config/db_connect.php';
 header('Content-Type: application/json');
 
-$response = ['success' => false, 'message' => ''];
+$response = ['success' => false, 'is_available' => false, 'booked_slots' => []];
 
-if (!isset($_SESSION['user_id'])) {
-    $response['message'] = "User not logged in.";
+if (!isset($_GET['technician_id']) || !isset($_GET['date'])) {
+    $response['message'] = 'Technician ID and date are required.';
     echo json_encode($response);
-    exit();
+    exit;
 }
 
-if (!isset($_GET['technician_id']) || empty($_GET['technician_id'])) {
-    $response['message'] = "Technician ID is required.";
-    echo json_encode($response);
-    exit();
+$technician_id = $_GET['technician_id'];
+$date = $_GET['date'];
+
+// Get technician's general availability
+$stmt = $conn->prepare("SELECT isAvailable FROM technicians WHERE id = ?");
+$stmt->bind_param("s", $technician_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$technician = $result->fetch_assoc();
+
+if ($technician) {
+    $response['is_available'] = (bool)$technician['isAvailable'];
 }
+$stmt->close();
 
-$technicianId = $conn->real_escape_string($_GET['technician_id']);
+// Get booked slots for the selected date
+$stmt = $conn->prepare("SELECT booking_time FROM bookings WHERE technician_id = ? AND booking_date = ?");
+$stmt->bind_param("ss", $technician_id, $date);
+$stmt->execute();
+$result = $stmt->get_result();
 
-// --- 1. Fetch all booked slots for the given technician ---
-$sql_booked = "SELECT booking_date, booking_time FROM bookings WHERE technician_id = ?";
-$stmt_booked = $conn->prepare($sql_booked);
-
-if ($stmt_booked === false) {
-    $response['message'] = "Database prepare failed for booked slots: " . $conn->error;
-    echo json_encode($response);
-    exit();
+while ($row = $result->fetch_assoc()) {
+    $response['booked_slots'][] = $row['booking_time'];
 }
-
-$stmt_booked->bind_param("s", $technicianId);
-$stmt_booked->execute();
-$result_booked = $stmt_booked->get_result();
-
-$bookedSlots = [];
-if ($result_booked->num_rows > 0) {
-    while ($row = $result_booked->fetch_assoc()) {
-        $bookedSlots[] = [
-            'booking_date' => $row['booking_date'], // YYYY-MM-DD
-            'booking_time' => $row['booking_time']  // HH:MM:SS
-        ];
-    }
-}
-$stmt_booked->close();
-
-// --- 2. Fetch all declared unavailable periods for the given technician ---
-// Fetching periods that are in the future or currently ongoing
-$sql_unavailable = "SELECT start_datetime, end_datetime, reason FROM technician_unavailable_periods WHERE technician_id = ? AND end_datetime >= NOW()";
-$stmt_unavailable = $conn->prepare($sql_unavailable);
-
-if ($stmt_unavailable === false) {
-    $response['message'] = "Database prepare failed for unavailable periods: " . $conn->error;
-    echo json_encode($response);
-    exit();
-}
-
-$stmt_unavailable->bind_param("s", $technicianId);
-$stmt_unavailable->execute();
-$result_unavailable = $stmt_unavailable->get_result();
-
-$unavailablePeriods = [];
-if ($result_unavailable->num_rows > 0) {
-    while ($row = $result_unavailable->fetch_assoc()) {
-        $unavailablePeriods[] = [
-            'start_datetime' => $row['start_datetime'],
-            'end_datetime' => $row['end_datetime'],
-            'reason' => $row['reason']
-        ];
-    }
-}
-$stmt_unavailable->close();
-
+$stmt->close();
 
 $response['success'] = true;
-$response['booked_slots'] = $bookedSlots;
-$response['unavailable_periods'] = $unavailablePeriods; // Add unavailable periods to the response
+echo json_encode($response);
 
 $conn->close();
-
-echo json_encode($response);
 ?>

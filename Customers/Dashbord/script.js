@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const availability = tech.isAvailable ? "Available" : "Not Available";
             const ratingStars = "★".repeat(Math.round(tech.rating)) + "☆".repeat(5 - Math.round(tech.rating));
             
-            // Corrected link to the renamed folder
+            // Corrected link to the new calendar booking page
             const bookingUrl = `../calendar-and-booking/index.html?technician_id=${tech.id}`;
 
             return `

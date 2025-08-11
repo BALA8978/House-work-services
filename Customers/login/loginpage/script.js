@@ -1,39 +1,40 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('login-form');
-    const messageDiv = document.getElementById('login-message');
-    const submitButton = loginForm.querySelector('button[type="submit"]');
+document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            messageDiv.textContent = 'Logging in...';
-            messageDiv.style.color = 'blue';
-            submitButton.disabled = true;
+    const form = event.target;
+    const formData = new FormData(form);
+    const loginMessage = document.getElementById('login-message');
 
-            const formData = new FormData(loginForm);
-            try {
-                const response = await fetch('login.php', {
-                    method: 'POST',
-                    body: formData,
-                });
-                const result = await response.json();
-
-                if (result.success) {
-                    messageDiv.style.color = 'green';
-                    messageDiv.textContent = result.message;
-                    // Redirect to the dashboard homepage
-                    window.location.href = '../../Dashbord/homepage/index.html';
-                } else {
-                    messageDiv.style.color = 'red';
-                    messageDiv.textContent = result.message;
-                    submitButton.disabled = false;
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                messageDiv.style.color = 'red';
-                messageDiv.textContent = 'An error occurred. Please try again.';
-                submitButton.disabled = false;
-            }
-        });
+    // Clear previous messages and set to a default state
+    if (loginMessage) {
+        loginMessage.textContent = '';
+        loginMessage.style.color = '#555';
     }
+
+    fetch('login.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (loginMessage) {
+            loginMessage.textContent = data.message;
+            if (data.success) {
+                loginMessage.style.color = 'green';
+                // Check for a redirect URL from the PHP response
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            } else {
+                loginMessage.style.color = 'red';
+            }
+        }
+    })
+    .catch(error => {
+        if (loginMessage) {
+            loginMessage.textContent = 'An error occurred. Please try again.';
+            loginMessage.style.color = 'red';
+        }
+        console.error('Fetch Error:', error);
+    });
 });

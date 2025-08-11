@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Payment - HomeCraft Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container payment-page">
+        <div class="payment-card-large">
+            <h1>Complete Your Payment</h1>
+            <p>Please select your preferred payment method to complete the booking.</p>
+
+            <div class="payment-summary">
+                <p><strong>Total Amount Due:</strong> <span id="amount-due">Loading...</span></p>
+            </div>
+
+            <div class="payment-methods">
+                <div class="method selected" data-method="upi">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <span>UPI / QR Code</span>
+                </div>
+                <div class="method" data-method="card">
+                    <i class="far fa-credit-card"></i>
+                    <span>Credit/Debit Card</span>
+                </div>
+                <div class="method" data-method="netbanking">
+                    <i class="fas fa-university"></i>
+                    <span>Net Banking</span>
+                </div>
+            </div>
+
+            <button id="pay-btn" class="btn-pay" disabled>Pay Now</button>
+            <p id="payment-status" class="status-message"></p>
+            <a href="index.html" class="back-to-payments-link">Back to Payments</a>
+        </div>
+    </div>
+    <script src="pay_script.js"></script>
+</body>
+</html>

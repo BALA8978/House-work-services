@@ -12,7 +12,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT b.booking_date, b.booking_time, b.status, t.name AS technician_name
+// Added b.booking_id to the SELECT statement
+$sql = "SELECT b.booking_id, b.booking_date, b.booking_time, b.status, t.name AS technician_name
         FROM bookings b
         JOIN technicians t ON b.technician_id = t.id
         WHERE b.user_id = ?

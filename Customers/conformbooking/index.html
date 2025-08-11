@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Booking - HomeCraft Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="confirmation-container">
+        <div class="confirmation-card">
+            <div class="success-icon" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1 id="page-title">Confirm Your Booking</h1>
+            <p id="page-subtitle">Please review the details below before proceeding.</p>
+            <div class="booking-details" id="booking-details">
+                <p>Loading booking details...</p>
+            </div>
+            <div class="actions" id="action-buttons">
+                <button id="pay-now-btn" class="btn btn-pay">Pay Now</button>
+                <button id="pay-later-btn" class="btn btn-secondary">Pay Later</button>
+            </div>
+            <a href="../Dashbord/homepage/index.html" id="cancel-link">Cancel Booking</a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
