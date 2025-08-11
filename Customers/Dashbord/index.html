@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeCraft Pro - Customer Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="top-frame">
+        <div class="header-left">
+            <div class="logo">HC</div>
+            <h1 class="project-name">HomeCraft Pro</h1>
+        </div>
+        <div class="header-right">
+            <nav class="nav-buttons">
+                <button id="home-nav-btn" class="nav-button active">Home</button>
+                <button id="search-nav-btn" class="nav-button">Search & Filter</button>
+                <button class="nav-button" onclick="location.href='../my-bookings/index.html'">My Bookings</button>
+                <button class="nav-button">Payments</button>
+            </nav>
+            <div class="user-profile-circle" onclick="location.href='../../Cprofile/profile.html'" aria-label="User Profile">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+    </div>
+
+    <main id="page-content">
+        
+        <div id="home-content">
+            <section class="hero">
+                <div class="container">
+                    <h1>One call fixes all – from faucets to fences.</h1>
+                    <p>HomeCraft Pro connects you with certified, insured professionals for all your home maintenance needs.</p>
+                    <button id="find-technician-hero-btn" class="btn btn-primary btn-large">Find a Technician Now</button>
+                </div>
+            </section>
+
+            <section id="services" class="services-section">
+                <div class="container">
+                    <h2>Our Services</h2>
+                    <p class="section-subtitle">Comprehensive solutions for every part of your home.</p>
+                    <div class="services-grid">
+                        <div class="service-card"><div class="icon">💧</div><h3>Plumbing</h3><p>Leaky faucets, clogged drains, and installations.</p></div>
+                        <div class="service-card"><div class="icon">🎨</div><h3>Painting</h3><p>Interior and exterior painting with a flawless finish.</p></div>
+                        <div class="service-card"><div class="icon">⚡</div><h3>Electrical</h3><p>Wiring, fixture installation, and safety checks.</p></div>
+                        <div class="service-card"><div class="icon">🌿</div><h3>Lawn Mowing</h3><p>Regular maintenance to keep your lawn pristine.</p></div>
+                        <div class="service-card"><div class="icon">🌳</div><h3>Tree Trimming</h3><p>Safe and aesthetic trimming for tree health.</p></div>
+                        <div class="service-card"><div class="icon">❄️</div><h3>Snow Removal</h3><p>Reliable and fast snow clearing for driveways.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="about-section">
+                <div class="container">
+                    <h2>Why Choose HomeCraft Pro?</h2>
+                    <div class="features-grid">
+                        <div class="feature"><h3>✅ Certified Professionals</h3><p>Our network of technicians are bonded, insured, and highly skilled.</p></div>
+                        <div class="feature"><h3>📍 Real-Time Tracking</h3><p>Know exactly when your technician will arrive with live GPS tracking.</p></div>
+                        <div class="feature"><h3>💼 For Everyone</h3><p>An easy-to-use platform for Homeowners and Technicians.</p></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="search-content" class="hidden">
+            <div class="search-container">
+                <input type="text" placeholder="Search technicians or services..." id="search-bar" autocomplete="off" />
+                <button id="filter-btn" aria-label="Filter">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+            </div>
+            <div class="technicians-list" id="technicians-list">
+                </div>
+        </div>
+
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2025 HomeCraft Pro. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div id="filters-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+        <div class="modal-content">
+            <h3 id="modal-title">Filter Technicians</h3>
+            <label>Technician ID: <input type="text" id="technician-id-filter" placeholder="Enter ID" /></label>
+            <label>Service Type:
+                <select id="service-type-filter">
+                    <option value="">All</option>
+                    <option value="Plumbing">Plumbing</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="AC Repair">AC Repair</option>
+                    <option value="Lawn Mowing">Lawn Mowing</option>
+                </select>
+            </label>
+            <label>Price Range:
+                <input type="number" id="min-price" placeholder="Min ₹" min="0" /> -
+                <input type="number" id="max-price" placeholder="Max ₹" min="0" />
+            </label>
+            <label>Minimum Rating:
+                <select id="rating-filter">
+                    <option value="0">Any</option>
+                    <option value="3">3★+</option>
+                    <option value="4">4★+</option>
+                    <option value="4.5">4.5★+</option>
+                </select>
+            </label>
+            <label>Min. Experience (years): <input type="number" id="min-exp" min="0" /></label>
+            <label><input type="checkbox" id="availability-filter" /> Available Now</label>
+            <div class="modal-buttons">
+                <button id="apply-filters" type="button">Apply</button>
+                <button id="close-filters" type="button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

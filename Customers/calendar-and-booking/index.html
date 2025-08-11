@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Technician</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="booking-container">
+        <header class="booking-header">
+            <h1>Book a Service</h1>
+            <p>Select a date and time to schedule your appointment.</p>
+        </header>
+        <main class="booking-main">
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button id="prev-month-btn">&lt;</button>
+                    <h2 id="current-month-year"></h2>
+                    <button id="next-month-btn">&gt;</button>
+                </div>
+                <div class="calendar-grid" id="calendar-grid">
+                    </div>
+            </div>
+            <div class="time-slots-container">
+                <h3>Available Time Slots</h3>
+                <p id="selected-date-display">Please select a date</p>
+                <div class="time-slots-grid" id="time-slots-grid">
+                    </div>
+            </div>
+        </main>
+        <footer class="booking-footer">
+            <button id="confirm-booking-btn" disabled>Confirm Booking</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

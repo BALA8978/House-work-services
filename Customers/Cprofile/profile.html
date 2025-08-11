@@ -1,69 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Customer Profile</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="profile.css">
-  <script src="profile.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="profile.css">
 </head>
 <body>
-  <div class="logo">
-    <img src="../Photos/logo.png" alt="HomeCraft Pro Logo" />
-  </div>
-
-  <div class="container">
-    <div class="profile-left">
-      <img id="avatarImg" src="../Photos/female.png" alt="Avatar" />
-      <h2 id="userName">Customer Name</h2>
-      <p id="userEmail">customer@example.com</p>
+    <div class="logo">
+        <img src="../login/Photos/logo.png" alt="HomeCraft Pro Logo" />
     </div>
-    <div class="profile-right">
-      <div class="tabs">
-        <div class="tab active" onclick="showTab('info')">Info</div>
-        <div class="tab" onclick="showTab('history')">History</div>
-        <div class="tab" onclick="showTab('settings')">Settings</div>
-      </div>
 
-      <div id="info" class="tab-content active">
-        <form id="infoForm" onsubmit="return validateForm()">
-          <div class="field">
-            <label>Gender</label>
-            <select id="genderSelect">
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          <div class="field"><label>Phone Number</label><input id="phone" type="text" placeholder="Enter phone" /></div>
-          <div class="field"><label>Address</label><textarea id="address" placeholder="Enter address"></textarea></div>
-          <div class="field"><label>City</label><input id="city" type="text" placeholder="Enter city" /></div>
-          <div class="field"><label>State</label><input id="state" type="text" placeholder="Enter state" /></div>
-          <div class="field"><label>Pincode</label><input id="pincode" type="text" placeholder="Enter pincode" /></div>
-          <button type="submit" class="delete-btn">Save</button>
-        </form>
-      </div>
+    <div class="container">
+        <div class="profile-left">
+            <img id="avatarImg" src="" alt="Avatar" />
+            <h2 id="userName">Customer Name</h2>
+            <p id="userEmailDisplay">customer@example.com</p>
+        </div>
+        <div class="profile-right">
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('info')">Info</div>
+                <div class="tab" onclick="showTab('history')">History</div>
+                <div class="tab" onclick="showTab('settings')">Settings</div>
+            </div>
 
-      <div id="history" class="tab-content">
-        <p>Booking history will appear here.</p>
-      </div>
+            <div id="info" class="tab-content active">
+                <form id="infoForm" onsubmit="event.preventDefault(); saveProfile();">
+                    <div class="field">
+                        <label>Email</label>
+                        <input id="userEmail" type="email" placeholder="Enter email" />
+                    </div>
+                    <div class="field">
+                        <label>Gender</label>
+                        <span id="genderDisplay" class="fixed-display"></span> </div>
+                    <div class="field"><label>Phone Number</label><input id="phone" type="text" placeholder="Enter phone" /></div>
+                    <div class="field"><label>Address</label><textarea id="address" placeholder="Enter address"></textarea></div>
+                    <div class="field"><label>City</label><input id="city" type="text" placeholder="Enter city" /></div>
+                    <div class="field"><label>State</label><input id="state" type="text" placeholder="Enter state" /></div>
+                    <div class="field"><label>Pincode</label><input id="pincode" type="text" placeholder="Enter pincode" /></div>
+                    <button type="submit" class="delete-btn">Save</button>
+                </form>
+            </div>
 
-      <div id="settings" class="tab-content">
-        <div class="setting-group">
-          <label>Enable Notifications</label>
-          <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            <div id="history" class="tab-content">
+                <p>Booking history will appear here.</p>
+            </div>
+
+            <div id="settings" class="tab-content">
+                <div class="setting-group">
+                    <label>Enable Notifications</label>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="setting-group">
+                    <label>Email Updates</label>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="setting-group">
+                    <label>SMS Alerts</label>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <button class="delete-btn" onclick="logout()">Log out</button>
+            </div>
         </div>
-        <div class="setting-group">
-          <label>Email Updates</label>
-          <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-        </div>
-        <div class="setting-group">
-          <label>SMS Alerts</label>
-          <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-        </div>
-        <button class="delete-btn">Delete Account</button>
-      </div>
     </div>
-  </div>
+    <script src="profile.js"></script>
 </body>
 </html>

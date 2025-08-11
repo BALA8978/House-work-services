@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - HomeCraft Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='../Dashbord/homepage/index.html'"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+            <h1>My Bookings</h1>
+        </div>
+
+        <div class="booking-history">
+            <h2>Booking History</h2>
+            <p class="section-subtitle">A record of all your past and upcoming service appointments.</p>
+            <div id="booking-history-list" class="history-grid">
+                <p>Loading booking history...</p>
+            </div>
+        </div>
+
+        <div class="recurring-services">
+            <div class="section-header">
+                <div class="section-title">
+                    <h2>Weekly/Monthly Services</h2>
+                    <p class="section-subtitle">Manage your scheduled recurring services.</p>
+                </div>
+                <button id="add-new-service-btn" class="btn btn-add-new">Add New Service</button>
+            </div>
+            <div id="recurring-services-list" class="recurring-grid">
+                <p>Loading recurring services...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-service-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add a Weekly/Monthly Service</h2>
+                <button id="close-modal-btn" class="close-btn">&times;</button>
+            </div>
+            <div id="modal-service-list" class="modal-body">
+<<<<<<< HEAD
+            </div>
+=======
+                </div>
+>>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

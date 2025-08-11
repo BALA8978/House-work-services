@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Pricing · ServicePro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f3f4f6;}
+    .feature-card { transition: transform 0.3s ease, box-shadow 0.3s ease;}
+    .feature-card:hover { transform: translateY(-5px);box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);}
+    ::-webkit-scrollbar { width: 8px;}
+    ::-webkit-scrollbar-track { background: #f1f1f1;}
+    ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px;}
+    ::-webkit-scrollbar-thumb:hover { background: #555;}
+  </style>
+</head>
+<body class="antialiased text-gray-800">
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold text-gray-800">
+        <a href="index.html">ServicePro</a>
+      </div>
+      <div class="hidden md:flex space-x-6 items-center">
+        <a href="onboarding.html" class="text-gray-600 hover:text-blue-600 transition">Onboarding</a>
+        <a href="pricing.html" class="text-gray-600 hover:text-blue-600 transition">Pricing</a>
+        <a href="scheduling.html" class="text-gray-600 hover:text-blue-600 transition">Scheduling</a>
+        <a href="dashboards.html" class="text-gray-600 hover:text-blue-600 transition">Dashboards</a>
+        <a href="warranty.html" class="text-gray-600 hover:text-blue-600 transition">Warranty</a>
+        <a href="support.html" class="text-gray-600 hover:text-blue-600 transition">Support</a>
+      </div>
+      <button id="mobile-menu-button" class="md:hidden flex items-center">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden">
+      <a href="onboarding.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Onboarding</a>
+      <a href="pricing.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Pricing</a>
+      <a href="scheduling.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Scheduling</a>
+      <a href="dashboards.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Dashboards</a>
+      <a href="warranty.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Warranty</a>
+      <a href="support.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Support</a>
+    </div>
+  </header>
+  <main class="container mx-auto px-6 py-12">
+    <section id="pricing" class="feature-card bg-white p-6 rounded-lg shadow-sm">
+      <div class="flex items-center mb-4">
+        <div class="bg-green-100 p-3 rounded-full mr-4">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold">Dynamic Pricing Engine</h2>
+          <span class="text-sm font-semibold text-gray-500">ID: FR19</span>
+        </div>
+      </div>
+      <p class="text-gray-600 mb-4">Adjust prices based on demand and weather. See it in action below.</p>
+      <div class="bg-gray-100 p-4 rounded-lg">
+        <div class="flex justify-between items-center mb-4">
+          <span class="font-medium">Base Service Fee:</span>
+          <span class="font-bold text-lg">$<span id="base-price">100.00</span></span>
+        </div>
+        <div class="flex items-center justify-between mb-2">
+          <label for="demand-toggle" class="font-medium text-sm">High Demand Surge</label>
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="demand-toggle" class="sr-only peer">
+            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full
+            rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px]
+            after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all
+            peer-checked:bg-green-600"></div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <label for="weather-toggle" class="font-medium text-sm">Storm Surge</label>
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="weather-toggle" class="sr-only peer">
+            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full
+            rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px]
+            after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all
+            peer-checked:bg-green-600"></div>
+          </label>
+        </div>
+        <hr class="my-4">
+        <div class="flex justify-between items-center text-xl font-bold text-green-700">
+          <span>Dynamic Price:</span>
+          <span id="dynamic-price">$100.00</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="bg-white mt-16 border-t">
+    <div class="container mx-auto px-6 py-8 text-center text-gray-600">
+      <p>&copy; 2025 ServicePro. All Rights Reserved.</p>
+      <p class="text-sm mt-2">Built to demonstrate modern field service management capabilities.</p>
+    </div>
+  </footer>
+  <script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // --- Dynamic Pricing Engine Logic ---
+    const demandToggle = document.getElementById('demand-toggle');
+    const weatherToggle = document.getElementById('weather-toggle');
+    const dynamicPriceEl = document.getElementById('dynamic-price');
+    const basePrice = 100.00;
+    const demandSurge = 1.25; // 25% increase
+    const weatherSurge = 1.50; // 50% increase
+
+    function updatePrice() {
+      let currentPrice = basePrice;
+      if (demandToggle.checked) {
+        currentPrice *= demandSurge;
+      }
+      if (weatherToggle.checked) {
+        currentPrice *= weatherSurge;
+      }
+      dynamicPriceEl.textContent = `$${currentPrice.toFixed(2)}`;
+    }
+
+    demandToggle.addEventListener('change', updatePrice);
+    weatherToggle.addEventListener('change', updatePrice);
+  </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technician Dashboard - HomeCraft Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="top-frame">
+        <div class="header-left">
+            <div class="logo">HC</div>
+            <h1 class="project-name">HomeCraft Pro</h1>
+        </div>
+        <div class="header-right">
+            <nav class="nav-buttons">
+                <button id="jobs-nav-btn" class="nav-button active">My Jobs</button>
+                <button id="tasks-nav-btn" class="nav-button">Tasks & Inventory</button>
+                <button id="payments-nav-btn" class="nav-button">Payments</button>
+         
+            </nav>
+            <div class="user-profile-circle">
+                <i class="fa-solid fa-user" onclick="location.href = '../Tprofile/index.html'"></i>
+            </div>
+        </div>
+    </div>
+
+    <main id="page-content">
+        <div id="jobs-content" class="content-section active">
+            <h2>My Jobs</h2>
+            <p class="section-subtitle">Manage your assigned jobs: accept, reject, or view details.</p>
+            <div class="jobs-grid" id="jobs-list">
+                <p>Loading jobs...</p>
+            </div>
+        </div>
+
+        <div id="tasks-content" class="content-section hidden">
+            <h2>Tasks & Inventory Management</h2>
+            <p class="section-subtitle">Log materials used, track time, and manage your expenses.</p>
+            <div class="tasks-container">
+                <p>Content coming soon...</p>
+            </div>
+        </div>
+
+        <div id="payments-content" class="content-section hidden">
+            <h2>Payment & Earning History</h2>
+            <p class="section-subtitle">View your earnings and manage payout schedules.</p>
+            <div class="payments-container">
+                <p>Content coming soon...</p>
+            </div>
+        </div>
+
+        <div id="profile-content" class="content-section hidden">
+            <h2>My Profile</h2>
+            <p class="section-subtitle">Upload your certifications and manage your personal details.</p>
+            <div class="profile-container">
+                <p>Content coming soon...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2025 HomeCraft Pro. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
