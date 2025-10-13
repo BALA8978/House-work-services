@@ -20,7 +20,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 $booking_id = $data['booking_id'] ?? 0;
 $item_id = $data['item_id'] ?? 0;
 $quantity = $data['quantity'] ?? 0;
-// --- END OF CORRECTION ---
+
 
 
 if (empty($booking_id) || empty($item_id) || !is_numeric($quantity) || $quantity <= 0) {
