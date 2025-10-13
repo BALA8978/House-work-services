@@ -1,0 +1,183 @@
+/*
+ * File: /Registration/style.css
+ * This stylesheet is adapted from the login page for a consistent look.
+ */
+
+/* --- General Styles --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    background: #f3f4f6;
+}
+
+/* --- Main Layout Container --- */
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.left-side {
+    flex: 1;
+    /* This path assumes the 'Photos' folder is one level above 'Registration' */
+    background-image: url('../Photos/right.png'); 
+    background-size: cover;
+    background-position: center;
+}
+
+.right-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+    position: relative;
+    padding: 20px 0; /* Add padding for scroll on small screens */
+}
+
+/* --- Registration Form Popup --- */
+.register-popup {
+    width: 100%;
+    max-width: 420px; /* Slightly wider for the extra field */
+    padding: 2rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.register-popup h2 {
+    text-align: center;
+    color: #4f46e5;
+    margin-bottom: 0.5rem;
+}
+
+.register-popup p {
+    text-align: center;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Form Elements --- */
+.register-popup form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.register-popup input[type="text"],
+.register-popup input[type="email"],
+.register-popup input[type="password"] {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+/* --- NEW: Role Selection Styling --- */
+.role-selection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.2rem;
+    color: #555;
+}
+
+.role-label {
+    font-weight: 600;
+}
+
+.role-options {
+    display: flex;
+    gap: 15px;
+}
+
+.role-options label {
+    cursor: pointer;
+    margin-left: 4px;
+}
+
+.role-options input[type="radio"] {
+    cursor: pointer;
+    accent-color: #5c27fe;
+}
+
+
+/* --- Message Area --- */
+#register-message {
+  font-size: 0.9rem; 
+  text-align: center; 
+  font-weight: bold; 
+  padding: 10px 0;
+  min-height: 25px;
+}
+#register-message.success {
+    color: #28a745;
+}
+#register-message.error {
+    color: #dc3545;
+}
+
+
+/* --- Button Styling --- */
+.register-popup button {
+    padding: 0.8rem;
+    background: linear-gradient(90deg, #7b2ff7, #f107a3);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.register-popup button:hover {
+    background: linear-gradient(90deg, #6a23d4, #e00695);
+}
+
+/* --- Login Link --- */
+.login-link {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.login-link a {
+    text-decoration: none;
+    color: #5c27fe;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* --- Responsive Design for Mobile --- */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column-reverse;
+    }
+
+    .left-side {
+        height: 200px; /* Adjust height for mobile view */
+        flex: none;
+    }
+
+    .right-side {
+        height: auto;
+        flex: 1;
+        align-items: flex-start; /* Align form to top on mobile */
+        padding-top: 40px;
+    }
+
+    .register-popup {
+        box-shadow: none;
+        border-radius: 0;
+    }
+}

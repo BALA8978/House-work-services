@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Technician Onboarding</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link to the main admin style file that already exists -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- Link to the local style for this page's content -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100">
+
+<div class="admin-wrapper">
+    <!-- This container will be filled by the JavaScript below -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Technician Onboarding</h1>
+        </header>
+
+        <div class="card">
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Skills</th>
+                            <th>Status</th>
+                            <th>Documents</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requests-tbody">
+                        <!-- Onboarding requests will be loaded here by script.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // This script fetches your existing sidebar.html and places it in the container
+    fetch('../sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('sidebar-container').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading sidebar:', error));
+</script>
+<script src="script.js"></script>
+</body>
+</html>
+

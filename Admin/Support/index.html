@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Customer Support</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .ticket-card {
+            background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; 
+            margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .ticket-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #f9f9f9; border-bottom: 1px solid #e0e0e0; }
+        .ticket-header h3 { font-size: 1.2rem; font-weight: 600; }
+        .ticket-body { padding: 20px; }
+        .ticket-footer { padding: 15px 20px; background: #f9f9f9; border-top: 1px solid #e0e0e0; }
+        .status-tag { padding: 5px 10px; border-radius: 20px; color: white; font-size: 0.8rem; }
+        .status-tag.open { background-color: #3498db; }
+        .status-tag.in-progress { background-color: #f1c40f; }
+        .status-tag.resolved { background-color: #2ecc71; }
+        .status-tag.closed { background-color: #95a5a6; }
+    </style>
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Customer Support Tickets</h1>
+        </header>
+        
+        <div id="ticket-list">
+            </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

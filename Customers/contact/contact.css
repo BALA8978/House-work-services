@@ -1,0 +1,129 @@
+:root {
+    --primary-color: #075E54; /* WhatsApp Green */
+    --secondary-color: #128C7E;
+    --background-color: #ECE5DD; /* WhatsApp Chat Background */
+    --text-color: #333;
+    --heading-font: 'Poppins', sans-serif;
+    --body-font: 'Poppins', sans-serif;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    --sent-bubble-color: #DCF8C6; /* Sent message bubble color */
+    --received-bubble-color: #FFF; /* Received message bubble color */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--body-font);
+    color: var(--text-color);
+    background-color: #d1d1d1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.chat-container {
+    background-color: var(--background-color);
+    max-width: 800px;
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.chat-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.technician-info h2 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.technician-info p {
+    font-size: 0.8rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message-bubble {
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    max-width: 70%;
+    line-height: 1.4;
+}
+
+.message-bubble.sent {
+    background-color: var(--sent-bubble-color);
+    align-self: flex-end;
+    border-top-right-radius: 0;
+}
+
+.message-bubble.received {
+    background-color: var(--received-bubble-color);
+    align-self: flex-start;
+    border-top-left-radius: 0;
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-top: 1px solid #ddd;
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    font-size: 1rem;
+}
+
+#send-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    margin-left: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#send-btn:hover {
+    background-color: #075E54;
+}

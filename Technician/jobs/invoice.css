@@ -1,0 +1,128 @@
+/* File: /Technician/jobs/invoice.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+.invoice-box {
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #eee;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    border-radius: 12px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #007BFF;
+}
+
+.company-details {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #007BFF;
+    margin: 0;
+}
+
+.customer-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.status {
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 16px;
+    color: white;
+}
+.status.paid { background-color: #28a745; }
+.status.pending { background-color: #ffc107; color: #333; }
+.status.refunding { background-color: #fd7e14; }
+
+.items-table table {
+    width: 100%;
+    line-height: inherit;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+.items-table th {
+    background: #f8f9fa;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+    font-weight: 600;
+}
+
+.items-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.items-table tr:last-child td {
+    border-bottom: none;
+}
+
+.items-table tfoot td {
+    font-weight: bold;
+}
+
+.items-table .total td {
+    font-size: 1.2rem;
+    color: #007BFF;
+    border-top: 2px solid #ddd;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.notes, .photos {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.photo-gallery {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.photo-gallery img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    font-size: 0.9rem;
+    color: #888;
+}

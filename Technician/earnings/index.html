@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Earnings - HomeCraft Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="../homepage/index.html" class="back-btn">&larr; Back to Dashboard</a>
+            <h1>My Earnings</h1>
+        </header>
+
+        <section class="summary-cards">
+            <div class="card">
+                <h3>Total Earned</h3>
+                <p id="total-earned">₹0.00</p>
+            </div>
+            <div class="card">
+                <h3>Last Payout</h3>
+                <p id="last-payout">₹0.00</p>
+            </div>
+            <div class="card">
+                <h3>Pending Payout</h3>
+                <p id="pending-payout">₹0.00</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Jobs Awaiting Payout</h2>
+            <div id="awaiting-payout-list"></div>
+        </section>
+
+        <section class="card">
+            <h2>Payout History</h2>
+            <div id="payout-history-list"></div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

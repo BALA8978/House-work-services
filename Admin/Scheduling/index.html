@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Bulk Scheduling</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Bulk Job Scheduling</h1>
+        </header>
+
+        <div class="card">
+            <form id="bulk-schedule-form">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                    <div class="form-group">
+                        <label for="technician-select">Assign to Technician</label>
+                        <select id="technician-select" name="technician_id" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-date">Date for all Jobs</label>
+                        <input type="date" id="booking-date" name="booking_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-time">Time Slot for all Jobs</label>
+                        <input type="text" id="booking-time" name="booking_time" placeholder="e.g., 10:00-12:00" required>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Jobs to Schedule</h3>
+                <div id="jobs-container">
+                    </div>
+
+                <button type="button" id="add-job-btn" class="btn btn-secondary mt-2">Add Another Job</button>
+                <div class="text-right mt-4">
+                    <button type="submit" class="btn btn-primary">Schedule All Jobs</button>
+                </div>
+            </form>
+            <div id="schedule-feedback" class="feedback mt-4"></div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

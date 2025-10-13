@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="top-frame">
+        <div class="header-left">
+            <div class="logo">HC</div>
+            <h1 class="project-name">HomeCraft Pro</h1>
+        </div>
+        <div class="header-right">
+           <nav class="nav-buttons">
+                    <button id="jobs-nav-btn" class="nav-button active" onclick="showContent('jobs-content', this)">My Jobs</button>
+                    <button id="accepted-jobs-nav-btn" class="nav-button" onclick="showContent('accepted-jobs-content', this)">Accepted Jobs</button>
+                    <button class="nav-button" onclick="window.parent.location.href = '../earnings/index.html'">Earnings</button>
+
+                    <button id="open-jobs-nav-btn" class="nav-button" onclick="showContent('open-jobs-content', this)">Open Jobs</button>
+                    <button id="rejected-jobs-nav-btn" class="nav-button" onclick="showContent('rejected-jobs-content', this)">Rejected Jobs</button>
+            </nav>
+            </nav>
+            <div class="user-profile-circle" onclick="window.parent.location.href = '../Tprofile/index.html'">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(contentId, clickedButton) {
+            const mainFrame = window.parent.frames['main_frame'];
+            if (mainFrame) {
+                const contentSections = mainFrame.document.querySelectorAll('.content-section');
+                contentSections.forEach(section => section.classList.add('hidden'));
+                
+                const targetSection = mainFrame.document.getElementById(contentId);
+                if (targetSection) {
+                    targetSection.classList.remove('hidden');
+                }
+
+                document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+                clickedButton.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Technician Profile - HomeCraft Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="profile-sidebar">
+            <div class="user-info">
+                <img id="avatarImg" src="../../Customers/login/Photos/male.png" alt="Avatar" />
+                <h2 id="userName">Technician Name</h2>
+                <p id="userEmailDisplay">technician@example.com</p>
+                <span class="user-role">Technician</span>
+            </div>
+
+            <a href="../homepage/index.html" class="action-btn home-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+            <nav class="profile-nav">
+                <a href="#profile-details" class="nav-link active" data-tab="profile-details"><i class="fas fa-user-edit"></i> Profile Details</a>
+                <a href="#job-history" class="nav-link" data-tab="job-history"><i class="fas fa-history"></i> Job History</a>
+                <a href="#settings" class="nav-link" data-tab="settings"><i class="fas fa-cog"></i> Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="../../Customers/login/homepage/index.html" class="logout-btn">Log Out</a>
+            </div>
+        </aside>
+
+        <main class="profile-content">
+            <section id="profile-details" class="tab-content active">
+                <div class="content-header">
+                    <h1>Profile Details</h1>
+                    <button id="edit-profile-btn" class="action-btn"><i class="fas fa-pencil-alt"></i> Edit Profile</button>
+                </div>
+                <form id="profile-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Your contact number" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="area">Service Area / Location</label>
+                            <input type="text" id="area" name="area" placeholder="e.g., Koregaon Park, Pune" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Years of Experience</label>
+                            <input type="number" id="experience" name="experience" min="0" placeholder="e.g., 5" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="availability-toggle">Current Availability</label>
+                            <label class="switch">
+                                <input type="checkbox" id="isAvailable" name="isAvailable" disabled>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="services">Services Offered (Comma-separated)</label>
+                            <textarea id="services" name="services" rows="3" placeholder="e.g., Plumbing, AC Repair, Electrical" disabled></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="documents">Upload New Certificate/Document (Optional)</label>
+                            <input type="file" id="documents" name="documents" accept=".pdf,.jpg,.jpeg,.png" disabled>
+                            <small>Uploading a new file will replace your existing document.</small>
+                        </div>
+                    </div>
+                    <div class="form-actions hidden">
+                        <button type="submit" class="action-btn save-btn">Save Changes</button>
+                        <button type="button" id="cancel-edit-btn" class="action-btn cancel-btn">Cancel</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="job-history" class="tab-content">
+                 <div class="content-header">
+                    <h1>Job History</h1>
+                 </div>
+                 <div id="job-history-container">
+                    <p>Loading job history...</p>
+                 </div>
+            </section>
+
+            <section id="settings" class="tab-content">
+                 <div class="content-header">
+                    <h1>Settings</h1>
+                 </div>
+                 <p>General application settings will be available here in a future update.</p>
+            </section>
+        </main>
+    </div>
+    <script src="profile.js"></script>
+</body>
+</html>

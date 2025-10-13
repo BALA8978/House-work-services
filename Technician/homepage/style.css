@@ -1,0 +1,185 @@
+/* --- General Styles & Variables --- */
+:root {
+    --primary-color: #007BFF;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --background-color: #f4f7f6;
+    --text-color: #333;
+    --heading-font: 'Poppins', sans-serif;
+    --body-font: 'Poppins', sans-serif;
+    --border-radius: 12px;
+    --box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: var(--body-font);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+}
+
+.job-card .actions {
+    margin-top: 20px; 
+    display: flex; 
+    flex-direction: column; /* Changed to column for better stacking */
+    gap: 10px;
+}
+.job-card .actions button, .job-card .actions .action-btn { /* Target all buttons */
+    padding: 10px; 
+    border: none; 
+    border-radius: 8px;
+    font-weight: bold; 
+    cursor: pointer; 
+
+    transition: opacity 0.3s;
+    color: white; 
+    font-size: 0.9rem; /* Slightly smaller font for more buttons */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.job-card .actions .action-btn {
+    background-color: var(--secondary-color);
+}
+/* --- Header / Nav Bar --- */
+.top-frame {
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    box-shadow: var(--box-shadow);
+    z-index: 100;
+}
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.logo {
+    width: 40px; height: 40px; background: var(--primary-color);
+    border-radius: 8px; display: flex; justify-content: center;
+    align-items: center; font-size: 20px; font-weight: bold; color: #fff;
+}
+.project-name { font-size: 24px; font-weight: 700; margin: 0; }
+.nav-buttons { display: flex; gap: 10px; }
+.nav-button {
+    padding: 10px 15px; border-radius: 8px; border: none;
+    background: transparent; color: var(--secondary-color); font-size: 1rem;
+    cursor: pointer; transition: all 0.3s ease;
+}
+.nav-button:hover, .nav-button.active {
+    background: var(--primary-color); color: white;
+}
+.user-profile-circle {
+    width: 45px; height: 45px; background: #eee; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 20px; color: #555; cursor: pointer;
+}
+
+/* --- Main Content Area --- */
+main { padding: 30px; }
+.content-section {
+    background: #fff; padding: 30px; border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow); max-width: 1200px; margin: 0 auto;
+}
+.hidden { display: none !important; }
+h2 {
+    font-size: 2rem; color: var(--primary-color); margin-bottom: 10px;
+}
+.section-subtitle {
+    color: #555; margin-bottom: 20px; border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+/* --- Job Card Styling --- */
+.job-card {
+    background: #fdfdfd; border: 1px solid #eee; padding: 20px;
+    border-radius: var(--border-radius); box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.job-card h3 {
+    font-size: 1.3rem; margin-bottom: 15px; color: var(--primary-color);
+    border-bottom: 1px solid #f0f0f0; padding-bottom: 10px;
+}
+.job-card p { margin-bottom: 8px; font-size: 1rem; }
+.job-card .status {
+    font-weight: bold; padding: 4px 10px; border-radius: 16px;
+    color: white; display: inline-block; font-size: 0.9rem;
+}
+.job-card .status.paid { background-color: var(--success-color); }
+.job-card .status.pending { background-color: var(--warning-color); color: var(--text-color); }
+
+.job-card .actions {
+    margin-top: 20px; display: flex; flex-direction: column; gap: 10px;
+}
+.job-card .actions button {
+    padding: 10px; border: none; border-radius: 8px;
+    font-weight: bold; cursor: pointer; transition: opacity 0.3s;
+    color: white; font-size: 1rem;
+}
+.job-card .actions .accept { background-color: var(--success-color); }
+.job-card .actions .reject { background-color: var(--danger-color); }
+.job-card .actions .resolve { background-color: var(--primary-color); }
+.job-card .actions .claim { background-color: var(--info-color); }
+.job-card .actions button:hover { opacity: 0.8; }
+
+.rejection-reason-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* --- Modal Styles --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); display: flex;
+    justify-content: center; align-items: center; z-index: 1001;
+}
+.modal-content {
+    background: #fff; padding: 25px; border-radius: var(--border-radius);
+    width: 90%; max-width: 500px;
+}
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px;
+}
+.modal-header h2 { margin: 0; font-size: 1.5rem; }
+.close-btn {
+    background: none; border: none; font-size: 2rem;
+    cursor: pointer; color: #888;
+}
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 5px; }
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 10px; border-radius: 8px;
+    border: 1px solid #ddd; font-size: 1rem;
+}
+.modal-footer { margin-top: 20px; text-align: right; }
+.btn-primary {
+    padding: 10px 20px; border: none; border-radius: 8px;
+    background-color: var(--primary-color); color: white;
+    font-weight: 600; cursor: pointer;
+}

@@ -1,0 +1,73 @@
+:root {
+    --primary-color: #007BFF;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --border-radius: 12px;
+    --box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.back-btn {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.tracking-card {
+    background: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+}
+
+#map-container {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.technician-status p {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
