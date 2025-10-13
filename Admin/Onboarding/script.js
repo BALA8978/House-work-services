@@ -1,56 +1,83 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetchOnboardingRequests();
-});
+    const requestsTbody = document.getElementById('requests-tbody');
 
-function fetchOnboardingRequests() {
-    fetch('get_onboarding_requests.php')
-        .then(response => response.json())
-        .then(data => {
-            const list = document.getElementById('onboarding-list');
-            list.innerHTML = '';
-            if (data.success) {
-                data.data.forEach(request => {
-                    const card = document.createElement('div');
-                    card.className = 'bg-white p-5 rounded-lg shadow-md';
-                    card.innerHTML = `
-                        <h2 class="text-xl font-bold">${request.full_name}</h2>
-                        <p><strong>Email:</strong> ${request.email}</p>
-                        <p><strong>Skills:</strong> ${request.skills}</p>
-                        <div class="mt-4">
-                            <button onclick="approve(${request.user_id})" class="bg-green-500 text-white px-4 py-2 rounded-md">Approve</button>
-                            <button onclick="reject(${request.user_id})" class="bg-red-500 text-white px-4 py-2 rounded-md">Reject</button>
-                        </div>
+    async function fetchOnboardingRequests() {
+        try {
+            const response = await fetch('get_onboarding_requests.php');
+            const result = await response.json();
+
+            requestsTbody.innerHTML = ''; // Clear existing rows
+            if (result.success && result.data.length > 0) {
+                result.data.forEach(request => {
+                    const tr = document.createElement('tr');
+                    
+                    // Action buttons are only shown for 'pending' requests
+                    const actionsHtml = request.status === 'pending' ?
+                        `<div class="flex space-x-2">
+                            <button class="action-btn approve-btn" data-id="${request.profile_id}">Approve</button>
+                            <button class="action-btn reject-btn" data-id="${request.profile_id}">Reject</button>
+                        </div>` :
+                        'Processed';
+
+                    // Make the document path a clickable link
+                    const documentLink = request.documents_path ? 
+                        `<a href="../Technician/apply/${request.documents_path}" target="_blank" class="document-link">View Document</a>` : 
+                        'No Document';
+
+                    tr.innerHTML = `
+                        <td>${request.full_name}</td>
+                        <td>${request.phone_number}</td>
+                        <td>${request.skills}</td>
+                        <td><span class="status-badge status-${request.status}">${request.status}</span></td>
+                        <td>${documentLink}</td>
+                        <td>${actionsHtml}</td>
                     `;
-                    list.appendChild(card);
+                    requestsTbody.appendChild(tr);
                 });
             } else {
-                list.innerHTML = `<p>${data.message}</p>`;
+                requestsTbody.innerHTML = '<tr><td colspan="6" class="text-center py-4">No onboarding requests found.</td></tr>';
             }
-        });
-}
+        } catch (error) {
+            console.error("Error fetching requests:", error);
+        }
+    }
 
-function approve(userId) {
-    updateStatus(userId, 'approved');
-}
+    async function updateOnboardingStatus(profileId, newStatus) {
+        try {
+            const response = await fetch('update_onboarding_status.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    profile_id: profileId,
+                    status: newStatus
+                })
+            });
+            const result = await response.json();
+            alert(result.message);
+            if (result.success) {
+                fetchOnboardingRequests(); // Refresh the list
+            }
+        } catch (error) {
+            console.error("Error updating status:", error);
+            alert("An error occurred. Please try again.");
+        }
+    }
 
-function reject(userId) {
-    updateStatus(userId, 'rejected');
-}
+    requestsTbody.addEventListener('click', function(e) {
+        const profileId = e.target.getAttribute('data-id');
+        if (!profileId) return;
 
-function updateStatus(userId, status) {
-    fetch('update_onboarding_status.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ user_id: userId, status: status })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            fetchOnboardingRequests();
-        } else {
-            alert(data.message);
+        if (e.target.classList.contains('approve-btn')) {
+            if (confirm(`Are you sure you want to approve this technician?`)) {
+                updateOnboardingStatus(profileId, 'approved');
+            }
+        } else if (e.target.classList.contains('reject-btn')) {
+            if (confirm(`Are you sure you want to reject this technician?`)) {
+                updateOnboardingStatus(profileId, 'rejected');
+            }
         }
     });
-}
+
+    // Initial load
+    fetchOnboardingRequests();
+});

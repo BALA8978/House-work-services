@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Technician - HomeCraft Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='../my-bookings/index.html'">← Back to Bookings</button>
+            <h1>Live Technician Tracking</h1>
+        </div>
+        <div class="tracking-card">
+            <div id="map-container">
+                <iframe
+                    id="map-frame"
+                    width="100%"
+                    height="450"
+                    style="border:0"
+                    loading="lazy"
+                    allowfullscreen
+                    src="">
+                </iframe>
+            </div>
+            <div class="technician-status">
+                <p><strong>Technician:</strong> <span id="technician-name">Loading...</span></p>
+                <p><strong>Status:</strong> En route</p>
+                <p><strong>Last Updated:</strong> <span id="last-updated">Just now</span></p>
+            </div>
+            <div class="actions">
+                <button id="update-location-btn" class="btn">Simulate Location Update</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -6,6 +6,7 @@ function logout() {
 }
 document.addEventListener('DOMContentLoaded', function() {
     loadCustomerProfile(); // Load data when the page loads
+    loadJobHistory();
 });
 
 function showTab(tabId) {
@@ -15,13 +16,62 @@ function showTab(tabId) {
     document.getElementById(tabId).classList.add("active");
 }
 
+function loadJobHistory() {
+    fetch('get_job_history.php')
+        .then(response => {
+            // Get the raw text from the response first
+            return response.text().then(text => {
+                try {
+                    // Then, try to parse it as JSON
+                    return JSON.parse(text);
+                } catch (e) {
+                    // If parsing fails, log the raw text and throw an error
+                    console.error("Failed to parse JSON from get_job_history.php:", text);
+                    throw new Error("Server returned an invalid response for job history.");
+                }
+            });
+        })
+        .then(data => {
+            const historyContainer = document.getElementById('job-history-container');
+            if (data.success && data.data.length > 0) {
+                let historyHtml = '<ul class="job-history-list">';
+                data.data.forEach(job => {
+                    const statusClass = job.completion_status.toLowerCase(); // Will be 'success' or 'failed'
+                    historyHtml += `<li class="job-history-item">
+                        <div class="history-field"><strong>Booking ID:</strong> ${job.booking_id}</div>
+                        <div class="history-field"><strong>Technician:</strong> ${job.technician_name}</div>
+                        <div class="history-field"><strong>Date:</strong> ${job.booking_date}</div>
+                        <div class="history-field"><strong>Status:</strong> <span class="status-${statusClass}">${job.completion_status}</span></div>
+                        <div class="history-field"><strong>Notes:</strong> ${job.technician_notes || 'N/A'}</div>
+                    </li>`;
+                });
+                historyHtml += '</ul>';
+                historyContainer.innerHTML = historyHtml;
+            } else {
+                historyContainer.innerHTML = '<p>No job history found.</p>';
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching job history:", error);
+            alert("An error occurred while fetching job history data.");
+        });
+}
+
+
 function loadCustomerProfile() {
     fetch('get_customer_profile.php')
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json();
+            // Get the raw text from the response first
+            return response.text().then(text => {
+                try {
+                    // Then, try to parse it as JSON
+                    return JSON.parse(text);
+                } catch (e) {
+                    // If parsing fails, log the raw text and throw an error
+                    console.error("Failed to parse JSON from get_customer_profile.php:", text);
+                    throw new Error("Server returned an invalid response for customer profile.");
+                }
+            });
         })
         .then(data => {
             if (data.success) {
@@ -135,5 +185,6 @@ function saveProfile() {
 
 // Helper function to capitalize the first letter for display
 function capitalizeFirstLetter(string) {
+    if(!string) return "";
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

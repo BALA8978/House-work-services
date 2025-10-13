@@ -1,59 +1,46 @@
 <?php
-// Enable error reporting for development (remove or comment out in production)
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// File: /Customers/Dashbord/get_technicians.php (Corrected)
 
-// Database credentials
-$host = 'localhost';
-$user = 'root'; // Default XAMPP user
-$pass = '';     // Default XAMPP password (blank)
-$db   = 'homecraft_pro_db'; // The database name created by setup_database.php
-
-// Set content type to JSON
+require '../config/db_connect.php';
 header('Content-Type: application/json');
 
-// Connect to MySQL database
-$conn = new mysqli($host, $user, $pass, $db);
-if ($conn->connect_error) {
-    // If database connection fails, send a 500 Internal Server Error and JSON response
-    http_response_code(500);
-    echo json_encode(['error' => 'Database connection failed: ' . $conn->connect_error]);
-    exit;
-}
+$response = [
+    'success' => false,
+    'data' => [],
+    'message' => ''
+];
 
-// Query to get technician details
-// Ensure column names match your database table exactly
-$sql = "SELECT id, name, isAvailable, rating, experience, services, price FROM technicians";
-$result = $conn->query($sql);
+try {
+    // We select all technicians who are marked as available.
+    // We also join with the technician_profiles to get the gender for the avatar image.
+    $sql = "SELECT 
+                t.id, 
+                t.name, 
+                t.rating, 
+                t.experience, 
+                t.services, 
+                t.price,
+                tp.gender
+            FROM technicians t
+            LEFT JOIN technician_profiles tp ON t.user_id = tp.user_id
+            WHERE t.isAvailable = 1";
 
-$technicians = [];
+    $result = $conn->query($sql);
 
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        // Convert services TEXT into array assuming comma-separated values
-        // Trim each service to remove leading/trailing whitespace
-        $services = [];
-        if (!empty($row['services'])) {
-            $services = array_map('trim', explode(',', $row['services']));
-        }
-
-        // Cast numeric values to appropriate types for consistency with JavaScript
-        $technicians[] = [
-            'id' => $row['id'],
-            'name' => $row['name'],
-            // Convert isAvailable to a boolean true/false
-            'isAvailable' => (boolval($row['isAvailable'])),
-            'rating' => floatval($row['rating']),
-            'experience' => intval($row['experience']),
-            'services' => $services,
-            'price' => intval($row['price'])
-        ];
+    if ($result) {
+        $technicians = $result->fetch_all(MYSQLI_ASSOC);
+        $response['success'] = true;
+        $response['data'] = $technicians;
+    } else {
+        throw new Exception("Failed to fetch technicians from the database.");
     }
+
+} catch (Exception $e) {
+    $response['message'] = 'A server error occurred: ' . $e->getMessage();
+    http_response_code(500);
 }
 
-// Encode the array of technicians as JSON and output it
-echo json_encode($technicians);
-
-// Close the database connection
+echo json_encode($response);
 $conn->close();
+
 ?>

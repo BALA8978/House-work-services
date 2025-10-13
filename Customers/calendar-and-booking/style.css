@@ -153,6 +153,19 @@ body {
     cursor: not-allowed;
 }
 
+.work-description-container {
+    margin-top: 20px;
+}
+
+#work-description {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+}
+
 .booking-footer {
     padding: 20px;
     text-align: center;

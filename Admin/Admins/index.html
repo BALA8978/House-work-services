@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Admins</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Manage Admins</h1>
+        </header>
+
+        <div class="card mb-8">
+            <h2>Add New Admin</h2>
+            <form id="add-admin-form">
+                <div class="form-group"><label for="full-name">Full Name</label><input type="text" id="full-name" required></div>
+                <div class="form-group"><label for="email">Email</label><input type="email" id="email" required></div>
+                <div class="form-group"><label for="password">Password</label><input type="password" id="password" required></div>
+                <div class="text-right"><button type="submit" class="btn-primary">Add Admin</button></div>
+            </form>
+            <div id="add-admin-feedback" class="feedback mt-4"></div>
+        </div>
+
+        <div class="card">
+            <h2>Current Admins</h2>
+            <table>
+                <thead><tr><th>Name</th><th>Email</th><th>Registration Date</th></tr></thead>
+                <tbody id="admins-tbody"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

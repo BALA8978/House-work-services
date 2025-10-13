@@ -1,0 +1,157 @@
+/* General Body Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* --- Sidebar Styles --- */
+.sidebar {
+    width: 80px; /* Collapsed width */
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden; /* Hide text that overflows */
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+}
+
+/* Expanded state on hover */
+.sidebar:hover {
+    width: 250px;
+}
+
+/* Sidebar Header/Logo */
+.sidebar-header {
+    padding: 20px 0;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Hide full logo text by default */
+.sidebar-logo-full {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+/* Show full logo when sidebar is expanded */
+.sidebar:hover .sidebar-logo-full {
+    opacity: 1;
+    transition-delay: 0.1s; /* Show it just after expansion starts */
+}
+
+/* Show icon logo by default */
+.sidebar-logo-icon {
+    display: inline-block;
+}
+/* Hide icon logo when sidebar is expanded */
+.sidebar:hover .sidebar-logo-icon {
+    display: none;
+}
+
+
+/* Navigation Links */
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    color: #ecf0f1;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+.sidebar nav a:hover {
+    background-color: #3498db;
+}
+
+/* Icons */
+.sidebar nav a i {
+    font-size: 1.2rem;
+    min-width: 60px; /* Center the icon in the collapsed view */
+    text-align: center;
+}
+
+/* Navigation Text */
+.nav-text {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+/* Show text when sidebar is expanded */
+.sidebar:hover .nav-text {
+    opacity: 1;
+    transition-delay: 0.1s; /* Make text appear smoothly */
+}
+
+/* --- Main Content Styles --- */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    margin-left: 80px; /* Match collapsed sidebar width */
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Adjust main content margin when sidebar is hovered */
+body:has(.sidebar:hover) .main-content {
+    margin-left: 250px; /* Match expanded sidebar width */
+}
+
+/* Card, Header, and other styles remain largely the same */
+.header {
+    margin-bottom: 30px;
+}
+.header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-bottom: 25px;
+}
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+.form-group, .form-group label, .form-group input, .form-group select, .form-group textarea {
+    box-sizing: border-box;
+}
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; }
+.btn, .btn-primary, .btn-secondary, .btn-approve, .btn-reject { color: #fff; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; text-align: center; display: inline-block; text-decoration: none; }
+.btn-primary { background-color: #3498db; }
+.btn-primary:hover { background-color: #2980b9; }
+.btn-secondary { background-color: #95a5a6; }
+.btn-secondary:hover { background-color: #7f8c8d; }
+.btn-approve { background-color: #2ecc71; }
+.btn-approve:hover { background-color: #27ae60; }
+.btn-reject { background-color: #e74c3c; }
+.btn-reject:hover { background-color: #c0392b; }
+.feedback { margin-top: 15px; padding: 10px; border-radius: 4px; display: none; }
+.feedback.success { background-color: #d4edda; color: #155724; display: block; }
+.feedback.error { background-color: #f8d7da; color: #721c24; display: block; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
+th { background-color: #f2f2f2; font-weight: 600; }
+tbody tr:hover { background-color: #f5f5f5; }
+.text-right { text-align: right; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }

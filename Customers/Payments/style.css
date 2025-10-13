@@ -2,6 +2,10 @@
     --primary-color: #007BFF;
     --success-color: #28a745;
     --secondary-color: #6c757d;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --danger-color: #dc3545;
+    --orange-color: #fd7e14;
     --background-color: #f8f9fa;
     --text-color: #333;
     --border-radius: 12px;
@@ -35,20 +39,41 @@ h2 { font-size: 1.8rem; margin-bottom: 5px; }
 .payments-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
 .payment-card {
     background: #fff; border: 1px solid #e9ecef; border-radius: var(--border-radius); padding: 20px;
-    box-shadow: var(--box-shadow); display: flex; justify-content: space-between; align-items: center;
+    box-shadow: var(--box-shadow); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
 }
+.payment-details { flex-grow: 1; }
 .payment-details h3 { font-size: 1.2rem; margin-bottom: 8px; color: var(--primary-color); }
 .payment-details p { font-size: 0.95rem; color: #555; margin-bottom: 5px; }
-.payment-status {
-    padding: 5px 12px; border-radius: 16px; font-weight: 600; font-size: 0.85rem; color: #fff;
+
+/* --- CORRECTED & ADDED STYLES --- */
+.status-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
-.payment-status.Paid { background-color: var(--success-color); }
-.payment-status.Pending { background-color: #ffc107; color: #333; }
+.status-tag {
+    padding: 5px 12px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #fff;
+}
+/* Payment Statuses */
+.status-tag.Paid { background-color: var(--info-color); }
+.status-tag.Pending { background-color: var(--warning-color); color: #333; }
+.status-tag.Refunding { background-color: var(--orange-color); }
+
+/* Work/Job Statuses */
+.status-tag.Work-Completed { background-color: var(--success-color); }
+.status-tag.Work-Failed { background-color: var(--danger-color); }
+.status-tag.Work-Pending { background-color: var(--secondary-color); }
+/* --- END OF CORRECTION --- */
+
+.payment-actions { margin-top: 10px; }
 .payment-actions .btn-pay-small {
     background-color: var(--primary-color); color: white; border: none; padding: 10px 20px;
     border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 600;
 }
-/* Styles for pay.html */
 .payment-page { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
 .payment-card-large {
     background: #fff; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--box-shadow);
@@ -73,3 +98,14 @@ h2 { font-size: 1.8rem; margin-bottom: 5px; }
 .btn-pay:disabled { background-color: #ccc; cursor: not-allowed; }
 .status-message { margin-top: 15px; font-weight: 600; }
 .back-to-payments-link { display: block; margin-top: 20px; color: var(--secondary-color); text-decoration: none; }
+
+.card-form-container {
+    text-align: left; margin-bottom: 20px; border-top: 1px solid #eee; padding-top: 20px;
+}
+.input-group { margin-bottom: 15px; }
+.input-group label { display: block; font-weight: 600; margin-bottom: 5px; color: #555; }
+.input-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; }
+.flex-group { display: flex; gap: 15px; }
+.flex-group .input-group { flex: 1; }
+.hidden { display: none; }
+

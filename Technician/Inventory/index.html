@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory for Job</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="../homepage/index.html" class="back-btn">&larr; Back to Dashboard</a>
+            <h1>Inventory Management</h1>
+        </div>
+
+        <div id="booking-details" class="card">
+            <p>Loading booking details...</p>
+        </div>
+
+        <div class="inventory-container">
+            <div class="card">
+                <h2>Add Materials to Job</h2>
+                <div class="form-group">
+                    <label for="item-select">Select an Item:</label>
+                    <select id="item-select"></select>
+                </div>
+                <div class="form-group">
+                    <label for="item-quantity">Quantity:</label>
+                    <input type="number" id="item-quantity" value="1" min="1">
+                </div>
+                <button id="add-material-btn" class="btn btn-primary">Add to Job</button>
+                <div id="materials-feedback" class="feedback"></div>
+            </div>
+
+            <div class="card">
+                <h2>Materials for this Job</h2>
+                <ul id="job-materials-list">
+                    <li>Loading...</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card request-card">
+            <h2>Request New Item</h2>
+            <p>If an item you need is not in the list, you can request it here.</p>
+           <form id="request-item-form">
+    <div class="form-group">
+        <label for="request-item-name">Item Name:</label>
+        <input type="text" id="request-item-name" name="item-name" required>
+    </div>
+    <div class="form-group">
+        <label for="request-reason">Reason for Request:</label>
+        <textarea id="request-reason" name="reason" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-secondary">Submit Request</button>
+    <div id="request-feedback" class="feedback"></div>
+</form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

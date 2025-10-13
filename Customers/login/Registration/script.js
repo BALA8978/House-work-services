@@ -1,4 +1,4 @@
-// Replace the entire contents of Registration/script.js with this code.
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.getElementById('register-form');

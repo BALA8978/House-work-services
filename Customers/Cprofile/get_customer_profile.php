@@ -1,64 +1,51 @@
 <?php
-// get_customer_profile.php
-
-include 'db_setup.php'; // Include your database connection file
-
+require '../config/db_connect.php';
 header('Content-Type: application/json');
 
-$response = ['success' => false, 'message' => ''];
+$response = ['success' => false, 'data' => null, 'message' => ''];
 
-// Check if user is logged in via session (assuming 'user_id' is set during login)
 if (!isset($_SESSION['user_id'])) {
-    $response['message'] = "User not logged in. Session user_id not set.";
+    $response['message'] = 'User not logged in.';
     echo json_encode($response);
-    exit();
+    exit;
 }
 
-$userId = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'];
 
-// Prepare and execute a JOIN query to get user details and their profile
-// IMPORTANT: Changed 'login l' to 'users l'
-$stmt = $conn->prepare("
-    SELECT
-        l.full_name,
-        l.email,
-        cp.gender,
-        cp.phone,
-        cp.address,
-        cp.city,
-        cp.state,
-        cp.pincode
-    FROM
-        users l  -- Changed from 'login l' to 'users l'
-    LEFT JOIN
-        customer_profiles cp ON l.id = cp.user_id
-    WHERE
-        l.id = ?
-");
-$stmt->bind_param("i", $userId); // 'i' for integer (user_id)
+try {
+    // This query joins the users table with the customer_profiles table
+    // to get all information in a single call.
+    $sql = "SELECT 
+                u.full_name AS userName, 
+                u.email AS userEmail,
+                cp.gender,
+                cp.phone,
+                cp.address,
+                cp.city,
+                cp.state,
+                cp.pincode
+            FROM users u
+            LEFT JOIN customer_profiles cp ON u.id = cp.user_id
+            WHERE u.id = ?";
+            
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-$stmt->execute();
-$result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $response['success'] = true;
+        $response['data'] = $result->fetch_assoc();
+    } else {
+        $response['message'] = 'User profile not found.';
+    }
+    $stmt->close();
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $response['success'] = true;
-    $response['data'] = [
-        'userName' => $row['full_name'],
-        'userEmail' => $row['email'],
-        'gender' => $row['gender'],
-        'phone' => $row['phone'],
-        'address' => $row['address'],
-        'city' => $row['city'],
-        'state' => $row['state'],
-        'pincode' => $row['pincode']
-    ];
-} else {
-    $response['message'] = "Customer profile data not found for user ID: " . $userId;
+} catch (Exception $e) {
+    $response['message'] = 'A server error occurred: ' . $e->getMessage();
+    http_response_code(500);
 }
-
-$stmt->close();
-$conn->close();
 
 echo json_encode($response);
+$conn->close();
 ?>

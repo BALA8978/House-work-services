@@ -1,57 +1,41 @@
 <?php
-error_reporting(0);
-ini_set('display_errors', 0);
-
-session_start();
 require '../config/db_connect.php';
 header('Content-Type: application/json');
 
-$response = ['success' => false, 'data' => null, 'message' => 'An unknown error occurred.'];
+$response = ['success' => false, 'data' => null, 'message' => ''];
+$payment_id = $_GET['payment_id'] ?? 0;
+
+if (!isset($_SESSION['user_id'])) {
+    $response['message'] = 'User not logged in.';
+    echo json_encode($response);
+    exit;
+}
+
+if (empty($payment_id)) {
+    $response['message'] = 'Payment ID is required.';
+    echo json_encode($response);
+    exit;
+}
 
 try {
-    if (!isset($_SESSION['user_id'])) {
-        throw new Exception('Authentication required. Please log in.');
-    }
-    if (!isset($_GET['payment_id'])) {
-        throw new Exception('Payment ID is required.');
-    }
-
-    $payment_id = $_GET['payment_id'];
-    $user_id = $_SESSION['user_id'];
-
-    // The SQL query is corrected to use `p.status` instead of `p.payment_status`
-    $sql = "SELECT p.amount, p.status
-            FROM payments p
-            JOIN bookings b ON p.booking_id = b.booking_id
-            WHERE p.payment_id = ? AND b.user_id = ?";
-
-    $stmt = $conn->prepare($sql);
-    if (!$stmt) {
-        throw new Exception("Database prepare statement failed: " . $conn->error);
-    }
-    
-    $stmt->bind_param("ii", $payment_id, $user_id);
+    $stmt = $conn->prepare("SELECT amount, status FROM payments WHERE payment_id = ? AND customer_id = ?");
+    $stmt->bind_param("ii", $payment_id, $_SESSION['user_id']);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($row = $result->fetch_assoc()) {
+    if ($result->num_rows > 0) {
         $response['success'] = true;
-        // Map the DB column 'status' to 'payment_status' for the frontend JS
-        $response['data'] = [
-            'amount' => $row['amount'],
-            'payment_status' => $row['status'] 
-        ];
-        $response['message'] = 'Details fetched successfully.';
+        $response['data'] = $result->fetch_assoc();
     } else {
-        $response['message'] = 'Payment record not found or access denied.';
+        $response['message'] = 'Payment not found or you do not have permission to view it.';
     }
-
     $stmt->close();
-    $conn->close();
 
 } catch (Exception $e) {
-    $response['message'] = $e->getMessage();
+    $response['message'] = 'Server error: ' . $e->getMessage();
+    http_response_code(500);
 }
 
 echo json_encode($response);
+$conn->close();
 ?>

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let technicians = []; // Will hold data fetched from the backend
+    let technicians = []; // Will hold the array of technician objects
     let currentFilters = {};
 
     // --- Page Section Elements ---
@@ -13,15 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // --- Function to switch views ---
     function showView(viewToShow) {
-        // Hide all views first
         homeContent.classList.add('hidden');
         searchContent.classList.add('hidden');
-
-        // Deactivate all nav buttons
         homeNavBtn.classList.remove('active');
         searchNavBtn.classList.remove('active');
 
-        // Show the selected view and activate its button
         if (viewToShow === 'home') {
             homeContent.classList.remove('hidden');
             homeNavBtn.classList.add('active');
@@ -32,32 +28,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // --- Navigation Event Listeners ---
-    homeNavBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        showView('home');
-    });
-
-    searchNavBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        showView('search');
-    });
-
-    findTechnicianHeroBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        showView('search');
-    });
+    homeNavBtn.addEventListener('click', (e) => { e.preventDefault(); showView('home'); });
+    searchNavBtn.addEventListener('click', (e) => { e.preventDefault(); showView('search'); });
+    findTechnicianHeroBtn.addEventListener('click', (e) => { e.preventDefault(); showView('search'); });
 
     // --- Main function to fetch technicians from the PHP backend ---
     function fetchTechnicians() {
-        // Assuming get_technicians.php is in a shared backend folder
-        fetch("../get_technicians.php") 
+        // --- THIS IS THE CORRECTED PATH ---
+        // We use a root-relative path starting from the project folder.
+        fetch("/House-work-services/Customers/Dashbord/get_technicians.php") 
             .then(response => {
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                 return response.json();
             })
-            .then(data => {
-                technicians = data;
-                applyFilters(); // Initial render of all technicians
+            .then(result => {
+                if (result.success && Array.isArray(result.data)) {
+                    technicians = result.data; // Assign the array
+                } else {
+                    technicians = []; 
+                    console.error("Backend did not return a valid technician array:", result.message);
+                }
+                applyFilters(); // Initial render
             })
             .catch(error => {
                 console.error("Failed to load technicians:", error);
@@ -66,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // --- Function to render technicians to the page (with the fix) ---
+    // --- Function to render technicians to the page ---
     function renderTechnicians(list) {
         const container = document.getElementById("technicians-list");
         if (!container) return;
@@ -77,13 +68,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const technicianCardsHTML = list.map(tech => {
-            // Ensure services is an array before joining
-            const services = Array.isArray(tech.services) ? tech.services.join(", ") : "No services listed";
+            const services = tech.services || "No services listed";
             const availability = tech.isAvailable ? "Available" : "Not Available";
             const ratingStars = "★".repeat(Math.round(tech.rating)) + "☆".repeat(5 - Math.round(tech.rating));
-            
-            // The fix is in the button's onclick attribute below.
-            // It now correctly constructs a clean URL with the technician's ID.
             
             return `
                 <div class="technician-card">
@@ -91,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <p><strong>Services:</strong> ${services}</p>
                     <p><strong>Rating:</strong> ${ratingStars} (${parseFloat(tech.rating).toFixed(1)})</p>
                     <p><strong>Status:</strong> ${availability}</p>
-                    <button class="btn btn-primary book-btn" onclick="location.href='../../calendar-and-booking/index.html?technician_id=${tech.id}'">Book Now</button>
+                    <button class="btn btn-primary book-btn" onclick="location.href='../calendar-and-booking/index.html?technician_id=${tech.id}'">Book Now</button>
                 </div>
             `;
         }).join('');
@@ -101,29 +88,31 @@ document.addEventListener("DOMContentLoaded", function () {
     // --- Filtering logic ---
     function filterTechnicians(list, filters) {
         return list.filter(tech => {
-            if (filters.searchTerm && ! (tech.name.toLowerCase().includes(filters.searchTerm) || (Array.isArray(tech.services) && tech.services.some(s => s.toLowerCase().includes(filters.searchTerm))))) return false;
-            if (filters.technicianId && !tech.id.toLowerCase().includes(filters.technicianId)) return false;
-            if (filters.serviceType && (!Array.isArray(tech.services) || !tech.services.includes(filters.serviceType))) return false;
-            if (filters.minPrice && tech.price < filters.minPrice) return false;
-            if (filters.maxPrice && tech.price > filters.maxPrice) return false;
-            if (filters.minRating && tech.rating < filters.minRating) return false;
-            if (filters.minExperience && tech.experience < filters.minExperience) return false;
-            if (filters.availability && !tech.isAvailable) return false;
-            return true;
+            const searchTermMatch = !filters.searchTerm || 
+                (tech.name && tech.name.toLowerCase().includes(filters.searchTerm)) || 
+                (tech.services && tech.services.toLowerCase().includes(filters.searchTerm));
+            const idMatch = !filters.technicianId || (tech.id && tech.id.toLowerCase().includes(filters.technicianId));
+            const serviceTypeMatch = !filters.serviceType || (tech.services && tech.services.toLowerCase().includes(filters.serviceType));
+            const minPriceMatch = !filters.minPrice || tech.price >= filters.minPrice;
+            const maxPriceMatch = !filters.maxPrice || tech.price <= filters.maxPrice;
+            const minRatingMatch = !filters.minRating || tech.rating >= filters.minRating;
+            const minExperienceMatch = !filters.minExperience || tech.experience >= filters.minExperience;
+            const availabilityMatch = !filters.availability || tech.isAvailable;
+            return searchTermMatch && idMatch && serviceTypeMatch && minPriceMatch && maxPriceMatch && minRatingMatch && minExperienceMatch && availabilityMatch;
         });
     }
-
+    
     // --- Gathers filter values and applies them ---
     function applyFilters() {
         const searchTerm = document.getElementById("search-bar")?.value.trim().toLowerCase() || "";
         currentFilters = {
             searchTerm: searchTerm,
             technicianId: document.getElementById("technician-id-filter")?.value.trim().toLowerCase() || "",
-            serviceType: document.getElementById("service-type-filter")?.value || "",
-            minPrice: parseInt(document.getElementById("min-price")?.value, 10) || undefined,
-            maxPrice: parseInt(document.getElementById("max-price")?.value, 10) || undefined,
-            minRating: parseFloat(document.getElementById("rating-filter")?.value) || undefined,
-            minExperience: parseInt(document.getElementById("min-exp")?.value, 10) || undefined,
+            serviceType: document.getElementById("service-type-filter")?.value.toLowerCase() || "",
+            minPrice: parseInt(document.getElementById("min-price")?.value, 10) || null,
+            maxPrice: parseInt(document.getElementById("max-price")?.value, 10) || null,
+            minRating: parseFloat(document.getElementById("rating-filter")?.value) || null,
+            minExperience: parseInt(document.getElementById("min-exp")?.value, 10) || null,
             availability: document.getElementById("availability-filter")?.checked || false,
         };
 

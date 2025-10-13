@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         } else {
             if ($conn->errno == 1062) {
-                $response['message'] = "Error: This email address is already registered.";
+                $response['message'] = "Error: This email is already registered.";
             } else {
                 $response['message'] = "Error during registration: " . $stmt->error;
             }

@@ -1,22 +1,15 @@
 <?php
 require '../config/db_connect.php';
 header('Content-Type: application/json');
-
-$response = ['success' => false, 'data' => []];
-
-$sql = "SELECT id, name, description, frequency, price FROM recurring_services ORDER BY frequency, name";
-$result = $conn->query($sql);
-
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        $response['data'][] = $row;
-    }
+$response = ['success' => false, 'data' => [], 'message' => ''];
+try {
+    $sql = "SELECT service_id, name, description, frequency, price FROM recurring_services";
+    $result = $conn->query($sql);
     $response['success'] = true;
-} else {
-    $response['message'] = 'Could not fetch services from the database.';
+    $response['data'] = $result->fetch_all(MYSQLI_ASSOC);
+} catch (Exception $e) {
+    $response['message'] = 'Server Error: ' . $e->getMessage();
 }
-
 echo json_encode($response);
-
 $conn->close();
 ?>

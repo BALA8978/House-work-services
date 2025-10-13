@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Profits Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .summary-card { color: white; padding: 20px; border-radius: 8px; }
+        .summary-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
+        .summary-card p { font-size: 2rem; font-weight: 600; }
+        .bg-green { background-color: #27ae60; }
+        .bg-red { background-color: #c0392b; }
+        .bg-blue { background-color: #2980b9; }
+    </style>
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Profits Dashboard</h1>
+        </header>
+
+        <div class="summary-cards">
+            <div class="summary-card bg-green">
+                <h3>Total Revenue</h3>
+                <p id="total-revenue">₹0.00</p>
+            </div>
+            <div class="summary-card bg-red">
+                <h3>Total Payouts to Technicians</h3>
+                <p id="total-payouts">₹0.00</p>
+            </div>
+            <div class="summary-card bg-blue">
+                <h3>Gross Profit</h3>
+                <p id="gross-profit">₹0.00</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Monthly Profit Breakdown</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Total Revenue</th>
+                        <th>Total Payouts</th>
+                        <th>Gross Profit</th>
+                    </tr>
+                </thead>
+                <tbody id="monthly-breakdown-tbody"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

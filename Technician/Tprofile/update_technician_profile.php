@@ -1,90 +1,90 @@
 <?php
-// update_technician_profile.php
+// File: /Technician/Tprofile/update_technician_profile.php (Redesigned)
 
-include '../config/db_connect.php'; // Use the central database connection file
-
+require '../config/db_connect.php';
 header('Content-Type: application/json');
 
-$response = ['success' => false, 'message' => ''];
+$response = ['success' => false, 'message' => 'An unknown error occurred.'];
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    $response['message'] = "Invalid request method. Only POST requests are accepted.";
+    $response['message'] = 'Invalid request method.';
     echo json_encode($response);
-    exit();
+    exit;
 }
 
-if (!isset($_SESSION['user_id']) || !is_numeric($_SESSION['user_id'])) {
-    $response['message'] = "User not logged in or invalid user ID in session.";
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'technician') {
+    $response['message'] = 'Authentication required.';
     echo json_encode($response);
-    exit();
+    exit;
 }
 
-$userId = (int)$_SESSION['user_id'];
-
-$about = $_POST['about'] ?? '';
-$specialty = $_POST['specialty'] ?? '';
-$experience_level = $_POST['experience_level'] ?? '';
-$skills = $_POST['skills'] ?? '';
+$user_id = $_SESSION['user_id'];
 $phone = $_POST['phone'] ?? '';
-$address = $_POST['address'] ?? '';
-$city = $_POST['city'] ?? '';
-$state = $_POST['state'] ?? '';
-$pincode = $_POST['pincode'] ?? '';
+$area = $_POST['area'] ?? '';
+$experience = $_POST['experience'] ?? 0;
+$services = $_POST['services'] ?? '';
+// For checkbox, 'on' is the default value if checked and no value is specified.
+$isAvailable = isset($_POST['isAvailable']) && $_POST['isAvailable'] === 'on' ? 1 : 0;
 
-// Basic validation for required fields
-if (empty($phone) || empty($city) || empty($state) || empty($specialty)) {
-    $response['message'] = "Specialty, Phone Number, City, and State are required fields.";
-    echo json_encode($response);
-    exit();
-}
+$conn->begin_transaction();
 
-// Check if a profile already exists for this user_id
-$stmt_check = $conn->prepare("SELECT profile_id FROM technician_profiles WHERE user_id = ?");
-if ($stmt_check === false) {
-    $response['message'] = "Prepare statement failed for profile check: " . $conn->error;
-    echo json_encode($response);
-    exit();
-}
-$stmt_check->bind_param("i", $userId);
-$stmt_check->execute();
-$result_check = $stmt_check->get_result();
-$stmt_check->close();
-
-if ($result_check->num_rows > 0) {
-    // Profile exists, so UPDATE
-    $stmt_update = $conn->prepare("UPDATE technician_profiles SET about = ?, specialty = ?, experience_level = ?, skills = ?, phone = ?, address = ?, city = ?, state = ?, pincode = ? WHERE user_id = ?");
-    if ($stmt_update === false) {
-        $response['message'] = "Prepare statement failed for update: " . $conn->error;
-        echo json_encode($response);
-        exit();
+try {
+    // --- Handle Optional File Upload ---
+    $documents_path_update_sql = "";
+    if (isset($_FILES['documents']) && $_FILES['documents']['error'] === UPLOAD_ERR_OK) {
+        $target_dir = "../apply/uploads/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+        
+        $file_name = uniqid() . '_' . basename($_FILES["documents"]["name"]);
+        $target_file = $target_dir . $file_name;
+        
+        if (move_uploaded_file($_FILES["documents"]["tmp_name"], $target_file)) {
+            $new_document_path = "uploads/" . $file_name; // Relative path for DB
+            $documents_path_update_sql = ", documents_path = ?";
+        } else {
+            throw new Exception("Sorry, there was an error uploading your file.");
+        }
     }
-    $stmt_update->bind_param("sssssssssi", $about, $specialty, $experience_level, $skills, $phone, $address, $city, $state, $pincode, $userId);
-    if ($stmt_update->execute()) {
-        $response['success'] = true;
-        $response['message'] = "Profile updated successfully!";
+
+    // --- Update technician_profiles table ---
+    // Added the optional documents_path part to the query
+    $sql1 = "UPDATE technician_profiles SET phone_number = ?, area = ?, skills = ? $documents_path_update_sql WHERE user_id = ?";
+    $stmt1 = $conn->prepare($sql1);
+    
+    if ($documents_path_update_sql) {
+        // If file was uploaded, bind 5 params
+        $stmt1->bind_param("ssssi", $phone, $area, $services, $new_document_path, $user_id);
     } else {
-        $response['message'] = "Error updating profile: " . $stmt_update->error;
+        // If no file, bind 4 params
+        $stmt1->bind_param("sssi", $phone, $area, $services, $user_id);
     }
-    $stmt_update->close();
-} else {
-    // Profile does not exist, so INSERT a new record
-    $stmt_insert = $conn->prepare("INSERT INTO technician_profiles (user_id, about, specialty, experience_level, skills, phone, address, city, state, pincode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    if ($stmt_insert === false) {
-        $response['message'] = "Prepare statement failed for insert: " . $conn->error;
-        echo json_encode($response);
-        exit();
-    }
-    $stmt_insert->bind_param("isssssssss", $userId, $about, $specialty, $experience_level, $skills, $phone, $address, $city, $state, $pincode);
-    if ($stmt_insert->execute()) {
-        $response['success'] = true;
-        $response['message'] = "New profile created successfully!";
-    } else {
-        $response['message'] = "Error creating new profile: " . $stmt_insert->error;
-    }
-    $stmt_insert->close();
-}
+    $stmt1->execute();
+    
+    // --- Update technicians table ---
+    $sql2 = "UPDATE technicians SET isAvailable = ?, experience = ?, services = ? WHERE user_id = ?";
+    $stmt2 = $conn->prepare($sql2);
+    $stmt2->bind_param("iisi", $isAvailable, $experience, $services, $user_id);
+    $stmt2->execute();
 
-$conn->close();
+    if ($stmt1->error || $stmt2->error) {
+        throw new Exception("Database update failed: " . $stmt1->error . " " . $stmt2->error);
+    }
+    
+    $conn->commit();
+    $response['success'] = true;
+    $response['message'] = 'Profile updated successfully!';
+    
+    $stmt1->close();
+    $stmt2->close();
+
+} catch (Exception $e) {
+    $conn->rollback();
+    $response['message'] = 'A server error occurred: ' . $e->getMessage();
+    http_response_code(500);
+}
 
 echo json_encode($response);
+$conn->close();
 ?>

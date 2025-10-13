@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Content</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main id="page-content">
+        <div id="jobs-content" class="content-section">
+            <h2>My New Jobs</h2>
+            <p class="section-subtitle">Review the details below and choose to accept or reject the assignment.</p>
+            <div class="jobs-grid" id="jobs-list"></div>
+        </div>
+
+        <div id="accepted-jobs-content" class="content-section hidden">
+            <h2>Accepted Jobs</h2>
+            <p class="section-subtitle">This is your active work queue. Resolve jobs upon completion.</p>
+            <div class="jobs-grid" id="accepted-jobs-list"></div>
+        </div>
+
+        <div id="open-jobs-content" class="content-section hidden">
+            <h2>Open Jobs</h2>
+            <p class="section-subtitle">These jobs are available for claiming on a first-come, first-served basis.</p>
+            <div class="jobs-grid" id="open-jobs-list"></div>
+        </div>
+
+        <div id="rejected-jobs-content" class="content-section hidden">
+            <h2>Rejected Jobs</h2>
+            <p class="section-subtitle">A history of jobs you have previously rejected.</p>
+            <div class="jobs-grid" id="rejected-jobs-list"></div>
+        </div>
+    </main>
+
+    <!-- Modal for Resolving a Job -->
+    <div id="resolve-job-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Resolve Job</h2>
+            <button class="close-btn" onclick="closeResolveModal()">&times;</button>
+        </div>
+        <form id="resolve-job-form">
+            <input type="hidden" id="resolve-booking-id" name="booking_id">
+            
+            <div class="form-group">
+                <label for="completion-status">Job Status</label>
+                <select id="completion-status" name="completion_status" required>
+                    <option value="Success">Completed Successfully</option>
+                    <option value="Pending">Not Completed (Pending)</option>
+                    <option value="Failed">Not Completed (Failed)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="technician-notes">Completion Notes (Visible to Customer)</label>
+                <textarea id="technician-notes" name="notes" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="work-photos">Upload Photos of Work (Optional)</label>
+                <input type="file" id="work-photos" name="work_photos[]" multiple accept="image/png, image/jpeg">
+            </div>
+
+            <div class="form-group">
+                <label for="hours-spent">Hours Spent</label>
+                <input type="number" id="hours-spent" name="hours" step="0.1" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="materials-cost">Materials Cost (₹)</label>
+                <input type="number" id="materials-cost" name="cost" step="0.01" min="0" required>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-primary">Submit Resolution</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

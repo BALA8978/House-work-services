@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Payout Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Custom styles for this page if needed */
+        .payout-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .payout-item input[type="checkbox"] {
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Payout Management</h1>
+        </header>
+
+        <div class="card">
+            <h2>Jobs Awaiting Payout</h2>
+            <div id="payout-queue-list">
+                <p>Loading jobs ready for payout...</p>
+            </div>
+            <div class="payout-actions text-right mt-4">
+                <button id="process-payout-btn" class="btn-primary" disabled>
+                    Process Selected Payouts
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

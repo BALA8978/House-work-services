@@ -1,32 +1,41 @@
 <?php
-session_start();
+// File: /Customers/my-bookings/get_recurring_services.php
 require '../config/db_connect.php';
 header('Content-Type: application/json');
 
-$response = ['success' => false, 'data' => []];
+$response = ['success' => false, 'data' => [], 'message' => ''];
 
 if (!isset($_SESSION['user_id'])) {
+    $response['message'] = 'User not logged in.';
     echo json_encode($response);
     exit;
 }
+$user_id = $_SESSION['user_id'];
 
-// Placeholder for fetching recurring services.
-// You would have a table for recurring bookings and logic to get the next service date.
-$response['data'][] = [
-    'service_description' => 'Weekly Lawn Mowing',
-    'frequency' => 'Weekly',
-    'next_service_date' => '2025-08-08'
-];
+try {
+    $sql = "SELECT 
+                rb.recurring_booking_id,
+                rs.name AS service_description,
+                rs.frequency,
+                rb.next_service_date,
+                rb.status
+            FROM recurring_bookings rb
+            JOIN recurring_services rs ON rb.service_id = rs.service_id
+            WHERE rb.user_id = ?
+            ORDER BY rb.next_service_date ASC";
 
-$response['data'][] = [
-    'service_description' => 'Monthly Pool Maintenance',
-    'frequency' => 'Monthly',
-    'next_service_date' => '2025-08-25'
-];
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $response['success'] = true;
+    $response['data'] = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+} catch (Exception $e) {
+    $response['message'] = 'Server Error: ' . $e->getMessage();
+}
 
-
-$response['success'] = true;
 echo json_encode($response);
-
 $conn->close();
 ?>

@@ -1,0 +1,141 @@
+:root {
+    --primary-color: #007BFF;
+    --secondary-color: #6c757d;
+    --background-color: #f4f7f6;
+    --text-color: #333;
+    --border-radius: 12px;
+    --box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    flex-grow: 1;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.back-btn {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #e9ecef;
+}
+
+.card {
+    background: #fff;
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.inventory-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+input[type="number"], select, textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+#job-materials-list {
+    list-style: none;
+    padding: 0;
+}
+
+#job-materials-list li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+#job-materials-list li:last-child {
+    border-bottom: none;
+}
+
+.feedback {
+    margin-top: 15px;
+    font-weight: 600;
+}
+.feedback.success {
+    color: #28a745;
+}
+.feedback.error {
+    color: #dc3545;
+}
+
+@media (max-width: 800px) {
+    .inventory-container {
+        grid-template-columns: 1fr;
+    }
+}

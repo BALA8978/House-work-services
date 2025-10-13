@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Inventory Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Inventory Management</h1>
+        </header>
+
+        <div class="card">
+            <h2>Current Stock Levels</h2>
+            <div id="stock-levels-list">
+                <p>Loading stock levels...</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Add New Inventory Item</h2>
+            <form id="add-item-form">
+                <div class="form-group">
+                    <label for="item-name">Item Name</label>
+                    <input type="text" id="item-name" name="item_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="item-type">Item Type</label>
+                    <select id="item-type" name="item_type" required>
+                        <option value="Tool">Tool</option>
+                        <option value="Material">Material</option>
+                        <option value="Kit">Kit</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stock-unit">Stock Unit (e.g., gallons, units)</label>
+                    <input type="text" id="stock-unit" name="stock_unit" required>
+                </div>
+                <div class="form-group">
+                    <label for="item-description">Item Description</label>
+                    <textarea id="item-description" name="item_description" rows="3"></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="btn-primary">Add Item</button>
+                    <p id="add-item-feedback" class="feedback mt-2"></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Technician Item Requests</h2>
+            <div id="item-requests-list">
+                <p>Loading new item requests...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Review - HomeCraft Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="review-container">
+        <h1>Leave a Review</h1>
+        <p>Your feedback helps us improve our services.</p>
+        <form id="review-form">
+            <div class="rating-stars">
+                <i class="far fa-star" data-value="1"></i>
+                <i class="far fa-star" data-value="2"></i>
+                <i class="far fa-star" data-value="3"></i>
+                <i class="far fa-star" data-value="4"></i>
+                <i class="far fa-star" data-value="5"></i>
+            </div>
+            <input type="hidden" name="rating" id="rating-value" value="0">
+            <input type="hidden" name="booking_id" id="booking_id" value="">
+            <textarea name="comment" id="comment" placeholder="Share your experience..."></textarea>
+            <button type="submit" class="btn">Submit Review</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

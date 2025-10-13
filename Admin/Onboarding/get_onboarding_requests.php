@@ -1,19 +1,23 @@
 <?php
-require '../../Customers/config/db_connect.php';
+require '../config/db_connect.php';
 header('Content-Type: application/json');
 
-$response = ['success' => false, 'data' => [], 'message' => ''];
+$response = ['success' => false, 'data' => []];
 
-$sql = "SELECT p.user_id, p.full_name, p.skills, u.email FROM pending_technicians p JOIN users u ON p.user_id = u.id WHERE p.status = 'pending'";
-$result = $conn->query($sql);
+try {
+    // Select all profiles regardless of status to show a complete history
+    $sql = "SELECT profile_id, full_name, phone_number, skills, documents_path, status 
+            FROM technician_profiles 
+            ORDER BY FIELD(status, 'pending', 'approved', 'rejected'), profile_id DESC";
+            
+    $result = $conn->query($sql);
 
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        $response['data'][] = $row;
+    if ($result) {
+        $response['data'] = $result->fetch_all(MYSQLI_ASSOC);
+        $response['success'] = true;
     }
-    $response['success'] = true;
-} else {
-    $response['message'] = 'Could not fetch onboarding requests.';
+} catch (Exception $e) {
+    $response['message'] = $e->getMessage();
 }
 
 echo json_encode($response);

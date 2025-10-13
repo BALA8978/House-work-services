@@ -1,66 +1,95 @@
 <?php
-session_start();
 require '../config/db_connect.php';
 header('Content-Type: application/json');
 
-$response = ['success' => false, 'message' => ''];
+$response = ['success' => false, 'message' => '', 'payment_id' => null];
+
+// Get the raw POST data from the JavaScript fetch request
 $data = json_decode(file_get_contents('php://input'), true);
 
+// Security Check: Ensure user is logged in before allowing them to book
 if (!isset($_SESSION['user_id'])) {
-    $response['message'] = 'You must be logged in to book a service.';
-    echo json_encode($response);
-    exit;
-}
-
-if (empty($data['technician_id']) || empty($data['date']) || empty($data['time'])) {
-    $response['message'] = 'All booking details are required.';
+    $response['message'] = 'Error: You must be logged in to create a booking.';
     echo json_encode($response);
     exit;
 }
 
 $user_id = $_SESSION['user_id'];
-$technician_id = $data['technician_id'];
-$booking_date = $data['date'];
-$booking_time = $data['time'];
+$technician_id = $data['technician_id'] ?? '';
+$date = $data['date'] ?? '';
+$time = $data['time'] ?? '';
+$description = $data['description'] ?? '';
 
+// Validate the incoming data
+if (empty($technician_id) || empty($date) || empty($time)) {
+    $response['message'] = 'Missing required booking information. Please try again.';
+    echo json_encode($response);
+    exit;
+}
+
+// Start a transaction
 $conn->begin_transaction();
 
 try {
-    // Insert the booking
-    $stmt = $conn->prepare("INSERT INTO bookings (user_id, technician_id, booking_date, booking_time, status) VALUES (?, ?, ?, ?, 'Confirmed')");
-    $stmt->bind_param("isss", $user_id, $technician_id, $booking_date, $booking_time);
+    // Step 1: Get the price from the technicians table to ensure it's correct
+    $price_stmt = $conn->prepare("SELECT price FROM technicians WHERE id = ?");
+    $price_stmt->bind_param("s", $technician_id);
+    $price_stmt->execute();
+    $price_result = $price_stmt->get_result();
     
-    if ($stmt->execute()) {
-        $new_booking_id = $conn->insert_id;
+    if ($price_result->num_rows === 0) {
+        throw new Exception("Technician not found. Booking cannot be created.");
+    }
+    
+    $technician_data = $price_result->fetch_assoc();
+    $amount = $technician_data['price'];
+    $price_stmt->close();
 
-        // The database trigger will automatically create a payment record.
-        // Now, we retrieve the ID of that new payment record.
-        $stmt_payment = $conn->prepare("SELECT payment_id FROM payments WHERE booking_id = ?");
-        $stmt_payment->bind_param("i", $new_booking_id);
-        $stmt_payment->execute();
-        $result = $stmt_payment->get_result();
-        $payment_row = $result->fetch_assoc();
-        
-        $response['success'] = true;
-        $response['message'] = 'Booking created successfully!';
-        $response['payment_id'] = $payment_row['payment_id']; // Send the payment_id back to the script
-        $stmt_payment->close();
-        
-        $conn->commit();
-    } else {
-        $response['message'] = 'Failed to create booking.';
-        $conn->rollback();
+    // Step 2: Insert the new booking into the 'bookings' table
+    $booking_stmt = $conn->prepare(
+        "INSERT INTO bookings (user_id, technician_id, booking_date, booking_time, work_description, status, work_status) 
+         VALUES (?, ?, ?, ?, ?, 'Confirmed', 'Pending')"
+    );
+    $booking_stmt->bind_param("issss", $user_id, $technician_id, $date, $time, $description);
+    
+    if (!$booking_stmt->execute()) {
+        // Check for a duplicate booking error (unique key on technician_id, date, time)
+        if ($conn->errno == 1062) {
+             throw new Exception("This time slot has just been taken. Please go back and select another.");
+        } else {
+            throw new Exception("Failed to create booking record: " . $booking_stmt->error);
+        }
     }
-} catch (mysqli_sql_exception $e) {
-    $conn->rollback();
-    if ($e->getCode() == 1062) { // Duplicate entry
-        $response['message'] = 'This time slot is already booked.';
-    } else {
-        $response['message'] = 'Database error: ' . $e->getMessage();
+    
+    $booking_id = $conn->insert_id; // Get the ID of the booking we just created
+    $booking_stmt->close();
+
+    // Step 3: Insert the corresponding payment record into the 'payments' table
+    $payment_stmt = $conn->prepare(
+        "INSERT INTO payments (booking_id, customer_id, technician_id, amount, status) 
+         VALUES (?, ?, ?, ?, 'Pending')"
+    );
+    $payment_stmt->bind_param("iisd", $booking_id, $user_id, $technician_id, $amount);
+    
+    if (!$payment_stmt->execute()) {
+        throw new Exception("Failed to create the associated payment record: " . $payment_stmt->error);
     }
+
+    $payment_id = $conn->insert_id; // Get the ID for the new payment record
+    $payment_stmt->close();
+
+    // If all database operations were successful, commit the changes
+    $conn->commit();
+    $response['success'] = true;
+    $response['message'] = 'Booking confirmed successfully!';
+    $response['payment_id'] = $payment_id; // Send the new payment_id back to the frontend
+
+} catch (Exception $e) {
+    // If any step failed, roll back all changes to keep the database consistent
+    $conn->rollback(); 
+    $response['message'] = $e->getMessage();
 }
 
-$stmt->close();
-$conn->close();
 echo json_encode($response);
+$conn->close();
 ?>

@@ -7,48 +7,87 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cancellation-modal.css">
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <button class="back-btn" onclick="window.location.href='../Dashbord/homepage/index.html'"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+        <header class="header">
+            <button class="back-btn" onclick="window.location.href='../Dashbord/homepage/index.html'">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
             <h1>My Bookings</h1>
-        </div>
+        </header>
 
-        <div class="booking-history">
-            <h2>Booking History</h2>
-            <p class="section-subtitle">A record of all your past and upcoming service appointments.</p>
-            <div id="booking-history-list" class="history-grid">
+        <section class="booking-history">
+            <div class="section-header">
+                <div class="section-title">
+                    <h2>Active and Completed Bookings</h2>
+                    <p class="section-subtitle">A record of all your service appointments.</p>
+                </div>
+            </div>
+            <div class="history-grid" id="booking-history-list">
                 <p>Loading booking history...</p>
             </div>
-        </div>
+        </section>
 
-        <div class="recurring-services">
+        <section class="recurring-services">
             <div class="section-header">
                 <div class="section-title">
                     <h2>Weekly/Monthly Services</h2>
-                    <p class="section-subtitle">Manage your scheduled recurring services.</p>
+                    <p class="section-subtitle">Your active recurring service subscriptions.</p>
                 </div>
-                <button id="add-new-service-btn" class="btn btn-add-new">Add New Service</button>
+                <button class="btn-add-new" id="add-new-service-btn"><i class="fas fa-plus"></i> Add New Service</button>
             </div>
-            <div id="recurring-services-list" class="recurring-grid">
+            <div class="recurring-grid" id="recurring-services-list">
                 <p>Loading recurring services...</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add New Recurring Service Modal -->
+    <div id="add-service-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add a Recurring Service</h2>
+                <button id="close-modal-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-service-list">
+                <!-- Service items will be loaded here by JavaScript -->
             </div>
         </div>
     </div>
 
-    <div id="add-service-modal" class="modal-overlay" style="display: none;">
+    <!-- Cancellation Modal -->
+    <div id="cancellation-modal" class="modal-overlay">
+        <div class="modal-content cancel-modal-content">
+            <div class="modal-header">
+                <h2>Cancel Booking</h2>
+                <button id="close-cancel-modal-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Please provide a reason for cancellation. Note: Refunds for pre-paid services will be processed according to our policy.</p>
+                <textarea id="cancellation-reason" placeholder="Enter reason here..." rows="4"></textarea>
+            </div>
+            <div class="modal-footer cancel-modal-footer">
+                <button id="confirm-cancel-btn" class="btn btn-danger">Confirm Cancellation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Recurring Service Modal -->
+    <div id="manage-recurring-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Add a Weekly/Monthly Service</h2>
-                <button id="close-modal-btn" class="close-btn">&times;</button>
+                <h2 id="manage-modal-title">Manage Service</h2>
+                <button id="close-manage-modal-btn" class="close-btn">&times;</button>
             </div>
-            <div id="modal-service-list" class="modal-body">
-<<<<<<< HEAD
+            <div class="modal-body">
+                <p><strong>Next Service Date:</strong> <span id="manage-modal-next-date"></span></p>
+                <p><strong>Status:</strong> <span id="manage-modal-status"></span></p>
             </div>
-=======
-                </div>
->>>>>>> 5399952a04f177fdbfcba053448f54e50fca2b46
+            <div class="modal-footer" id="manage-modal-actions">
+                <!-- Action buttons will be added here by JavaScript -->
+            </div>
         </div>
     </div>
 

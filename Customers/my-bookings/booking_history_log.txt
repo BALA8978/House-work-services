@@ -1,0 +1,16 @@
+{
+    "success": true,
+    "data": [
+        {
+            "booking_id": 1,
+            "technician_name": "Alice Johnson",
+            "booking_date": "2025-09-10",
+            "booking_time": "09:00-11:00",
+            "booking_status": "Accepted",
+            "payment_status": "Paid",
+            "work_status": "Completed",
+            "display_status": "Completed"
+        }
+    ],
+    "message": ""
+}

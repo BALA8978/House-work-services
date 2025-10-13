@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Warranty Claim - HomeCraft Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Submit a Warranty Claim</h1>
+        <p>All our services are guaranteed for 90 days. If you have any issues, please let us know.</p>
+        <form id="warranty-form">
+            <input type="hidden" name="booking_id" id="booking_id">
+            <div class="input-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            <div class="input-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn">Submit Claim</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

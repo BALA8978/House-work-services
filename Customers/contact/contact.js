@@ -1,58 +1,40 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // --- DOM Elements ---
-    const technicianNameDisplay = document.getElementById('technicianName');
-    const messageInput = document.getElementById('message-input');
-    const sendBtn = document.getElementById('send-btn');
-    const chatMessagesContainer = document.getElementById('chat-messages');
+    const contactForm = document.getElementById('contact-form');
+    const statusMessage = document.getElementById('status-message');
 
-    // --- Pre-fill technician name from URL ---
-    const urlParams = new URLSearchParams(window.location.search);
-    const technicianName = urlParams.get('technician');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(contactForm);
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            submitButton.textContent = 'Submitting...';
+            submitButton.disabled = true;
 
-    if (technicianName) {
-        technicianNameDisplay.textContent = technicianName;
+            try {
+                const response = await fetch('submit_support_ticket.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    statusMessage.textContent = result.message;
+                    statusMessage.className = 'status-message success';
+                    contactForm.reset();
+                } else {
+                    statusMessage.textContent = `Error: ${result.message}`;
+                    statusMessage.className = 'status-message error';
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                statusMessage.textContent = 'A network error occurred. Please try again.';
+                statusMessage.className = 'status-message error';
+            } finally {
+                submitButton.textContent = 'Submit';
+                submitButton.disabled = false;
+            }
+        });
     }
-
-    // --- Function to add a message to the chat window ---
-    function addMessage(message, type) {
-        const messageBubble = document.createElement('div');
-        messageBubble.className = `message-bubble ${type}`; // 'sent' or 'received'
-        messageBubble.textContent = message;
-        chatMessagesContainer.appendChild(messageBubble);
-
-        // Scroll to the bottom of the chat
-        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-    }
-
-    // --- Function to handle sending a message ---
-    function sendMessage() {
-        const messageText = messageInput.value.trim();
-
-        if (messageText) {
-            // Display the sent message
-            addMessage(messageText, 'sent');
-
-            // Clear the input field
-            messageInput.value = '';
-
-            // Simulate a reply from the technician after a short delay
-            setTimeout(() => {
-                const reply = `Hi! This is ${technicianName || 'your technician'}. I've received your message and will get back to you shortly.`;
-                addMessage(reply, 'received');
-            }, 1500);
-        }
-    }
-
-    // --- Event Listeners ---
-    sendBtn.addEventListener('click', sendMessage);
-    messageInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            sendMessage();
-        }
-    });
-
-    // --- Initial welcome message ---
-    setTimeout(() => {
-         addMessage('Welcome! How can I help you today?', 'received');
-    }, 500);
 });

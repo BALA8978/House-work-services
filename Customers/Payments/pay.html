@@ -12,7 +12,7 @@
     <div class="container payment-page">
         <div class="payment-card-large">
             <h1>Complete Your Payment</h1>
-            <p>Please select your preferred payment method to complete the booking.</p>
+            <p>Please select your preferred payment method to finalize the booking.</p>
 
             <div class="payment-summary">
                 <p><strong>Total Amount Due:</strong> <span id="amount-due">Loading...</span></p>
@@ -33,7 +33,29 @@
                 </div>
             </div>
 
+            <div id="card-payment-form" class="card-form-container hidden">
+                <div class="input-group">
+                    <label for="card-number">Card Number</label>
+                    <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19">
+                </div>
+                <div class="input-group">
+                    <label for="card-holder">Card Holder</label>
+                    <input type="text" id="card-holder" placeholder="Enter cardholder's name">
+                </div>
+                <div class="flex-group">
+                    <div class="input-group">
+                        <label for="expiry-date">Expiry Date</label>
+                        <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="input-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+            </div>
+
             <button id="pay-btn" class="btn-pay" disabled>Pay Now</button>
+            <!-- CORRECTED ID HERE -->
             <p id="payment-status" class="status-message"></p>
             <a href="index.html" class="back-to-payments-link">Back to Payments</a>
         </div>
@@ -41,3 +63,4 @@
     <script src="pay_script.js"></script>
 </body>
 </html>
+

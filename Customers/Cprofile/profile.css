@@ -216,6 +216,65 @@ input:checked + .slider:before {
     opacity: 0.9;
 }
 
+/* --- Job History Styles --- */
+#job-history-container {
+    max-height: 400px; /* Limit height and make it scrollable */
+    overflow-y: auto;
+    padding-right: 10px; /* Space for scrollbar */
+}
+
+.job-history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.job-history-item {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.3s ease;
+}
+
+.job-history-item:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.history-field {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #333;
+}
+
+.history-field:last-child {
+    margin-bottom: 0;
+}
+
+.history-field strong {
+    font-weight: 600;
+    color: #111;
+    margin-right: 5px;
+}
+
+.status-success {
+    color: #16a34a; /* Green */
+    font-weight: bold;
+    background-color: #dcfce7;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.status-failed {
+    color: #dc2626; /* Red */
+    font-weight: bold;
+    background-color: #fee2e2;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
